@@ -1,17 +1,58 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Search from "./components/search";
+import Manuscript from "./components/manuscript";
+import {StateMachineComponent} from "./renderMachine";
 import * as serviceWorker from './serviceWorker';
+import {interpret} from "xstate";
+import './assets/css/isidore.css';
+import {IsiMachine} from "./machine/model";
 
+
+
+const interpreter = interpret(IsiMachine);
+interpreter.start();
+
+function gotoUrl () {
+    if (window.location.hash.substr(1).indexOf("detail/") === 0) {
+        const id = +window.location.hash.substr(window.location.hash.indexOf("/") + 1)
+        interpreter.send("detail", {passage_id: id});
+    } else {
+        if (window.location.hash.substr(1).indexOf("map/") === 0) {
+            const id = window.location.hash.substr(window.location.hash.indexOf("/") + 1)
+            interpreter.send("map", {code: id});
+        } else {
+            if (window.location.hash.substr(1).indexOf("search") === 0) {
+                if (window.location.hash.substr(1).length > 6 && window.location.hash.substr(1).indexOf("search") !== -1) {
+                    const id = window.location.hash.substr(window.location.hash.indexOf("/") + 1);
+                    interpreter.send("search", {search_string: id});
+                } else {
+                    const id = "none";
+                    interpreter.send("search", {search_string: id});
+                }
+            } else {
+                interpreter.send(window.location.hash.substr(1))
+            }
+
+        }
+
+    }
+}
+window.onhashchange = gotoUrl;
+
+//gotoUrl();
+
+if (window.location.hash.substr(1).length > 0) {
+    interpreter.send(window.location.hash.substr(1))
+}
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+    <div>
+        {StateMachineComponent(interpreter, {
+            detail: ({state}) => <Manuscript/>,
+            "search": ({state}) => <Search/>,
+            "fourOhFour": ({state}) => <div>404</div>,
+            "": ({state}) => <div>The GUI for {state.value} is not yet defined</div>
+        })}</div>
+    , document.getElementById('root'));
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
