@@ -135,6 +135,7 @@ function ManuscriptDetails() {
                         Related manuscripts
                     </div>
                     <div className="hcManuscriptValue">
+                        <u><i>Collectio Sangermanensis</i></u><br/>
                         <a href ="">Albi, Bibliothèque municipale, MS 38</a><br/>
                         <a href ="">Albi, Bibliothèque municipale, MS 38bis</a><br/>
                         <a href ="">Cologne, Dombibliothek, MS 117 (fol. 1-92)</a><br/>
@@ -144,6 +145,16 @@ function ManuscriptDetails() {
                         <a href ="">Paris, BnF, Lat. 12444</a><br/>
                         <a href ="">St. Gallen, Stiftsbibliothek, MS 446</a><br/>
                         <a href ="">Sélestat, Bibliothèque humaniste, MS 132</a><br/>
+                        Vesoul 79 (11th c.) <br/>&nbsp;<br/>
+                        <u><i>De catholica ecclesia et eius ministris et de baptismatis officio</i></u><br/>
+                        Einsiedeln 110 (11th c., St. Gallen)<br/>
+                        Vatican, Vat. Lat. 1146 (11th c.)<br/>
+                        Vat. Lat. 1147 (11th c.)<br/>
+                        Vat. Lat. 1148 (11th c.)<br/>
+                        Vienna 914 (11th c.)
+
+
+
                     </div>
                 </div>
             </div>

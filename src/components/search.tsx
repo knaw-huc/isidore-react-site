@@ -1,11 +1,16 @@
 import React, {useEffect} from "react";
 import Header from "../page/header";
 import Footer from "../page/footer";
-import ManuscriptList from "./manuscriptList"
+import ManuscriptList from "./manuscriptList";
+import {useState} from "react";
+import SearchFreeText from "../facets/searchFreeText";
+import GeoNameFacet from "../facets/geoNameFacet";
 
 
 export default function Search() {
     const dummyFacets: boolean = false;
+    const [searchFT, setSearchFT] = useState(false);
+    const [geoFacet, setGeoFacet] = useState(false);
 
     return (
         <div>
@@ -19,31 +24,33 @@ export default function Search() {
                             <button type="button" name="button" id="showFacets" className="hcfixedSideButton"><img
                                 src="https://d33wubrfki0l68.cloudfront.net/191a405740a4ade92836ba6eea6a6ceaa798bf2f/a4d8b/images/icons/icon-set-facets.svg"
                                 className="icon" alt="Facet button"/></button>
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
+                                 onClick={() => setSearchFT(!searchFT)}>
+                                {searchFT ? (<span className="hcFacetGroup">&#9660; search</span>) : (
+                                    <span className="hcFacetGroup">&#9658; search</span>
+                                )}
+                            </div>
+                            {searchFT ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <SearchFreeText/>
+                                </div>) : (<div/>)}
+
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; SHIPMASTERS</span>) : (
-                                    <span className="hcFacetGroup">&#9658; SHIPMASTERS</span>)}
+                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; date</span>) : (
+                                    <span className="hcFacetGroup">&#9658; date</span>)}
                             </div>
                             {dummyFacets ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
 
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; DEPARTURES</span>) : (
-                                    <span className="hcFacetGroup">&#9658; DEPARTURES</span>)}
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => setGeoFacet(!geoFacet)}>
+                                {geoFacet ? (<span className="hcFacetGroup">&#9660; geo location</span>) : (
+                                    <span className="hcFacetGroup">&#9658; geo location</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {geoFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
-                                </div>) : (<div/>)}
-
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; DESTINATIONS</span>) : (
-                                    <span className="hcFacetGroup">&#9658; DESTINATIONS</span>)}
-                            </div>
-                            {dummyFacets ? (
-                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <GeoNameFacet/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
@@ -78,14 +85,14 @@ export default function Search() {
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets: <span
                                     className="hcFacetReset hcClickable">Reset facets</span>
                                 </div>
-                                    <span className="hcSelectedFacet"><span
-                                        className="hcSelectedFacetType">None</span></span>
+                                <span className="hcSelectedFacet"><span
+                                    className="hcSelectedFacetType">None</span></span>
                             </div>
-                            <ManuscriptList />
-                                <div className="hcPagination">
-                                    <div className="hcClickable">  Previous</div>
-                                    <div className="hcClickable" >Next &#8594;</div>
-                                </div>
+                            <ManuscriptList/>
+                            <div className="hcPagination">
+                                <div className="hcClickable"> Previous</div>
+                                <div className="hcClickable">Next &#8594;</div>
+                            </div>
 
                         </div>
                     </div>

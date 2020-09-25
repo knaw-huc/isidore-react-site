@@ -2,6 +2,7 @@ export interface IResultManuscript {
     shelfmark: string,
     bischoff_cla_date: string,
     material_type: string,
+    designed_as: string,
     place: string,
     certainty: string,
     no_of_folia: string,

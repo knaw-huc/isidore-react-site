@@ -11,7 +11,7 @@ export const IsiMachine = Machine<{
 }>(
     {
         id: 'fetch',
-        initial: 'detail',
+        initial: 'search',
         context: {
             search_string: "none"
         },
