@@ -1016,6 +1016,14 @@ margin: 6px 0 0 16px;
   padding-left: 20px;
 }
 
+.dateFrom{
+  display: block;
+}
+
+.sliderImg{
+  width: 150px !important;
+}
+
 .hcFacetSubDivision {
   font-size: .90rem;
   font-weight: 700;
@@ -1474,9 +1482,10 @@ border-left: 1px solid #ccc;
 
 .resultShelfmark{
   display: block;
-  width: calc(100% - 120px);
+  width: calc(100% - 140px);
   font-weight: bold;
   color: rgb(73, 85, 114);
+  cursor: pointer;
 }
 
 .hcNonCanDesign, .hcExcDesign, .hcCanDesign, .hcUnknownDesign {

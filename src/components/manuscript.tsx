@@ -2,8 +2,25 @@ import React from "react";
 import Header from "../page/header";
 import Footer from "../page/footer";
 import ManuscriptDetails from "./manuscriptDetails";
+import {useState} from "react";
+import {IManuscript} from "../misc/interfaces";
 
-function Manuscript() {
+function Manuscript(props: {manuscriptID: string}) {
+    const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState<IManuscript>({} as IManuscript);
+    console.log(props.manuscriptID);
+
+    async function fetchData() {
+        const url = "http://www.huc.localhost/isidore_service/detail/" + props.manuscriptID;
+        console.log(url);
+        const response = await fetch(url);
+        const json: IManuscript = await response.json();
+        setResult(json);
+        setLoading(false);
+    }
+    if (loading) {
+        fetchData();
+    }
 
     return (
         <div>
@@ -20,11 +37,11 @@ function Manuscript() {
                         {/*</div>*/}
                         <div className="hcLayoutResults">
                             <div className="hcResultsHeader hcMarginBottom1">
-
-
-                                            <ManuscriptDetails/>
-
-
+                                {loading ? (
+                                    <div>Loading...</div>
+                                ) : (
+                                    <ManuscriptDetails manuscript={result}/>
+                                )}
 
                             </div>
                         </div>

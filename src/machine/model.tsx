@@ -1,7 +1,8 @@
 import {assign, Machine} from "xstate";
 
 export const IsiMachine = Machine<{
-    search_string: string
+    search_string: string,
+    manuscript_id: string
 }, {
     states: {
         fourOhFour: {},
@@ -13,10 +14,16 @@ export const IsiMachine = Machine<{
         id: 'fetch',
         initial: 'search',
         context: {
-            search_string: "none"
+            search_string: "none",
+            manuscript_id: ""
         },
         on: {
-            detail: "detail",
+            detail: {
+                actions: assign({
+                    manuscript_id: (context, event) => event.manuscript_id
+                }),
+                target: "detail"
+            },
             search: {
                 actions: assign({
                     search_string: (context, event) => event.search_string
@@ -29,7 +36,8 @@ export const IsiMachine = Machine<{
             fourOhFour: {},
             detail: {
                 on: {
-                    search: "search"
+                    search: "search",
+                    detail: "detail"
                 }
             },
             search: {

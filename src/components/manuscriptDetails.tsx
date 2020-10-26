@@ -1,17 +1,23 @@
-import React from "react";
-import img from "../assets/img/dummy_img.jpg";
+import React, {useState} from "react";
+import {IManuscript} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 
-function ManuscriptDetails() {
-
+function ManuscriptDetails(props: {manuscript: IManuscript}) {
+    const layout_items = props.manuscript.layout;
+    const content = props.manuscript.content;
+    const img: string = SERVICE_SERVER + "img/detail/" + props.manuscript.image;
+    const additional_content = props.manuscript.additional_content;
+    const larger_unit = props.manuscript.larger_unit;
+    const related_manuscripts = props.manuscript.related_manuscripts;
 
     return (
         <div className="hcManuscriptBasicInfo">
             <div className="hcManuscriptTable">
                 <div className="hcManuscriptRow">
                     <div className="hcManuscriptLabelHeader">
-                        Vatican, Biblioteca A postolica Vaticana, Pal. Lat. 485
-                        <div className="hcSteinova">386</div>
+                        {props.manuscript.shelfmark}
+                        <div className="hcSteinova">{props.manuscript.steinova}</div>
                     </div>
                 </div>
             </div>
@@ -22,8 +28,8 @@ function ManuscriptDetails() {
                         Last modified by Evina Steinová on 7 September 2020
                     </div>
                     <div className="hcManuscriptValueOtherIDs">
-                        Anspach 283<br/>
-                        BK III 6531
+                        Anspach {props.manuscript.anspach}<br/>
+                        BK {props.manuscript.bischoff}
                     </div>
                 </div>
             </div>
@@ -33,7 +39,7 @@ function ManuscriptDetails() {
                         Date of origin
                     </div>
                     <div className="hcManuscriptValue">
-                        9th c., 3/4
+                        {props.manuscript.bischoff_cla_date} (BK)
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -41,7 +47,7 @@ function ManuscriptDetails() {
                         Place of origin
                     </div>
                     <div className="hcManuscriptValue">
-                        Lorsch
+                        {props.manuscript.place_absolute}
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -49,7 +55,7 @@ function ManuscriptDetails() {
                         Provenance
                     </div>
                     <div className="hcManuscriptValue">
-                        Lorsch
+                        {props.manuscript.provenance}
                     </div>
 
                 </div>
@@ -61,7 +67,7 @@ function ManuscriptDetails() {
                         Folia
                     </div>
                     <div className="hcManuscriptValue">
-                        113 fols.
+                        {props.manuscript.no_of_folia} fols.
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -69,7 +75,9 @@ function ManuscriptDetails() {
                         Layout
                     </div>
                     <div className="hcManuscriptValue">
-                        255 x 185mm (190mm x 120 mm), 29 - 30 long line
+                        {layout_items.map(line => {
+                            return <div className="line">{line}</div>
+                        })}
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -77,13 +85,13 @@ function ManuscriptDetails() {
                         Script
                     </div>
                     <div className="hcManuscriptValue">
-                        Caroline minuscule
+                        {props.manuscript.script}
                     </div>
                 </div>
             </div>
             <div className="hcManuscriptTable">
                 <div className="hcManuscriptMaterialType">
-                    <strong>excerpt collection + excerpt collection + single excerpt</strong>
+                    <strong>{props.manuscript.material_type}</strong>
                 </div>
             </div>
             <div className="hcManuscriptTable">
@@ -92,9 +100,9 @@ function ManuscriptDetails() {
                         Content
                     </div>
                     <div className="hcManuscriptValue">
-                        1.25.2 <i>(fol. 14v)</i><br/>
-                        8.1, 15.4.5-7, 15.4.11 <i>(fols. 44v-45r)</i><br/>
-                        8.1.1, 7.12.1-6, 7.12.9-13, 7.12.17, 7.12.20-33, 7.14.5-8, 7.14.10, 7.14.9, 6.19.43-47, 6.19.1, 6.19.5-8, 6.19.24 <i>(fols. 46v-48r)</i><br/>
+                        {content.map(item => {
+                            return <div className="line">{item.details} <i>({item.locations})</i></div>
+                        })}
                     </div>
                 </div>
             </div>
@@ -104,7 +112,7 @@ function ManuscriptDetails() {
                         Type
                     </div>
                     <div className="hcManuscriptValue">
-                        pastoral collection
+                        {props.manuscript.type}
                     </div>
                 </div>
             </div>
@@ -114,7 +122,9 @@ function ManuscriptDetails() {
                         Additional content
                     </div>
                     <div className="hcManuscriptValue">
-                        computistica;<br/>expositions of the mass;<br/>Jesse of Amiens, De baptismo;<br/>Collectio canonum Dionysio-Hadriana;<br/>Theodulf of Orléans, Capitularium;<br/>ps-Bede, De remediis peccatorum
+                        {additional_content.map(line => {
+                            return <div className="line">{line}</div>
+                        })}
                     </div>
                 </div>
             </div>
@@ -124,8 +134,9 @@ function ManuscriptDetails() {
                         Larger unit
                     </div>
                     <div className="hcManuscriptValue">
-                        Collectio Sangermanensis (fols. 44v-45r, only the Q&amp;A section)<br/>
-                        De catholica ecclesia et eius ministris et de baptismatis officio (fols. 46v-48r)
+                        {larger_unit.map(line => {
+                            return <div className="line">{line}</div>
+                        })}
                     </div>
                 </div>
             </div>
@@ -135,26 +146,15 @@ function ManuscriptDetails() {
                         Related manuscripts
                     </div>
                     <div className="hcManuscriptValue">
-                        <u><i>Collectio Sangermanensis</i></u><br/>
-                        <a href ="">Albi, Bibliothèque municipale, MS 38</a><br/>
-                        <a href ="">Albi, Bibliothèque municipale, MS 38bis</a><br/>
-                        <a href ="">Cologne, Dombibliothek, MS 117 (fol. 1-92)</a><br/>
-                        <a href ="">Fulda, Hochschul- und Landesbibliothek, Aa 2</a><br/>
-                        <a href ="">London, British Library, Harley 3034</a><br/>
-                        <a href ="">Munich, Bayerische Staatsbibliothek, Clm 14508 (fols. 64-148)</a><br/>
-                        <a href ="">Paris, BnF, Lat. 12444</a><br/>
-                        <a href ="">St. Gallen, Stiftsbibliothek, MS 446</a><br/>
-                        <a href ="">Sélestat, Bibliothèque humaniste, MS 132</a><br/>
-                        Vesoul 79 (11th c.) <br/>&nbsp;<br/>
-                        <u><i>De catholica ecclesia et eius ministris et de baptismatis officio</i></u><br/>
-                        Einsiedeln 110 (11th c., St. Gallen)<br/>
-                        Vatican, Vat. Lat. 1146 (11th c.)<br/>
-                        Vat. Lat. 1147 (11th c.)<br/>
-                        Vat. Lat. 1148 (11th c.)<br/>
-                        Vienna 914 (11th c.)
-
-
-
+                        {related_manuscripts.map((item, index) => {
+                            return (<div><div className="line">{item.reason}</div>
+                            {item.intern.map(item_in => {
+                                const url = "/#detail/" + item_in.id;
+                                return (<div onClick={() => {window.scroll(0,0); window.location.href = url;}}>{item_in.shelfmark}</div>)
+                            })}
+                            </div>)
+                            }
+                        )}
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@ function ManuscriptDetails() {
                         Bibliography
                     </div>
                     <div className="hcManuscriptValue">
-                        Beeson, p. 98; Keefe II, pp. 100-103;<br/>Keefe, Catalogue, 360;<br/>Stadelmaier, pp. 100-101; Arevalo, Isidoriana IV, pp. 357-360
+                        Beeson, p. 98; Keefe II, pp. 100-103;<br/>Keefe, Catalogue, 360;<br/>Stadelmaier, pp. 100-101;<br/> Arevalo, Isidoriana IV, pp. 357-360
                     </div>
                 </div>
             </div>

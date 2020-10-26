@@ -1,0 +1,1 @@
+export const SERVICE_SERVER = "http://www.huc.localhost/isidore_service/";
