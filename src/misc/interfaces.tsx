@@ -5,6 +5,8 @@ export interface IResultManuscript {
     material_type: string,
     designed_as: string,
     absolute_places: IAbsolutePlace[],
+    scaled_dates: IScaledDate[],
+    physical_state: string,
     certainty: string,
     no_of_folia: string,
     page_height_min: string,
@@ -17,6 +19,10 @@ export interface IResultManuscript {
 
 export interface IAbsolutePlace {
     place_absolute: string
+}
+
+export interface IScaledDate {
+    date: string;
 }
 
 export interface IResultManuscriptList {

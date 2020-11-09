@@ -9,6 +9,8 @@ import AbsolutePlaceFacet from "../facets/absolutePlaceFacet";
 import DatelabelFacet from "../facets/dateLabelFacet";
 import DatePeriodFacet from "../facets/dataPeriodFacet";
 import FiltersFacet from "../facets/filtersFacet";
+import BookFacet from "../facets/bookFacet";
+import PageDimensionsFacet from "../facets/pageDimensions";
 
 
 export default function Search() {
@@ -16,6 +18,11 @@ export default function Search() {
     const [searchFT, setSearchFT] = useState(false);
     const [geoFacet, setGeoFacet] = useState(false);
     const [dateLabelFacet, setDatelabelFacet] = useState(false);
+    const [bookFacet, setBookFacet] = useState(false);
+    const [dimFacet, setDimFacet] = useState(false);
+    const [filterFacet, setFilterFacet] = useState(false);
+
+    const cross: string = "[x]";
 
     return (
         <div>
@@ -79,13 +86,13 @@ export default function Search() {
 
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; page dimensions</span>) : (
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => setDimFacet(!dimFacet)}>
+                                {dimFacet ? (<span className="hcFacetGroup">&#9660; page dimensions</span>) : (
                                     <span className="hcFacetGroup">&#9658; page dimensions</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {dimFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <PageDimensionsFacet/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
@@ -115,22 +122,15 @@ export default function Search() {
 
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; contains books</span>) : (
-                                    <span className="hcFacetGroup">&#9658; contains books</span>)}
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setBookFacet(!bookFacet)
+                            }}>
+                                {bookFacet ? (<span className="hcFacetGroup">&#9660; books</span>) : (
+                                    <span className="hcFacetGroup">&#9658; books</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {bookFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
-                                </div>) : (<div/>)}
-
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; includes chapters</span>) : (
-                                    <span className="hcFacetGroup">&#9658; includes chapters</span>)}
-                            </div>
-                            {dummyFacets ? (
-                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <BookFacet/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
@@ -160,16 +160,16 @@ export default function Search() {
 
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; other filters</span>) : (
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {setFilterFacet(!filterFacet)}}>
+                                {filterFacet ? (<span className="hcFacetGroup">&#9660; other filters</span>) : (
                                     <span className="hcFacetGroup">&#9658; other filters</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {filterFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <FiltersFacet/>
                                 </div>) : (<div/>)}
 
-                           {/* <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
+                            {/* <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
                                 {dummyFacets ? (<span className="hcFacetGroup">&#9660; provenance</span>) : (
                                     <span className="hcFacetGroup">&#9658; provenance</span>)}
                             </div>
@@ -191,8 +191,9 @@ export default function Search() {
                         </div>
 
                         <div className="hcLayoutResults">
+
                             <div className="hcResultsHeader hcMarginBottom1">
-                                <div className="hcNumberFound">Manuscripts found: 50</div>
+                                <div className="hcNumberFound">Manuscripts found: 78</div>
                                 {/*<div><select value="">
                                     <option value="schipper_achternaam.raw">Order by family name</option>
                                     <option value="jaar">Order by year</option>
@@ -201,10 +202,13 @@ export default function Search() {
                             </div>
                             <div className="hcMarginBottom2">
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets: <span
-                                    className="hcFacetReset hcClickable">Reset facets</span>
+                                    className="hcFacetReset hcClickable">Reset facets - Download results</span>
                                 </div>
                                 <span className="hcSelectedFacet"><span
-                                    className="hcSelectedFacetType">None</span></span>
+                                    className="hcSelectedFacetType">Page dimensions: </span>
+                                <div className="hcFacetValues">501 - 550 mm {cross}</div>
+                                    <div className="hcFacetValues">unknown {cross}</div>
+                                </span>
                             </div>
                             <ManuscriptList/>
                             <div className="hcPagination">

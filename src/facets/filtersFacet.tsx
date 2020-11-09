@@ -30,7 +30,7 @@ function FiltersFacet() {
                 <div><input type="checkbox"/> Annotations (68)</div>
                 <div><input type="checkbox"/> Digitized (99)</div>
                 <div><input type="checkbox"/> Part larger collection (99)</div>
-                <div><input type="checkbox"/> Full <i>Etymologiae</i> (99)</div>
+                <div><input type="checkbox"/> Exclude full<br/><span className="facetSpacer">&nbsp;</span><i>Etymologiae</i> (339)</div>
 
             </div>
 

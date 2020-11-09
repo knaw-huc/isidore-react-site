@@ -17,7 +17,7 @@ gotoUrl();
 function gotoUrl() {
     if (window.location.hash.substr(1).indexOf("detail/") === 0) {
         const id = window.location.hash.substr(window.location.hash.indexOf("/") + 1);
-        interpreter.send("fourOhFour"); //Filthy solution
+        interpreter.send("fourOhFour"); //Filthy solution for forcing props reload!!!
         interpreter.send("detail", {manuscript_id: id});
     } else {
         if (window.location.hash.substr(1).indexOf("search") === 0) {

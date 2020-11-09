@@ -10,6 +10,8 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
     const additional_content = props.manuscript.additional_content;
     const larger_unit = props.manuscript.larger_unit;
     const related_manuscripts = props.manuscript.related_manuscripts;
+    const bibliography = props.manuscript.bibliography;
+    const digitized = props.manuscript.digitized_at;
 
     return (
         <div className="hcManuscriptBasicInfo">
@@ -147,11 +149,14 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
                     <div className="hcManuscriptValue">
                         {related_manuscripts.map((item, index) => {
-                            return (<div><div className="line">{item.reason}</div>
-                            {item.intern.map(item_in => {
+                            return (<div><div className="cursLine">{item.reason}</div>
+                            {item.intern.map((item_in, index) => {
                                 const url = "/#detail/" + item_in.id;
-                                return (<div onClick={() => {window.scroll(0,0); window.location.href = url;}}>{item_in.shelfmark}</div>)
+                                return (<div key={index} className="linkLine" onClick={() => {window.scroll(0,0); window.location.href = url;}}>{item_in.shelfmark}</div>)
                             })}
+                                {item.extern.map((index_ex, index) => {
+                                    return (<div key={index} className="line">{index_ex.item}</div> )
+                                })}
                             </div>)
                             }
                         )}
@@ -164,7 +169,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Annotations
                     </div>
                     <div className="hcManuscriptValue">
-                        -
+                        {props.manuscript.annotations}
                     </div>
                 </div>
             </div>
@@ -174,7 +179,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Innovations
                     </div>
                     <div className="hcManuscriptValue">
-                        -
+                        {props.manuscript.innovations}
                     </div>
                 </div>
             </div>
@@ -184,7 +189,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Additional observations
                     </div>
                     <div className="hcManuscriptValue">
-                        on fols. 16r-17v a glossary-like text that excerpts terms from Etym. VI, VII and VIII: 7.1.1-17 + 6.19.50 + (7.2.6-7 + 7.2.13-14 + 7.2.28-29 + 7.2.31) + 7.3.2 + 7.5.1 + (7.6.4 + 7.6.22 + 7.6.25) + 7.7.2 + 7.8.33 + (7.9.3-4 + 7.9.6-7) + 7.11.1 + 7.12.1 + 7.6.21 + (7.12.12 + 7.12.20 + 7.12.29 + 7.12.31) + (7.13.1 + 7.13.3) + (7.14.5-7 + 7.14.9-10) + (8.1.1 + 8.1.7) + 8.2.6 + 8.3.4 + 8.4.3-4 + 8.6.1 + 8.9.21
+                        {props.manuscript.additional_observations}
                     </div>
                 </div>
             </div>
@@ -194,7 +199,9 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Bibliography
                     </div>
                     <div className="hcManuscriptValue">
-                        Beeson, p. 98; Keefe II, pp. 100-103;<br/>Keefe, Catalogue, 360;<br/>Stadelmaier, pp. 100-101;<br/> Arevalo, Isidoriana IV, pp. 357-360
+                        {bibliography.map(line => {
+                            return <div className="line">{line}</div>
+                        })}
                     </div>
                 </div>
             </div>
@@ -204,10 +211,9 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Digitized at
                     </div>
                     <div className="hcManuscriptValue">
-                        <a href="#">https://digi.vatlib.it/view/bav_pal_lat_485</a><br/>
-                        <a href="#"></a><br/>
-                        <a href="#"></a><br/>
-                        <a href="#"></a><br/>
+                        {digitized.map(line => {
+                            return <div className="linkLine">{line}</div>
+                        })}
                     </div>
                 </div>
             </div>

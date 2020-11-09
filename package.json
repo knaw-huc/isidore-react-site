@@ -8,13 +8,15 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "@types/jest": "^24.9.1",
-    "@types/node": "^12.12.58",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3",
-    "typescript": "^3.7.5",
+    "@types/leaflet": "^1.5.19",
+    "@types/node": "^12.19.3",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9",
+    "@types/react-numeric-input": "^2.2.3",
+    "leaflet.markercluster": "^1.4.1",
+    "react-numeric-input": "^2.2.3",
+    "react-scripts": "^4.0.0",
+    "typescript": "^3.9.7",
     "xstate": "^4.13.0"
   },
   "scripts": {
@@ -37,5 +39,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "leaflet": "^1.7.1",
+    "material-ui": "^0.20.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-leaflet": "^3.0.0"
   }
 }
