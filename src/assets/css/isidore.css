@@ -1034,7 +1034,13 @@ margin: 6px 0 0 16px;
 }
 .hcFacetItems {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+}
+
+.checkBoxItem {
+  display: inline;
+  vertical-align: top !important;
+}
 
 .hcFacetItem {
   display: flex;
@@ -1600,6 +1606,11 @@ border-left: 1px solid #ccc;
   font-weight: bold;
   font-size: 10px;
   display: inline;
+}
+
+.checkBoxLabel {
+  display: inline-block;
+  width: 200px !important;
 }
 
 .facetSpacer {

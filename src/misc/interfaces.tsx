@@ -97,3 +97,12 @@ export interface IManuscriptContent {
     details: string,
     locations: string
 }
+
+export interface facetData {
+    key: string,
+    doc_count: number
+}
+
+export interface facetList {
+    buckets: facetData[]
+}
