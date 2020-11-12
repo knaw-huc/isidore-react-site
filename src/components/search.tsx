@@ -15,6 +15,11 @@ import PhysicalStateFacet from "../facets/physicalStateFacet";
 import ScriptFacet from "../facets/scriptFacet";
 import ManuscriptTypeFacet from "../facets/manuscriptType";
 import LayoutFacet from "../facets/layoutFacet";
+import TransmittedFacet from "../facets/transmittedFacet";
+import ProvenanceFacet from "../facets/provenanceFacet";
+import AuthorFacet from "../facets/authorFacet";
+import CurrentPlaceFacet from "../facets/currentPlaceFacet";
+import RegionFacet from "../facets/regionFacet";
 
 
 export default function Search() {
@@ -29,6 +34,11 @@ export default function Search() {
     const [scriptFacet, setScriptFacet] = useState(false);
     const [manuscriptFacet, setManuscriptFacet] = useState(false);
     const [layoutFacet, setLayoutFacet] = useState(false);
+    const [transmittedFacet, setTransmittedFacet] = useState(false);
+    const [provenanceFacet, setProvenanceFacet] = useState(false);
+    const [authorFacet, setAuthorFacet] = useState(false);
+    const [currentPlaceFacet, setCurrentPlaceFacet] = useState(false);
+    const [regionFacet, setRegionFacet] = useState(false);
 
     const cross: string = "[x]";
 
@@ -54,6 +64,16 @@ export default function Search() {
                                     <SearchFreeText/>
                                 </div>) : (<div/>)}
 
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setCurrentPlaceFacet(!currentPlaceFacet);
+                            }}>
+                                {currentPlaceFacet ? (<span className="hcFacetGroup">&#9660; current place</span>) : (
+                                    <span className="hcFacetGroup">&#9658; current place</span>)}
+                            </div>
+                            {currentPlaceFacet ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <CurrentPlaceFacet/>
+                                </div>) : (<div/>)}
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
                                  onClick={() => setDatelabelFacet(!dateLabelFacet)}>
                                 {dateLabelFacet ? (<span className="hcFacetGroup">&#9660; date of origin</span>) : (
@@ -76,22 +96,26 @@ export default function Search() {
                                     <AbsolutePlaceFacet/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; region of origin</span>) : (
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setRegionFacet(!regionFacet);
+                            }}>
+                                {regionFacet ? (<span className="hcFacetGroup">&#9660; region of origin</span>) : (
                                     <span className="hcFacetGroup">&#9658; region of origin</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {regionFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <RegionFacet/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; provenance</span>) : (
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setProvenanceFacet(!provenanceFacet);
+                            }}>
+                                {provenanceFacet ? (<span className="hcFacetGroup">&#9660; provenance</span>) : (
                                     <span className="hcFacetGroup">&#9658; provenance</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {provenanceFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <ProvenanceFacet/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => setDimFacet(!dimFacet)}>
@@ -124,16 +148,18 @@ export default function Search() {
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <PhysicalStateFacet/>
                                 </div>) : (<div/>)}
+                                
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; material format</span>) : (
-                                    <span className="hcFacetGroup">&#9658; material format</span>)}
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setTransmittedFacet(!transmittedFacet);
+                            }}>
+                                {transmittedFacet ? (<span className="hcFacetGroup">&#9660; etym. transmitted as</span>) : (
+                                    <span className="hcFacetGroup">&#9658; etym. transmitted as</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {transmittedFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <TransmittedFacet/>
                                 </div>) : (<div/>)}
-
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
                                 setBookFacet(!bookFacet)
                             }}>
@@ -156,13 +182,15 @@ export default function Search() {
                                     <ManuscriptTypeFacet/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; author</span>) : (
-                                    <span className="hcFacetGroup">&#9658; author</span>)}
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setAuthorFacet(!authorFacet);
+                            }}>
+                                {authorFacet ? (<span className="hcFacetGroup">&#9660; author / text / types</span>) : (
+                                    <span className="hcFacetGroup">&#9658; author / text / types</span>)}
                             </div>
-                            {dummyFacets ? (
+                            {authorFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
+                                    <AuthorFacet/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -209,7 +237,7 @@ export default function Search() {
                         <div className="hcLayoutResults">
 
                             <div className="hcResultsHeader hcMarginBottom1">
-                                <div className="hcNumberFound">Manuscripts found: 81</div>
+                                <div className="hcNumberFound">Manuscripts found: 447</div>
                                 {/*<div><select value="">
                                     <option value="schipper_achternaam.raw">Order by family name</option>
                                     <option value="jaar">Order by year</option>
@@ -221,9 +249,9 @@ export default function Search() {
                                     className="hcFacetReset hcClickable">Reset facets - Download results</span>
                                 </div>
                                 <span className="hcSelectedFacet"><span
-                                    className="hcSelectedFacetType">Books: </span>
-                                <div className="hcFacetValues">V (1-39) {cross}</div>
-                                    <div className="hcFacetValues">VI (1-19) {cross}</div>
+                                    className="hcSelectedFacetType">None</span>
+                                <div className="hcFacetValues"></div>
+                                    <div className="hcFacetValues"></div>
                                 </span>
                             </div>
                             <ManuscriptList/>

@@ -2,7 +2,7 @@ import React from "react";
 import {useState, useEffect} from "react";
 
 
-function SearchFreetext() {
+function CurrentPlaceFacet() {
     const port: string = 'Home';
     const [help, setHelp] = useState(false);
     const [count, setCount] = useState(0);
@@ -14,25 +14,23 @@ function SearchFreetext() {
     }
 
 
-
-
     return (
         <div className="hcFacet">
-            <div className="hcFacetTitle">
-Free text search
-
-            </div>
             { help &&
             <div className="hcFacetHelp">
                 <strong>Free text facet</strong><br/>
                 Type text and complete with ENTER.
             </div> }
+            <div className="hcFacetFilter"><input type="text" name="" placeholder="Type to filter"/></div>
             <div className="hcFacetItems">
-                <input className="hcFacetSearch" placeholder="Type text to search"/>
+               No data yet...
             </div>
+            {/*<div className="hcClickable" >
+                { true ? (<div>More...</div>) : (<div>Less...</div>)}
+            </div>*/}
         </div>
     );
 
 }
 
-export default SearchFreetext;
+export default CurrentPlaceFacet;
