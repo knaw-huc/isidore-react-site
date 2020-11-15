@@ -25,7 +25,6 @@ import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
 
-
 export default function Search() {
     const [searchFT, setSearchFT] = useState(true);
     const [geoFacet, setGeoFacet] = useState(false);
@@ -75,17 +74,36 @@ export default function Search() {
     async function fetchData() {
         const url = SERVICE_SERVER + "search/" + Base64.toBase64(JSON.stringify(searchData));
         const response = await fetch(url);
-        const json: IResultManuscriptList  = await response.json();
+        const json: IResultManuscriptList = await response.json();
         setResult(json);
         setLoading(false);
     }
 
-    function setPageLength(amount:string) {
+    function setPageLength(amount: string) {
         let sd = searchData;
         sd.page = 1;
         sd.page_length = parseInt(amount);
         setSearchData(sd);
         setRefresh(!refresh);
+    }
+
+    function nextPage() {
+        goToPage(searchData.page + 1);
+    }
+
+    function prevPage() {
+        if (searchData.page > 0) {
+            goToPage(searchData.page - 1);
+        }
+
+    }
+
+    function goToPage(page: number) {
+        let sd = searchData;
+        sd.page = page;
+        setSearchData(sd);
+        setRefresh(!refresh);
+        window.scroll(0, 0);
     }
 
     useEffect(() => {
@@ -168,7 +186,8 @@ export default function Search() {
                                     <ProvenanceFacet/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => setDimFacet(!dimFacet)}>
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
+                                 onClick={() => setDimFacet(!dimFacet)}>
                                 {dimFacet ? (<span className="hcFacetGroup">&#9660; page dimensions</span>) : (
                                     <span className="hcFacetGroup">&#9658; page dimensions</span>)}
                             </div>
@@ -203,7 +222,8 @@ export default function Search() {
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
                                 setTransmittedFacet(!transmittedFacet);
                             }}>
-                                {transmittedFacet ? (<span className="hcFacetGroup">&#9660; etym. transmitted as</span>) : (
+                                {transmittedFacet ? (
+                                    <span className="hcFacetGroup">&#9660; etym. transmitted as</span>) : (
                                     <span className="hcFacetGroup">&#9658; etym. transmitted as</span>)}
                             </div>
                             {transmittedFacet ? (
@@ -254,7 +274,9 @@ export default function Search() {
                                     <ScriptFacet/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {setFilterFacet(!filterFacet)}}>
+                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                                setFilterFacet(!filterFacet)
+                            }}>
                                 {filterFacet ? (<span className="hcFacetGroup">&#9660; other filters</span>) : (
                                     <span className="hcFacetGroup">&#9658; other filters</span>)}
                             </div>
@@ -262,33 +284,14 @@ export default function Search() {
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <FiltersFacet/>
                                 </div>) : (<div/>)}
-
-                            {/* <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; provenance</span>) : (
-                                    <span className="hcFacetGroup">&#9658; provenance</span>)}
-                            </div>
-                            {dummyFacets ? (
-                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
-                                </div>) : (<div/>)}
-
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle">
-                                {dummyFacets ? (<span className="hcFacetGroup">&#9660; provenance</span>) : (
-                                    <span className="hcFacetGroup">&#9658; provenance</span>)}
-                            </div>
-                            {dummyFacets ? (
-                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-
-                                </div>) : (<div/>)}*/}
-
-
                         </div>
 
                         <div className="hcLayoutResults">
 
                             <div className="hcResultsHeader hcMarginBottom1">
-                                <div className="hcNumberFound">Manuscripts found: 447</div>
-                                <div><select value={searchData.page_length} className="hcAmountOfPages" onChange={(e) => setPageLength(e.target.value)}>
+                                <div className="hcNumberFound">Manuscripts found: 447 - Page {searchData.page} of {result.pages}</div>
+                                <div><select value={searchData.page_length} className="hcAmountOfPages"
+                                             onChange={(e) => setPageLength(e.target.value)}>
                                     <option value={10}>10 manuscripts per page</option>
                                     <option value={20}>20 manuscripts per page</option>
                                     <option value={50}>50 manuscripts per page</option>
@@ -305,13 +308,15 @@ export default function Search() {
                                     <div className="hcFacetValues"></div>
                                 </span>
                             </div>
-                            {loading ? (<div>Loading...</div>) : (<ManuscriptList result = {result} />)}
-
-                            <div className="hcPagination">
-                                <div className="hcClickable"> Previous</div>
-                                <div className="hcClickable">Next &#8594;</div>
-                            </div>
-
+                            {loading ? (<div>Loading...</div>) : (
+                                <div>
+                                    <ManuscriptList result={result}/>
+                                    <div className="hcPagination">
+                                        {searchData.page > 1 ? (<div className="hcClickable" onClick={() => {prevPage()}}>&#8592; Previous</div>) : (<div/>)}
+                                        {searchData.page < result.pages ? (<div className="hcClickable" onClick={() => {nextPage()}}>Next &#8594;</div>) : (<div/>)}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
