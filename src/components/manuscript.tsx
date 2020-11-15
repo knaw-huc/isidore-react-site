@@ -4,6 +4,7 @@ import Footer from "../page/footer";
 import ManuscriptDetails from "./manuscriptDetails";
 import {useState} from "react";
 import {IManuscript} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 function Manuscript(props: {manuscriptID: string}) {
     const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ function Manuscript(props: {manuscriptID: string}) {
     console.log(props.manuscriptID);
 
     async function fetchData() {
-        const url = "http://www.huc.localhost/isidore_service/detail/" + props.manuscriptID;
+        const url = SERVICE_SERVER + "detail/" + props.manuscriptID;
         console.log(url);
         const response = await fetch(url);
         const json: IManuscript = await response.json();

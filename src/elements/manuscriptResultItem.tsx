@@ -1,5 +1,6 @@
 import React from "react";
 import {IResultManuscript} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 export default function ManuscriptResultItem(props: { item: IResultManuscript }) {
     const width: number = 75;
@@ -7,7 +8,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
     if (props.item.certainty === 'no') {
         certainty = " (?)";
     }
-    const thumb:string = "http://www.huc.localhost/isidore_service/img/thumbs/" + props.item.image;
+    const thumb:string = SERVICE_SERVER + "img/thumbs/" + props.item.image;
 
     function setStyle(design: string): string
     {
@@ -99,7 +100,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
     }
 
     function formatFolia(fols: string) {
-        if (fols == null || fols == "") {
+        if (fols == null || fols === "") {
             return ""
         } else {
             return fols + " fols., ";
@@ -107,7 +108,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
     }
 
     function formatDimension(height: string, width: string) {
-        if (height == null || height == "" || width == null || width == "") {
+        if (height == null || height === "" || width == null || width === "") {
             return "";
         } else {
             return height + " x " + width + " mm";
@@ -123,7 +124,9 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
             <div className="resultCell">
                 <div className="thumb"><img src={thumb} alt="Test"/></div>
                 <div className="resultData">
-                    <div className="resultShelfmark" onClick={() => {window.location.href = "#detail/" + props.item.id; }}>
+                    <div className="resultShelfmark" onClick={() => {
+                        //console.log(window.pageYOffset);
+                        window.location.href = "#detail/" + props.item.id; }}>
                         {props.item.shelfmark}
                     </div>
                     <div className="resultDateLocation">{props.item.scaled_dates[0].date}, {props.item.absolute_places[0].place_absolute}{certainty}</div>

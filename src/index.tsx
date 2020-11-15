@@ -29,7 +29,8 @@ function gotoUrl() {
                 interpreter.send("search", {search_string: id});
             }
         } else {
-            interpreter.send(window.location.hash.substr(1))
+            const id = "none";
+            interpreter.send("search", {search_string: id});
         }
     }
 }

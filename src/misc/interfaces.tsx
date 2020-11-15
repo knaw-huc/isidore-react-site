@@ -32,7 +32,21 @@ export interface IResultManuscriptList {
 }
 
 export interface IFacetState {
-    search: boolean;
+    search: boolean,
+    geo: boolean,
+    dateLabel: boolean,
+    book: boolean,
+    dimensions: boolean,
+    filters: boolean,
+    physicalState: boolean,
+    script: boolean,
+    manuscript: boolean,
+    layout: boolean,
+    transmitted: boolean,
+    provenance: boolean,
+    authors: boolean,
+    currentplace: boolean,
+    region: boolean
 }
 
 export interface ISearchValues {
@@ -45,6 +59,7 @@ export interface ISearchObject {
     facetstate: IFacetState,
     searchvalues: ISearchValues[] | string,
     page: number,
+    page_length: number,
     sortorder: string;
 }
 

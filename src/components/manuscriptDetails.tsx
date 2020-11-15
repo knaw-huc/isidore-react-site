@@ -13,6 +13,13 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
     const bibliography = props.manuscript.bibliography;
     const digitized = props.manuscript.digitized_at;
 
+    function openWindow(ref: string) {
+        let a= document.createElement('a');
+        a.target= '_blank';
+        a.href= ref;
+        a.click();
+    }
+
     return (
         <div className="hcManuscriptBasicInfo">
             <div className="hcManuscriptTable">
@@ -212,7 +219,9 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
                     <div className="hcManuscriptValue">
                         {digitized.map(line => {
-                            return <div className="linkLine">{line}</div>
+                            return <div className="linkLine" onClick={() => {
+                               openWindow(line.item);
+                            }}>{line.item}</div>
                         })}
                     </div>
                 </div>

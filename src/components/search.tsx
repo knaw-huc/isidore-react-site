@@ -20,10 +20,13 @@ import ProvenanceFacet from "../facets/provenanceFacet";
 import AuthorFacet from "../facets/authorFacet";
 import CurrentPlaceFacet from "../facets/currentPlaceFacet";
 import RegionFacet from "../facets/regionFacet";
+import {IResultManuscriptList, ISearchObject} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
+import {Base64} from "js-base64";
+
 
 
 export default function Search() {
-    const dummyFacets: boolean = false;
     const [searchFT, setSearchFT] = useState(true);
     const [geoFacet, setGeoFacet] = useState(false);
     const [dateLabelFacet, setDatelabelFacet] = useState(false);
@@ -39,8 +42,55 @@ export default function Search() {
     const [authorFacet, setAuthorFacet] = useState(false);
     const [currentPlaceFacet, setCurrentPlaceFacet] = useState(false);
     const [regionFacet, setRegionFacet] = useState(false);
+    const [refresh, setRefresh] = useState(false);
+    const [searchData, setSearchData] = useState<ISearchObject>({
+        facetstate: {
+            search: true,
+            geo: false,
+            dateLabel: false,
+            book: false,
+            dimensions: false,
+            filters: false,
+            physicalState: false,
+            script: false,
+            manuscript: false,
+            layout: false,
+            transmitted: false,
+            provenance: false,
+            authors: false,
+            currentplace: false,
+            region: false
+        },
+        searchvalues: "none",
+        page: 1,
+        page_length: 20,
+        sortorder: ""
+    });
 
     const cross: string = "[x]";
+
+    const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState<IResultManuscriptList>({amount: 0, pages: 0, manuscripts: []});
+
+    async function fetchData() {
+        const url = SERVICE_SERVER + "search/" + Base64.toBase64(JSON.stringify(searchData));
+        const response = await fetch(url);
+        const json: IResultManuscriptList  = await response.json();
+        setResult(json);
+        setLoading(false);
+    }
+
+    function setPageLength(amount:string) {
+        let sd = searchData;
+        sd.page = 1;
+        sd.page_length = parseInt(amount);
+        setSearchData(sd);
+        setRefresh(!refresh);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, [refresh]);
 
     return (
         <div>
@@ -148,7 +198,7 @@ export default function Search() {
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <PhysicalStateFacet/>
                                 </div>) : (<div/>)}
-                                
+
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
                                 setTransmittedFacet(!transmittedFacet);
@@ -238,11 +288,12 @@ export default function Search() {
 
                             <div className="hcResultsHeader hcMarginBottom1">
                                 <div className="hcNumberFound">Manuscripts found: 447</div>
-                                {/*<div><select value="">
-                                    <option value="schipper_achternaam.raw">Order by family name</option>
-                                    <option value="jaar">Order by year</option>
-                                    <option value="schipper_plaatsnaam.raw">Order by home port</option>
-                                </select></div>*/}
+                                <div><select value={searchData.page_length} className="hcAmountOfPages" onChange={(e) => setPageLength(e.target.value)}>
+                                    <option value={10}>10 manuscripts per page</option>
+                                    <option value={20}>20 manuscripts per page</option>
+                                    <option value={50}>50 manuscripts per page</option>
+                                    <option value={100}>100 manuscripts per page</option>
+                                </select></div>
                             </div>
                             <div className="hcMarginBottom2">
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets: <span
@@ -254,7 +305,8 @@ export default function Search() {
                                     <div className="hcFacetValues"></div>
                                 </span>
                             </div>
-                            <ManuscriptList/>
+                            {loading ? (<div>Loading...</div>) : (<ManuscriptList result = {result} />)}
+
                             <div className="hcPagination">
                                 <div className="hcClickable"> Previous</div>
                                 <div className="hcClickable">Next &#8594;</div>

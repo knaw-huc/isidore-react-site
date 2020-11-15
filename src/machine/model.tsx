@@ -15,7 +15,7 @@ export const IsiMachine = Machine<{
         initial: 'search',
         context: {
             search_string: "none",
-            manuscript_id: ""
+            manuscript_id: "",
         },
         on: {
             detail: {

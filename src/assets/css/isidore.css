@@ -1494,7 +1494,7 @@ border-left: 1px solid #ccc;
   cursor: pointer;
 }
 
-.psFragment, .psOneVolume {
+.psFragment, .psOneVolume, .psFirstVolume, .psIncomplete, .psTwoVolumes, .psDestroyed, .psAddition, .psSecondVolume, .psMarginalia {
   position: absolute;
   display: block;
   top: 32px;
@@ -1506,6 +1506,10 @@ border-left: 1px solid #ccc;
   font-weight: bold;
 }
 
+.psSecondVolume {
+  background-color: #1c5a91;
+}
+
 .psFragment {
   background-color: #3aa5b0;
 }
@@ -1513,6 +1517,30 @@ border-left: 1px solid #ccc;
 .psOneVolume {
   background-color: #1c5a91;
 }
+
+.psFirstVolume {
+  background-color: #0087d4;
+}
+
+.psIncomplete {
+  background-color: #b88d28;
+}
+
+.psTwoVolumes {
+  background-color: #082045;
+}
+
+.psDestroyed {
+  background-color: #2f5813;
+}
+
+.psAddition, .psMarginalia {
+  background-color: #ab9c1b;
+}
+
+
+
+
 
 .hcNonCanDesign, .hcExcDesign, .hcCanDesign, .hcUnknownDesign {
   position: absolute;
@@ -1615,6 +1643,10 @@ border-left: 1px solid #ccc;
 
 .facetSpacer {
   display: inline-block;
+}
+
+.hcAmountOfPages {
+  font-size: 10px !important;
 }
 
 
