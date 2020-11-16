@@ -1,9 +1,9 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList} from "../misc/interfaces";
+import {facetList, IRemoveFacet, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 
-function RegionFacet() {
+function RegionFacet(props: {add: ISendCandidate}) {
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
@@ -16,6 +16,7 @@ function RegionFacet() {
         setData(json);
         setLoading(false);
     }
+
 
     useEffect(() => {
         fetchData();
@@ -31,7 +32,7 @@ function RegionFacet() {
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index} className="checkBoxItem"><input type="checkbox"/><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Region of origin", field: "scaled_places.place", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

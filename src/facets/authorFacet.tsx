@@ -2,8 +2,9 @@ import React from "react";
 import {useState, useEffect} from "react";
 import {facetList} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
+import {ISendCandidate} from "../misc/interfaces";
 
-function AuthorFacet() {
+function AuthorFacet(props: {parentCallback: ISendCandidate}) {
 
     let [more, setMore] = useState(true);
     const [filter, setFilter] = useState("");
@@ -72,7 +73,7 @@ function AuthorFacet() {
             {!loading ? (<div className="hcFacetItems">
                     {data.buckets.map((item) => {
                         return (
-                            <div className="hcFacetItem">
+                            <div className="hcFacetItem" onClick={() => props.parentCallback({facet: "Authors", field: "authors.author", candidate: item.key})}>
                                 <div className="checkBoxItem"> {item.key} <div className="facetAmount">({item.doc_count})</div></div>
                             </div>
                         )

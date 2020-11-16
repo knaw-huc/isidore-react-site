@@ -20,7 +20,7 @@ import ProvenanceFacet from "../facets/provenanceFacet";
 import AuthorFacet from "../facets/authorFacet";
 import CurrentPlaceFacet from "../facets/currentPlaceFacet";
 import RegionFacet from "../facets/regionFacet";
-import {IResultManuscriptList, ISearchObject} from "../misc/interfaces";
+import {IResultManuscriptList, ISearchObject, ISendCandidate, IFacetCandidate, ISearchValues, IRemoveFacet, IResetFacets} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
@@ -67,6 +67,10 @@ export default function Search() {
     });
 
     const cross: string = "[x]";
+    let facets: ISearchValues[] = [];
+    if (typeof searchData.searchvalues === "object") {
+        facets = searchData.searchvalues as ISearchValues[];
+    }
 
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState<IResultManuscriptList>({amount: 0, pages: 0, manuscripts: []});
@@ -78,6 +82,72 @@ export default function Search() {
         setResult(json);
         setLoading(false);
     }
+
+    const removeFacet: IRemoveFacet = (field: string, value: string) => {
+        let searchBuffer: ISearchObject = searchData;
+        if (typeof searchBuffer.searchvalues === "object") {
+            searchBuffer.searchvalues.forEach((item: ISearchValues) => {
+                if (item.name === field) {
+                    item.values = item.values.filter((element => element !== value));
+                }
+            })
+            searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
+                return el.values.length > 0
+            });
+            if (searchBuffer.searchvalues.length === 0) {
+                searchBuffer.searchvalues = "none";
+            }
+        }
+        setSearchData(searchBuffer);
+        setRefresh(!refresh);
+    }
+
+    const resetFacets: IResetFacets = () => {
+        let searchBuffer: ISearchObject = searchData;
+        searchBuffer.page = 1;
+        searchBuffer.searchvalues = "none";
+        setSearchData(searchBuffer);
+        setRefresh(!refresh);
+    }
+
+
+
+    const sendCandidate: ISendCandidate = (candidate: IFacetCandidate) => {
+        let searchBuffer: ISearchObject = searchData;
+        if (searchData.searchvalues === "none") {
+            searchBuffer.searchvalues = [{
+                name: candidate.facet,
+                field: candidate.field,
+                values: [candidate.candidate]
+            } as ISearchValues];
+            setSearchData(searchData);
+            setRefresh(!refresh);
+        } else {
+            if (typeof searchBuffer.searchvalues === "object") {
+                let found: boolean = false;
+                searchBuffer.searchvalues.forEach((item) => {
+                    if (item.name === candidate.facet) {
+                        found = true;
+                        if (!item.values.includes(candidate.candidate)) {
+                            item.values.push(candidate.candidate);
+                        }
+                    }
+                });
+                if (!found) {
+                    searchBuffer.searchvalues.push({
+                        name: candidate.facet,
+                        field: candidate.field,
+                        values: [candidate.candidate]
+                    });
+                }
+            }
+            searchBuffer.page = 1;
+            setSearchData(searchData);
+            setRefresh(!refresh);
+            window.scroll(0, 0);
+        }
+    }
+
 
     function setPageLength(amount: string) {
         let sd = searchData;
@@ -172,7 +242,7 @@ export default function Search() {
                             </div>
                             {regionFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <RegionFacet/>
+                                    <RegionFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -183,7 +253,7 @@ export default function Search() {
                             </div>
                             {provenanceFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ProvenanceFacet/>
+                                    <ProvenanceFacet parentCallback={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
@@ -204,7 +274,7 @@ export default function Search() {
                             </div>
                             {layoutFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <LayoutFacet/>
+                                    <LayoutFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -215,7 +285,7 @@ export default function Search() {
                             </div>
                             {physicalStateFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <PhysicalStateFacet/>
+                                    <PhysicalStateFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
 
@@ -228,7 +298,7 @@ export default function Search() {
                             </div>
                             {transmittedFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <TransmittedFacet/>
+                                    <TransmittedFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
                                 setBookFacet(!bookFacet)
@@ -249,10 +319,10 @@ export default function Search() {
                             </div>
                             {manuscriptFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ManuscriptTypeFacet/>
+                                    <ManuscriptTypeFacet  add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                            <div className="hcFacetSubDivision" onClick={() => {
                                 setAuthorFacet(!authorFacet);
                             }}>
                                 {authorFacet ? (<span className="hcFacetGroup">&#9660; author / text / types</span>) : (
@@ -260,10 +330,10 @@ export default function Search() {
                             </div>
                             {authorFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <AuthorFacet/>
+                                    <AuthorFacet parentCallback={sendCandidate}/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                            <div className="hcFacetSubDivision" onClick={() => {
                                 setScriptFacet(!scriptFacet);
                             }}>
                                 {scriptFacet ? (<span className="hcFacetGroup">&#9660; script</span>) : (
@@ -271,10 +341,10 @@ export default function Search() {
                             </div>
                             {scriptFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ScriptFacet/>
+                                    <ScriptFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                            <div className="hcFacetSubDivision" onClick={() => {
                                 setFilterFacet(!filterFacet)
                             }}>
                                 {filterFacet ? (<span className="hcFacetGroup">&#9660; other filters</span>) : (
@@ -289,7 +359,7 @@ export default function Search() {
                         <div className="hcLayoutResults">
 
                             <div className="hcResultsHeader hcMarginBottom1">
-                                <div className="hcNumberFound">Manuscripts found: 447 - Page {searchData.page} of {result.pages}</div>
+                                <div className="hcNumberFound">Manuscripts found: {result.amount} - Page {searchData.page} of {result.pages}</div>
                                 <div><select value={searchData.page_length} className="hcAmountOfPages"
                                              onChange={(e) => setPageLength(e.target.value)}>
                                     <option value={10}>10 manuscripts per page</option>
@@ -300,13 +370,24 @@ export default function Search() {
                             </div>
                             <div className="hcMarginBottom2">
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets: <span
-                                    className="hcFacetReset hcClickable">Reset facets - Download results</span>
+                                    className="hcFacetReset hcClickable" onClick={resetFacets}>Reset facets - Download results</span>
                                 </div>
-                                <span className="hcSelectedFacet"><span
-                                    className="hcSelectedFacetType">None</span>
-                                <div className="hcFacetValues"></div>
-                                    <div className="hcFacetValues"></div>
-                                </span>
+                                {searchData.searchvalues === "none" ? (
+                                    <span className="hcSelectedFacet"><span
+                                        className="hcSelectedFacetType">None</span></span>
+                                ) : (
+                                    facets.map((item: ISearchValues) => {
+                                        return (
+                                            <span className="hcSelectedFacet"><span
+                                                className="hcSelectedFacetType">{item.name}: </span>
+                                                {item.values.map(function (skipper, i) {
+                                                    return (<div className="hcFacetValues" key={i}
+                                                                 onClick={() => removeFacet(item.name, skipper)}>{skipper} {cross} </div>)
+                                                })}
+                                    </span>
+                                        )
+                                    })
+                                )}
                             </div>
                             {loading ? (<div>Loading...</div>) : (
                                 <div>

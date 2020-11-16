@@ -1,9 +1,9 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList} from "../misc/interfaces";
+import {facetList, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 
-function PhysicalStateFacet() {
+function PhysicalStateFacet(props: {add: ISendCandidate}) {
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
@@ -31,7 +31,7 @@ function PhysicalStateFacet() {
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index}><input type="checkbox"/><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Physical state", field: "physical_state", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

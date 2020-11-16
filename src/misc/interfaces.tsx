@@ -121,3 +121,27 @@ export interface facetData {
 export interface facetList {
     buckets: facetData[]
 }
+
+export interface IFacetCandidate {
+    facet: string,
+    field: string,
+    candidate: string
+}
+
+export interface ISendCandidate {
+    (data: IFacetCandidate):void
+}
+
+export interface ISearchValues {
+    name: string,
+    field: string,
+    values: string[]
+}
+
+export interface IRemoveFacet {
+    (field: string, value: string): void
+}
+
+export interface IResetFacets {
+    (): void
+}

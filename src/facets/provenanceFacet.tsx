@@ -1,9 +1,9 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList} from "../misc/interfaces";
+import {facetList, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 
-function ProvenanceFacet() {
+function ProvenanceFacet(props: {parentCallback: ISendCandidate}) {
 
     let [more, setMore] = useState(true);
     const [filter, setFilter] = useState("");
@@ -63,8 +63,7 @@ function ProvenanceFacet() {
             </div>
             <div>
                 {help ? (<div className="hcFacetHelp">
-                    <strong>The full name facet </strong><br/>
-                    The names of the shipmasters are ordered by their number of passages. Filtering this facet is based on <u>family name</u>.
+                    <strong>Provenance facet </strong><br/>
                 </div>) : (<div/>)}
 
             </div>
@@ -72,7 +71,7 @@ function ProvenanceFacet() {
             {!loading ? (<div className="hcFacetItems">
                     {data.buckets.map((item) => {
                         return (
-                            <div className="hcFacetItem">
+                            <div className="hcFacetItem" onClick={() => props.parentCallback({facet: "Provenance", field: "provenance", candidate: item.key})}>
                                 <div className="checkBoxItem"> {item.key} <div className="facetAmount">({item.doc_count})</div></div>
                             </div>
                         )
