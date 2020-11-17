@@ -44,7 +44,7 @@ ReactDOM.render(
     <div>
         {StateMachineComponent(interpreter, {
             "detail": ({state}) => <Manuscript manuscriptID={(state.context || {}).manuscript_id}/>,
-            "search": ({state}) => <Search/>,
+            "search": ({state}) => <Search  search_string={(state.context || {}).search_string}/>,
             "fourOhFour": ({state}) => <div>404</div>,
             "": ({state}) => <div>The GUI for {state.value} is not yet defined</div>
         })}</div>

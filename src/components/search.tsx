@@ -25,24 +25,8 @@ import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
 
-export default function Search() {
-    const [searchFT, setSearchFT] = useState(true);
-    const [geoFacet, setGeoFacet] = useState(false);
-    const [dateLabelFacet, setDatelabelFacet] = useState(false);
-    const [bookFacet, setBookFacet] = useState(false);
-    const [dimFacet, setDimFacet] = useState(false);
-    const [filterFacet, setFilterFacet] = useState(false);
-    const [physicalStateFacet, setPhysicalStatefacet] = useState(false);
-    const [scriptFacet, setScriptFacet] = useState(false);
-    const [manuscriptFacet, setManuscriptFacet] = useState(false);
-    const [layoutFacet, setLayoutFacet] = useState(false);
-    const [transmittedFacet, setTransmittedFacet] = useState(false);
-    const [provenanceFacet, setProvenanceFacet] = useState(false);
-    const [authorFacet, setAuthorFacet] = useState(false);
-    const [currentPlaceFacet, setCurrentPlaceFacet] = useState(false);
-    const [regionFacet, setRegionFacet] = useState(false);
-    const [refresh, setRefresh] = useState(false);
-    const [searchData, setSearchData] = useState<ISearchObject>({
+export default function Search(props: {search_string: string}) {
+    let searchBuffer: ISearchObject = {
         facetstate: {
             search: true,
             geo: false,
@@ -64,12 +48,42 @@ export default function Search() {
         page: 1,
         page_length: 20,
         sortorder: ""
-    });
+    };
+
+    if (props.search_string !== "none") {
+        try {
+            searchBuffer = JSON.parse(Base64.fromBase64(props.search_string)) as ISearchObject;
+        } catch (Error) {
+            window.scroll(0, 0);
+            window.location.href = "/";
+        }
+
+    }
+
+    const [searchFT, setSearchFT] = useState(searchBuffer.facetstate.search);
+    const [geoFacet, setGeoFacet] = useState(searchBuffer.facetstate.geo);
+    const [dateLabelFacet, setDatelabelFacet] = useState(searchBuffer.facetstate.dateLabel);
+    const [bookFacet, setBookFacet] = useState(searchBuffer.facetstate.book);
+    const [dimFacet, setDimFacet] = useState(searchBuffer.facetstate.dimensions);
+    const [filterFacet, setFilterFacet] = useState(searchBuffer.facetstate.filters);
+    const [physicalStateFacet, setPhysicalStatefacet] = useState(searchBuffer.facetstate.physicalState);
+    const [scriptFacet, setScriptFacet] = useState(searchBuffer.facetstate.script);
+    const [manuscriptFacet, setManuscriptFacet] = useState(searchBuffer.facetstate.manuscript);
+    const [layoutFacet, setLayoutFacet] = useState(searchBuffer.facetstate.layout);
+    const [transmittedFacet, setTransmittedFacet] = useState(searchBuffer.facetstate.transmitted);
+    const [provenanceFacet, setProvenanceFacet] = useState(searchBuffer.facetstate.provenance);
+    const [authorFacet, setAuthorFacet] = useState(searchBuffer.facetstate.authors);
+    const [currentPlaceFacet, setCurrentPlaceFacet] = useState(searchBuffer.facetstate.currentplace);
+    const [regionFacet, setRegionFacet] = useState(searchBuffer.facetstate.region);
+    const [refresh, setRefresh] = useState(false);
+    const [searchData, setSearchData] = useState<ISearchObject>(searchBuffer);
+
+
 
     const cross: string = "[x]";
     let facets: ISearchValues[] = [];
-    if (typeof searchData.searchvalues === "object") {
-        facets = searchData.searchvalues as ISearchValues[];
+    if (typeof searchBuffer.searchvalues === "object") {
+        facets = searchBuffer.searchvalues as ISearchValues[];
     }
 
     const [loading, setLoading] = useState(true);
@@ -99,6 +113,7 @@ export default function Search() {
             }
         }
         setSearchData(searchBuffer);
+        window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
         setRefresh(!refresh);
     }
 
@@ -107,6 +122,7 @@ export default function Search() {
         searchBuffer.page = 1;
         searchBuffer.searchvalues = "none";
         setSearchData(searchBuffer);
+        window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
         setRefresh(!refresh);
     }
 
@@ -121,6 +137,7 @@ export default function Search() {
                 values: [candidate.candidate]
             } as ISearchValues];
             setSearchData(searchData);
+            window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
             setRefresh(!refresh);
         } else {
             if (typeof searchBuffer.searchvalues === "object") {
@@ -143,6 +160,7 @@ export default function Search() {
             }
             searchBuffer.page = 1;
             setSearchData(searchData);
+            window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
             setRefresh(!refresh);
             window.scroll(0, 0);
         }
@@ -154,6 +172,7 @@ export default function Search() {
         sd.page = 1;
         sd.page_length = parseInt(amount);
         setSearchData(sd);
+        window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
         setRefresh(!refresh);
     }
 
@@ -172,6 +191,7 @@ export default function Search() {
         let sd = searchData;
         sd.page = page;
         setSearchData(sd);
+        window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
         setRefresh(!refresh);
         window.scroll(0, 0);
     }
@@ -263,7 +283,7 @@ export default function Search() {
                             </div>
                             {dimFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <PageDimensionsFacet/>
+                                    <PageDimensionsFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {

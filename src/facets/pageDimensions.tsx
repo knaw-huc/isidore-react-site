@@ -1,18 +1,25 @@
 import React from "react";
 import {useState, useEffect} from "react";
+import {facetList, ISendCandidate} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 
-function PageDimensionsFacet() {
+function PageDimensionsFacet(props: {add: ISendCandidate}) {
+    const [data, setData] = useState<facetList>({"buckets": []});
+    const [loading, setLoading] = useState(true);
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/page_dimensions/normal";
     const [help, setHelp] = useState(false);
-    const [count, setCount] = useState(0);
 
-
-    function sendCandidate(value: string) {
-        let header: string = "Home port big region";
-        let field: string = "plaats_regio_groot";
+    async function fetchData() {
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
     }
 
-
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     return (
@@ -23,16 +30,13 @@ function PageDimensionsFacet() {
                 Select one or more ranges.
             </div> }
             <div className="hcFacetItems">
-                <div><input type="checkbox"/>&lt; 300 mm <div className="facetAmount">(16)</div></div>
-                <div><input type="checkbox"/>300-350 mm <div className="facetAmount">(40)</div></div>
-                <div><input type="checkbox"/>351-400 mm <div className="facetAmount">(65)</div></div>
-                <div><input type="checkbox"/>401-450 mm <div className="facetAmount">(76)</div></div>
-                <div><input type="checkbox"/>451-500 mm <div className="facetAmount">(83)</div></div>
-                <div><input type="checkbox"/>501-550 mm <div className="facetAmount">(67)</div></div>
-                <div><input type="checkbox"/>551-600 mm <div className="facetAmount">(51)</div></div>
-                <div><input type="checkbox"/>601-650 mm <div className="facetAmount">(26)</div></div>
-                <div><input type="checkbox"/>&gt; 650 mm <div className="facetAmount">(12)</div></div>
-                <div><input type="checkbox"/>unknown <div className="facetAmount">(11)</div></div>
+                {!loading ? (<div>
+                    {data.buckets.map((item, index) => {
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Page dimensions", field: "page_dimensions", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                    })}
+                </div>) : (<div>Loading...</div>)}
+                <div>
+                </div>
             </div>
             {/*<div className="hcClickable" >
                 { true ? (<div>More...</div>) : (<div>Less...</div>)}
