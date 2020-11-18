@@ -32,7 +32,7 @@ function PageDimensionsFacet(props: {add: ISendCandidate}) {
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Page dimensions", field: "page_dimensions", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Page dimensions", field: "page_dimensions", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount"> ({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

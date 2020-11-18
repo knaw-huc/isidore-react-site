@@ -23,6 +23,7 @@ import RegionFacet from "../facets/regionFacet";
 import {IResultManuscriptList, ISearchObject, ISendCandidate, IFacetCandidate, ISearchValues, IRemoveFacet, IResetFacets} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
+import IsiMap from "../elements/map";
 
 
 export default function Search(props: {search_string: string}) {
@@ -239,7 +240,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {dateLabelFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <DatelabelFacet/>
+                                    <DatelabelFacet add={sendCandidate}/>
                                     <DatePeriodFacet/>
                                 </div>) : (<div/>)}
 
@@ -250,8 +251,8 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {geoFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <GeoNameFacet/>
-                                    <AbsolutePlaceFacet/>
+                                    <GeoNameFacet add={sendCandidate}/>
+                                    <AbsolutePlaceFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -372,12 +373,11 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {filterFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <FiltersFacet/>
+                                    <FiltersFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
                         </div>
 
                         <div className="hcLayoutResults">
-
                             <div className="hcResultsHeader hcMarginBottom1">
                                 <div className="hcNumberFound">Manuscripts found: {result.amount} - Page {searchData.page} of {result.pages}</div>
                                 <div><select value={searchData.page_length} className="hcAmountOfPages"
@@ -411,6 +411,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {loading ? (<div>Loading...</div>) : (
                                 <div>
+                                    <IsiMap result={result}/>
                                     <ManuscriptList result={result}/>
                                     <div className="hcPagination">
                                         {searchData.page > 1 ? (<div className="hcClickable" onClick={() => {prevPage()}}>&#8592; Previous</div>) : (<div/>)}

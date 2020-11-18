@@ -1,19 +1,25 @@
 import React from "react";
 import {useState, useEffect} from "react";
+import {facetList, ISendCandidate} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 
-function DatelabelFacet() {
-    const port: string = 'Home';
+function DatelabelFacet(props: { add: ISendCandidate }) {
+    const [data, setData] = useState<facetList>({"buckets": []});
+    const [loading, setLoading] = useState(true);
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_dates.date/normal";
     const [help, setHelp] = useState(false);
-    const [count, setCount] = useState(0);
 
-
-    function sendCandidate(value: string) {
-        let header: string = "Home port big region";
-        let field: string = "plaats_regio_groot";
+    async function fetchData() {
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
     }
 
-
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     return (
@@ -21,28 +27,28 @@ function DatelabelFacet() {
             <div className="hcFacetTitle">
                 Date scaled
             </div>
-            { help &&
+            {help &&
             <div className="hcFacetHelp">
-                <strong>Free text facet</strong><br/>
-                Type text and complete with ENTER.
-            </div> }
+                <strong>Scaled date facet</strong><br/>
+            </div>}
             <div className="hcFacetItems">
-                <div><input type="checkbox"/>7th c. (1)</div>
-                <div><input type="checkbox"/>7th c., 2/2 (1)</div>
-                <div><input type="checkbox"/>8th c. (1)</div>
-                <div><input type="checkbox"/>8th c., 1/2 (4)</div>
-                <div><input type="checkbox"/>9th c. (17)</div>
-                <div><input type="checkbox"/>9th c., 1/2 (157)</div>
-                <div><input type="checkbox"/>9th c., 2/2 (127)</div>
-                <div><input type="checkbox"/>10th c. (32)</div>
-                <div><input type="checkbox"/>10th c. 1/2 (26)</div>
-                <div><input type="checkbox"/>10th c. 2/2 (14)</div>
-                <div><input type="checkbox"/>11th c. (4)</div>
-                <div><input type="checkbox"/>11th c. 1/2 (40)</div>
+                {!loading ? (<div>
+                    {data.buckets.map((item, index) => {
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({
+                            facet: "Date scaled",
+                            field: "scaled_dates.date",
+                            candidate: item.key
+                        })}>
+                            <div className="checkBoxLabel"> {item.key}
+                                <div className="facetAmount"> ({item.doc_count})</div>
+                            </div>
+                        </div>);
+                    })}
+                </div>) : (<div>Loading...</div>)}
+                <div>
+                </div>
             </div>
-            {/*<div className="hcClickable" >
-                { true ? (<div>More...</div>) : (<div>Less...</div>)}
-            </div>*/}
+
         </div>
     );
 

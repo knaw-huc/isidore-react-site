@@ -1,43 +1,53 @@
 import React from "react";
 import {useState, useEffect} from "react";
+import {facetList, ISendCandidate} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 
-function GeoNameFacet() {
-    const port: string = 'Home';
+function GeoNameFacet(props: { add: ISendCandidate }) {
+    const [data, setData] = useState<facetList>({"buckets": []});
+    const [loading, setLoading] = useState(true);
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/absolute_places.country/normal";
     const [help, setHelp] = useState(false);
-    const [count, setCount] = useState(0);
 
-
-    function sendCandidate(value: string) {
-        let header: string = "Home port big region";
-        let field: string = "plaats_regio_groot";
+    async function fetchData() {
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
     }
 
-
+    useEffect(() => {
+        fetchData();
+    }, []);
 
 
     return (
         <div className="hcFacet">
             <div className="hcFacetTitle">
                 Modern place
-
             </div>
-            { help &&
+            {help &&
             <div className="hcFacetHelp">
                 <strong>Free text facet</strong><br/>
                 Type text and complete with ENTER.
-            </div> }
+            </div>}
             <div className="hcFacetItems">
-                <div><input type="checkbox"/> France <div className="facetAmount">(54)</div></div>
-                <div><input type="checkbox"/> Germany <div className="facetAmount">(29)</div></div>
-                <div><input type="checkbox"/> Italy <div className="facetAmount">(19)</div></div>
-                <div><input type="checkbox"/> Spain <div className="facetAmount">(11)</div></div>
-                <div><input type="checkbox"/> Switzerland <div className="facetAmount">(7)</div></div>
-                <div><input type="checkbox"/> United kingdom <div className="facetAmount">(5)</div></div>
-                <div><input type="checkbox"/> Unknown <div className="facetAmount">(3)</div></div>
-                <div><input type="checkbox"/> Ireland <div className="facetAmount">(1)</div></div>
-                <div><input type="checkbox"/> Austria <div className="facetAmount">(1)</div></div>
-                <div><input type="checkbox"/> Belgium <div className="facetAmount">(1)</div></div>
+                {!loading ? (<div>
+                    {data.buckets.map((item, index) => {
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({
+                            facet: "Modern place",
+                            field: "absolute_places.country",
+                            candidate: item.key
+                        })}>
+                            <div className="checkBoxLabel"> {item.key}
+                                <div className="facetAmount"> ({item.doc_count})</div>
+                            </div>
+                        </div>);
+                    })}
+                </div>) : (<div>Loading...</div>)}
+                <div>
+                </div>
             </div>
         </div>
     );

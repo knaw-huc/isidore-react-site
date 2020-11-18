@@ -32,14 +32,14 @@ function AuthorFacet(props: {parentCallback: ISendCandidate}) {
             if (filter === "") {
                 url= SERVICE_SERVER + "elastic/nested_facet/authors.author/short";
             } else {
-                url= SERVICE_SERVER + "elastic/nested_facet/authors.author  /short/" + filter;
+                url= SERVICE_SERVER + "elastic/nested_facet/authors.author/short/" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url= SERVICE_SERVER + "elastic/initial_facet/provenance/long";
+                url= SERVICE_SERVER + "elastic/initial_facet/authors.author/long";
             } else {
-                url= SERVICE_SERVER + "elastic/facet/provenance/long/" + filter;
+                url= SERVICE_SERVER + "elastic/facet/authors.author/long/" + filter;
             }
             setMore(true);
         }

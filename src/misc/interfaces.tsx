@@ -18,7 +18,9 @@ export interface IResultManuscript {
 }
 
 export interface IAbsolutePlace {
-    place_absolute: string
+    place_absolute: string,
+    latitude: number,
+    longitude: number
 }
 
 export interface IScaledDate {

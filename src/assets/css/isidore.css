@@ -1649,5 +1649,16 @@ border-left: 1px solid #ccc;
   font-size: 10px !important;
 }
 
+.resultMap {
+  display: block;
+}
+
+.leaflet-container {
+  height: 300px !important;
+  width: 860px !important;
+  margin-bottom: 30px;
+  border: 1px solid #000000;
+}
+
 
 
