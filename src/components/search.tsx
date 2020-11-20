@@ -241,7 +241,7 @@ export default function Search(props: {search_string: string}) {
                             {dateLabelFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <DatelabelFacet add={sendCandidate}/>
-                                    <DatePeriodFacet/>
+                                    <DatePeriodFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"

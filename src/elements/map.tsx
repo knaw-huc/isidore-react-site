@@ -15,7 +15,13 @@ function IsiMap(props: {result: IResultManuscriptList}) {
               {props.result.manuscripts.map((item: IResultManuscript) => {
                   if  (item.absolute_places[0].latitude !== 0 && !isNaN(item.absolute_places[0].latitude)) {
                   let position: LatLngTuple  = [item.absolute_places[0].latitude , item.absolute_places[0].longitude];
-                  return  (<Marker position={position}/>)}})}
+                      return  (<Marker position={position}>
+                          <Popup><span>{item.absolute_places[0].place_absolute}<br/></span><span className="hcClickable" onClick={() => {
+                              window.location.href = "#detail/" + item.id;
+                          }}>
+                            Go to manuscript
+                      </span></Popup>
+                      </Marker>)}})}
           </MapContainer>
       </div>
     );

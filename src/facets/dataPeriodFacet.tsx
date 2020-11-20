@@ -1,20 +1,26 @@
 import React from "react";
 import {useState, useEffect} from "react";
 import slider from "../assets/img/slider.png";
+import {facetList, ISendCandidate} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 
-function DatePeriodFacet() {
-    const port: string = 'Home';
+function DatePeriodFacet(props: { add: ISendCandidate }) {
+    const [data, setData] = useState<facetList>({"buckets": []});
+    const [loading, setLoading] = useState(true);
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_dates.numerical_date/normal";
     const [help, setHelp] = useState(false);
-    const [count, setCount] = useState(0);
 
-
-    function sendCandidate(value: string) {
-        let header: string = "Home port big region";
-        let field: string = "plaats_regio_groot";
+    async function fetchData() {
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
     }
 
-    const width: string = "100px";
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div className="hcFacet">
@@ -27,8 +33,19 @@ function DatePeriodFacet() {
                 Type text and complete with ENTER.
             </div> }
             <div className="hcFacetItems">
-                <div className="dateFrom">700 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1100</div>
-                <div className="slider"><img className="sliderImg" src={slider}/></div>
+                {!loading ? (<div>
+                    {data.buckets.map((item, index) => {
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({
+                            facet: "Numerical date",
+                            field: "scaled_dates.numerical_date",
+                            candidate: item.key
+                        })}>
+                            <div className="checkBoxLabel"> {item.key}
+                                <div className="facetAmount"> ({item.doc_count})</div>
+                            </div>
+                        </div>);
+                    })}
+                </div>) : (<div>Loading...</div>)}
             </div>
             {/*<div className="hcClickable" >
                 { true ? (<div>More...</div>) : (<div>Less...</div>)}

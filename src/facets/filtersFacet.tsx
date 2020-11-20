@@ -9,10 +9,26 @@ function FiltersFacet(props: { add: ISendCandidate }) {
     return (
         <div className="hcFacet">
             <div className="hcFacetItems">
-                <div>Annotations <div className="facetAmount">(68)</div></div>
-                <div>Digitized <div className="facetAmount">(99)</div></div>
-                <div>Part larger collection <div className="facetAmount">(99)</div></div>
-                <div>Exclude full <i>Etymologiae</i><div className="facetAmount"> (339)</div>
+                <div className="hcFacetItem" onClick={() => props.add({
+                    facet: "Annotations",
+                    field: "annotations",
+                    candidate: "yes"
+                })}>Annotations&nbsp;<div className="facetAmount"> (68)</div></div>
+                <div className="hcFacetItem" onClick={() => props.add({
+                    facet: "Digitized",
+                    field: "digitized",
+                    candidate: "yes"
+                })}>Digitized&nbsp; <div className="facetAmount"> (306)</div></div>
+                <div className="hcFacetItem" onClick={() => props.add({
+                    facet: "Part larger collection",
+                    field: "part",
+                    candidate: "yes"
+                })}>Part larger collection<div className="facetAmount">(69)</div></div>
+                <div className="hcFacetItem" onClick={() => props.add({
+                    facet: "Exclude full Etymologiae",
+                    field: "excluded",
+                    candidate: "yes"
+                })}>Exclude full <div className="facetAmount">&nbsp; (108)</div>
                 </div>
 
             </div>
