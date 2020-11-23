@@ -1,35 +1,31 @@
 import React from "react";
 import {useState, useEffect} from "react";
+import {ISendCandidate} from "../misc/interfaces";
 
 
-function SearchFreetext() {
-    const port: string = 'Home';
-    const [help, setHelp] = useState(false);
-    const [count, setCount] = useState(0);
+function SearchFreetext(props: {add: ISendCandidate}) {
+    const [textField, setTextField] = useState<string>("");
 
-
-    function sendCandidate(value: string) {
-        let header: string = "Home port big region";
-        let field: string = "plaats_regio_groot";
+    function handleChange(e: React.FormEvent<HTMLInputElement>): void {
+        setTextField(e.currentTarget.value);
     }
 
-
+    function setTextFacet() {
+        if (textField !== "") {
+            props.add({facet: "Free text", field: "FREE_TEXT", candidate: textField});
+        }
+    }
 
 
     return (
         <div className="hcFacet">
             <div className="hcFacetTitle">
-Free text search
-
+                Free text search
             </div>
-            { help &&
-            <div className="hcFacetHelp">
-                <strong>Free text facet</strong><br/>
-                Type text and complete with ENTER.
-            </div> }
             <div className="hcFacetItems">
-                <input className="hcFacetSearch" placeholder="Type text to search"/>
+                <input className="hcFacetSearch" defaultValue={textField} placeholder="Type text to search" onChange={handleChange}/>
             </div>
+            <button className="ftSearchBtn" onClick={setTextFacet}>Search</button>
         </div>
     );
 

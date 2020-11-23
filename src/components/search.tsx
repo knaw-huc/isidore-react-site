@@ -220,7 +220,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {searchFT ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <SearchFreeText/>
+                                    <SearchFreeText  add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -231,7 +231,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {currentPlaceFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <CurrentPlaceFacet/>
+                                    <CurrentPlaceFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
                                  onClick={() => setDatelabelFacet(!dateLabelFacet)}>
@@ -329,7 +329,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {bookFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <BookFacet/>
+                                    <BookFacet add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {

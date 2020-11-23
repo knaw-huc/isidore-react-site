@@ -1628,6 +1628,8 @@ border-left: 1px solid #ccc;
   height: 22px;
   padding: 2px;
   margin-left: 6px;
+  color: #ffffff;
+  background-color: #1c5a91;
 }
 
 .facetAmount {
@@ -1659,6 +1661,13 @@ border-left: 1px solid #ccc;
   width: 860px !important;
   margin-bottom: 30px;
   border: 1px solid #000000;
+}
+
+.ftSearchBtn {
+  margin-top: 4px;
+  padding: 4px;
+  color: #ffffff;
+  background-color: #1c5a91;
 }
 
 
