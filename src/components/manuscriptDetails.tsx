@@ -13,12 +13,21 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
     const bibliography = props.manuscript.bibliography;
     const digitized = props.manuscript.digitized_at;
 
+    let folText = "fols.";
+    if (props.manuscript.no_of_folia === "1") {
+        folText = "fol.";
+    }
+
+
+
     function openWindow(ref: string) {
         let a= document.createElement('a');
         a.target= '_blank';
         a.href= ref;
         a.click();
     }
+
+
 
     return (
         <div className="hcManuscriptBasicInfo">
@@ -37,8 +46,8 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Last modified by Evina Steinová on 7 September 2020
                     </div>
                     <div className="hcManuscriptValueOtherIDs">
-                        Anspach {props.manuscript.anspach}<br/>
-                        BK {props.manuscript.bischoff}
+                        {props.manuscript.anspach !== "" ? (<div>Anspach {props.manuscript.anspach}</div>) : (<div/>)}
+                        {props.manuscript.bischoff !== "" ? (<div>BK {props.manuscript.bischoff}</div>) : (<div/>)}
                     </div>
                 </div>
             </div>
@@ -76,7 +85,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Folia
                     </div>
                     <div className="hcManuscriptValue">
-                        {props.manuscript.no_of_folia} fols.
+                        {props.manuscript.no_of_folia} {folText}
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -84,9 +93,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Layout
                     </div>
                     <div className="hcManuscriptValue">
-                        {layout_items.map(line => {
-                            return <div className="line">{line}</div>
-                        })}
+                        {layout_items}
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -110,7 +117,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
                     <div className="hcManuscriptValue">
                         {content.map(item => {
-                            return <div className="line">{item.details} <i>({item.locations})</i></div>
+                            return <div className="line"><i>Etym. </i> {item.details} <i>({item.locations})</i></div>
                         })}
                     </div>
                 </div>
@@ -226,6 +233,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
                 </div>
             </div>
+            <div className="linkLine" onClick={() => {window.history.back()}}>Back to results</div>
         </div>
     )
 }

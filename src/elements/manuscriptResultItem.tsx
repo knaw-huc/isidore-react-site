@@ -82,10 +82,10 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                 returnValue = "psSecondVolume";
                 break;
             case "unknown":
-                returnValue = "hcUnknownDesign";
+                returnValue = "psUnknownDesign";
                 break;
             default:
-                returnValue = "hcUnknownDesign";
+                returnValue = "psUnknownDesign";
                 break;
         }
         return returnValue;
@@ -103,7 +103,11 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
         if (fols == null || fols === "") {
             return ""
         } else {
-            return fols + " fols., ";
+            if (fols === "1") {
+                return fols + " fol.";
+            } else {
+                return fols + " fols., ";
+            }
         }
     }
 

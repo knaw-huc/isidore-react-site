@@ -27,6 +27,9 @@ function bookFacet(props: {add: ISendCandidate}) {
                 <BookFacetItem add={props.add} book = {18}  bookLatin = "XVIII" chapters= {69} />
                 <BookFacetItem add={props.add} book = {19}  bookLatin = "XIX" chapters= {34} />
                 <BookFacetItem add={props.add} book = {20}  bookLatin = "XX" chapters= {16} />
+                <div className="hcClickable" onClick={() => props.add({facet: "Books", field: "books_latin", candidate: "Unknown"})}>
+                    <div className="checkBoxItem"> <strong>Unknown</strong></div>
+                </div>
             </div>
         </div>
     );

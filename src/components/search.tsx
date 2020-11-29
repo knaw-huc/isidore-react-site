@@ -24,6 +24,7 @@ import {IResultManuscriptList, ISearchObject, ISendCandidate, IFacetCandidate, I
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 import IsiMap from "../elements/map";
+import DummySliderFacet from "../facets/dummySliderfacet";
 
 
 export default function Search(props: {search_string: string}) {
@@ -241,7 +242,7 @@ export default function Search(props: {search_string: string}) {
                             {dateLabelFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <DatelabelFacet add={sendCandidate}/>
-                                    <DatePeriodFacet add={sendCandidate}/>
+                                    <DummySliderFacet/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
@@ -382,7 +383,6 @@ export default function Search(props: {search_string: string}) {
                                 <div className="hcNumberFound">Manuscripts found: {result.amount} - Page {searchData.page} of {result.pages}</div>
                                 <div><select value={searchData.page_length} className="hcAmountOfPages"
                                              onChange={(e) => setPageLength(e.target.value)}>
-                                    <option value={10}>10 manuscripts per page</option>
                                     <option value={20}>20 manuscripts per page</option>
                                     <option value={50}>50 manuscripts per page</option>
                                     <option value={100}>100 manuscripts per page</option>

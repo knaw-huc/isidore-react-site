@@ -1494,7 +1494,7 @@ border-left: 1px solid #ccc;
   cursor: pointer;
 }
 
-.psFragment, .psOneVolume, .psFirstVolume, .psIncomplete, .psTwoVolumes, .psDestroyed, .psAddition, .psSecondVolume, .psMarginalia {
+.psFragment, .psOneVolume, .psFirstVolume, .psIncomplete, .psTwoVolumes, .psDestroyed, .psAddition, .psSecondVolume, .psMarginalia, .psUnknownDesign {
   position: absolute;
   display: block;
   top: 32px;
@@ -1536,6 +1536,10 @@ border-left: 1px solid #ccc;
 
 .psAddition, .psMarginalia {
   background-color: #ab9c1b;
+}
+
+.psUnknownDesign {
+  background-color: #333333;
 }
 
 
