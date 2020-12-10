@@ -3,7 +3,7 @@ import {useState, useEffect} from "react";
 import {facetList, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 
-function ProvenanceFacet(props: {parentCallback: ISendCandidate}) {
+function ProvenanceFacet(props: { parentCallback: ISendCandidate }) {
 
     let [more, setMore] = useState(true);
     const [filter, setFilter] = useState("");
@@ -29,16 +29,16 @@ function ProvenanceFacet(props: {parentCallback: ISendCandidate}) {
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url= SERVICE_SERVER + "elastic/initial_facet/provenance/short";
+                url = SERVICE_SERVER + "elastic/initial_facet/provenance/short";
             } else {
-                url= SERVICE_SERVER + "elastic/facet/provenance/short/" + filter;
+                url = SERVICE_SERVER + "elastic/facet/provenance/short/" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url= SERVICE_SERVER + "elastic/initial_facet/provenance/long";
+                url = SERVICE_SERVER + "elastic/initial_facet/provenance/long";
             } else {
-                url= SERVICE_SERVER + "elastic/facet/provenance/long/" + filter;
+                url = SERVICE_SERVER + "elastic/facet/provenance/long/" + filter;
             }
             setMore(true);
         }
@@ -46,10 +46,7 @@ function ProvenanceFacet(props: {parentCallback: ISendCandidate}) {
 
 
     function handleChange(e: React.FormEvent<HTMLInputElement>) {
-        if (e.currentTarget.value.length > 1)
-        {
-            setFilter(e.currentTarget.value);
-        }
+        setFilter(e.currentTarget.value);
     }
 
     useEffect(() => {
@@ -67,19 +64,26 @@ function ProvenanceFacet(props: {parentCallback: ISendCandidate}) {
                 </div>) : (<div/>)}
 
             </div>
-            <div className="hcFacetFilter"><input type="text" name="" onChange={handleChange} id="shipMasterFilter" placeholder="Type to filter"/></div>
+            <div className="hcFacetFilter"><input type="text" name="" onChange={handleChange} id="shipMasterFilter"
+                                                  placeholder="Type to filter"/></div>
             {!loading ? (<div className="hcFacetItems">
                     {data.buckets.map((item) => {
                         return (
-                            <div className="hcFacetItem" onClick={() => props.parentCallback({facet: "Provenance", field: "provenance", candidate: item.key})}>
-                                <div className="checkBoxItem"> {item.key} <div className="facetAmount">({item.doc_count})</div></div>
+                            <div className="hcFacetItem" onClick={() => props.parentCallback({
+                                facet: "Provenance",
+                                field: "provenance",
+                                candidate: item.key
+                            })}>
+                                <div className="checkBoxItem"> {item.key}
+                                    <div className="facetAmount">({item.doc_count})</div>
+                                </div>
                             </div>
                         )
                     })}
 
 
                     <div className="hcClickable" onClick={changeListLength}>
-                        { more ? (<div>More...</div>) : (<div>Less...</div>)}
+                        {more ? (<div>More...</div>) : (<div>Less...</div>)}
                     </div>
                 </div>) :
                 (<div className="hcFacetLoading">Loading...</div>)}

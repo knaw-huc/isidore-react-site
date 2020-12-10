@@ -1,10 +1,10 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList, ISendCandidate} from "../misc/interfaces";
+import {facetList, ISendCandidate, ISearchObject} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 
 
-function DatelabelFacet(props: { add: ISendCandidate }) {
+function DatelabelFacet(props: { add: ISendCandidate}) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
     let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_dates.date/normal";

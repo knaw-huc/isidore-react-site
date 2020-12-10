@@ -1674,5 +1674,13 @@ border-left: 1px solid #ccc;
   background-color: #1c5a91;
 }
 
+.hcPageNumber {
+  font-weight: bold;
+  text-align: right;
+  color: #666;
+  font-size: smaller;
+  margin-top: 10px;
+}
+
 
 

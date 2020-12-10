@@ -4,7 +4,7 @@ import {facetList, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 
 
-function AbsolutePlaceFacet(props: {add: ISendCandidate}) {
+function AbsolutePlaceFacet(props: { add: ISendCandidate }) {
     let [more, setMore] = useState(true);
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
@@ -29,16 +29,16 @@ function AbsolutePlaceFacet(props: {add: ISendCandidate}) {
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url= SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/short";
+                url = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/short";
             } else {
-                url= SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/short/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/short/" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url= SERVICE_SERVER + "elastic/initial_facet/absolute_places.place_absolute/long";
+                url = SERVICE_SERVER + "elastic/initial_facet/absolute_places.place_absolute/long";
             } else {
-                url= SERVICE_SERVER + "elastic/facet/absolute_places.place_absolute/long/" + filter;
+                url = SERVICE_SERVER + "elastic/facet/absolute_places.place_absolute/long/" + filter;
             }
             setMore(true);
         }
@@ -46,10 +46,7 @@ function AbsolutePlaceFacet(props: {add: ISendCandidate}) {
 
 
     function handleChange(e: React.FormEvent<HTMLInputElement>) {
-        if (e.currentTarget.value.length > 1)
-        {
-            setFilter(e.currentTarget.value);
-        }
+        setFilter(e.currentTarget.value);
     }
 
     useEffect(() => {
@@ -57,29 +54,34 @@ function AbsolutePlaceFacet(props: {add: ISendCandidate}) {
     }, [filter, more]);
 
 
-
-
     return (
         <div className="hcFacet">
             <div className="hcFacetTitle">
                 Absolute place
             </div>
-            { help &&
+            {help &&
             <div className="hcFacetHelp">
                 <strong>Absolute place facet</strong><br/>
                 Type text and complete with ENTER.
-            </div> }
-            <div className="hcFacetFilter"><input type="text" name="" onChange={handleChange} placeholder="Type to filter"/></div>
+            </div>}
+            <div className="hcFacetFilter"><input type="text" name="" onChange={handleChange}
+                                                  placeholder="Type to filter"/></div>
             {!loading ? (<div className="hcFacetItems">
                     {data.buckets.map((item) => {
                         return (
-                            <div className="hcFacetItem" onClick={() => props.add({facet: "Absolute place", field: "absolute_places.place_absolute", candidate: item.key})}>
-                                <div className="checkBoxItem"> {item.key} <div className="facetAmount">({item.doc_count})</div></div>
+                            <div className="hcFacetItem" onClick={() => props.add({
+                                facet: "Absolute place",
+                                field: "absolute_places.place_absolute",
+                                candidate: item.key
+                            })}>
+                                <div className="checkBoxItem"> {item.key}
+                                    <div className="facetAmount">({item.doc_count})</div>
+                                </div>
                             </div>
                         )
                     })}
                     <div className="hcClickable" onClick={changeListLength}>
-                        { more ? (<div>More...</div>) : (<div>Less...</div>)}
+                        {more ? (<div>More...</div>) : (<div>Less...</div>)}
                     </div>
                 </div>) :
                 (<div className="hcFacetLoading">Loading...</div>)}

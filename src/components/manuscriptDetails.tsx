@@ -77,7 +77,9 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
 
                 </div>
-                <div className="hcManuscriptImg"><img className="thumb" src={img}/></div>
+                <div className="hcManuscriptImg"><img className="thumb" src={img}/>
+                    {props.manuscript.page_number !== "" && <div className="hcPageNumber">Page number {props.manuscript.page_number}</div>}
+                </div>
             </div>
             <div className="hcManuscriptTable">
                 <div className="hcManuscriptRow">

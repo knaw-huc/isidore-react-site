@@ -89,6 +89,7 @@ export interface IManuscript {
     bibliography: IStringList[],
     digitized_at: IStringList[],
     image: string;
+    page_number: string;
 }
 
 export interface IRelatedManuscripts {

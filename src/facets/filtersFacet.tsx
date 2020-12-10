@@ -1,10 +1,24 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {ISendCandidate} from "../misc/interfaces";
+import {facetList, ISendCandidate} from "../misc/interfaces";
+import {SERVICE_SERVER} from "../misc/config";
 
 
 function FiltersFacet(props: { add: ISendCandidate }) {
+    const [data, setData] = useState<facetList>({"buckets": []});
+    const [loading, setLoading] = useState(true);
+    let url: string = SERVICE_SERVER + "elastic/filter_facets/dummy";
 
+    async function fetchData() {
+        const response = await fetch(url);
+        const json = await response.json();
+        setData(json);
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div className="hcFacet">

@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {ISendCandidate} from "../misc/interfaces";
+import {ISendCandidate, ISearchObject} from "../misc/interfaces";
 
 
 function SearchFreetext(props: {add: ISendCandidate}) {
