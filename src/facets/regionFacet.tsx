@@ -1,13 +1,14 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList, IRemoveFacet, ISendCandidate} from "../misc/interfaces";
+import {facetList, IRemoveFacet, ISearchObject, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
+import {Base64} from "js-base64";
 
-function RegionFacet(props: {add: ISendCandidate}) {
+function RegionFacet(props: {add: ISendCandidate, search: ISearchObject, refresh: boolean }) {
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_places.place/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
@@ -20,7 +21,7 @@ function RegionFacet(props: {add: ISendCandidate}) {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [props.refresh]);
 
     return (
         <div className="hcFacet">

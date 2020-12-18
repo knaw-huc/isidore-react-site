@@ -1,22 +1,23 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList, ISendCandidate} from "../misc/interfaces";
+import {facetList, ISearchObject, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
+import {Base64} from "js-base64";
 
 
-function CurrentPlaceFacet(props: { add: ISendCandidate }) {
+function CurrentPlaceFacet(props: { add: ISendCandidate, search: ISearchObject, refresh: boolean }) {
     let [more, setMore] = useState(true);
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/current_places.place/short";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
         if (more) {
-            url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/short/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
         } else {
-            url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/long/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
         }
 
         const response = await fetch(url);
@@ -29,9 +30,9 @@ function CurrentPlaceFacet(props: { add: ISendCandidate }) {
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/short";
+                url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
             } else {
-                url = SERVICE_SERVER + "elastic/nested_facet/autcurrent_placeshors.place/short/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/autcurrent_placeshors.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
             }
             setMore(false);
         } else {
@@ -51,7 +52,7 @@ function CurrentPlaceFacet(props: { add: ISendCandidate }) {
 
     useEffect(() => {
         fetchData();
-    }, [filter, more]);
+    }, [filter, more, props.refresh]);
 
 
     return (

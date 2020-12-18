@@ -1,13 +1,14 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList, ISendCandidate} from "../misc/interfaces";
+import {facetList, ISearchObject, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
+import {Base64} from "js-base64";
 
 
-function GeoNameFacet(props: { add: ISendCandidate }) {
+function GeoNameFacet(props: { add: ISendCandidate, search: ISearchObject, refresh: boolean }) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/absolute_places.country/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/absolute_places.country/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
@@ -19,7 +20,7 @@ function GeoNameFacet(props: { add: ISendCandidate }) {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [props.refresh]);
 
 
     return (

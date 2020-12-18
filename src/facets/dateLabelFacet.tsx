@@ -2,12 +2,13 @@ import React from "react";
 import {useState, useEffect} from "react";
 import {facetList, ISendCandidate, ISearchObject} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
+import {Base64} from "js-base64";
 
 
-function DatelabelFacet(props: { add: ISendCandidate}) {
+function DatelabelFacet(props: { add: ISendCandidate, search: ISearchObject, refresh: boolean }) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_dates.date/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_dates.date/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
@@ -19,7 +20,7 @@ function DatelabelFacet(props: { add: ISendCandidate}) {
 
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [props.refresh]);
 
 
     return (

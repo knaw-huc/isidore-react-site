@@ -1,23 +1,24 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList} from "../misc/interfaces";
+import {facetList, ISearchObject} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {ISendCandidate} from "../misc/interfaces";
+import {Base64} from "js-base64";
 
-function AuthorFacet(props: { parentCallback: ISendCandidate }) {
+function AuthorFacet(props: { parentCallback: ISendCandidate, search: ISearchObject, refresh: boolean  }) {
 
     let [more, setMore] = useState(true);
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/authors.author/short";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
         if (more) {
-            url = SERVICE_SERVER + "elastic/nested_facet/authors.author/short/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
         } else {
-            url = SERVICE_SERVER + "elastic/nested_facet/authors.author/long/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
         }
 
         const response = await fetch(url);
@@ -30,16 +31,16 @@ function AuthorFacet(props: { parentCallback: ISendCandidate }) {
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/nested_facet/authors.author/short";
+                url = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
             } else {
-                url = SERVICE_SERVER + "elastic/nested_facet/authors.author/short/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/initial_facet/authors.author/long";
+                url = SERVICE_SERVER + "elastic/initial_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long";
             } else {
-                url = SERVICE_SERVER + "elastic/facet/authors.author/long/" + filter;
+                url = SERVICE_SERVER + "elastic/facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
             }
             setMore(true);
         }
@@ -52,7 +53,7 @@ function AuthorFacet(props: { parentCallback: ISendCandidate }) {
 
     useEffect(() => {
         fetchData();
-    }, [filter, more]);
+    }, [filter, more, props.refresh]);
 
     return (
         <div className="hcFacet">

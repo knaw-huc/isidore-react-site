@@ -213,7 +213,7 @@ export default function Search(props: {search_string: string}) {
                             <button type="button" name="button" id="showFacets" className="hcfixedSideButton"><img
                                 src="https://d33wubrfki0l68.cloudfront.net/191a405740a4ade92836ba6eea6a6ceaa798bf2f/a4d8b/images/icons/icon-set-facets.svg"
                                 className="icon" alt="Facet button"/></button>
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
+                            <div className="hcFacetSubDivision"
                                  onClick={() => setSearchFT(!searchFT)}>
                                 {searchFT ? (<span className="hcFacetGroup">&#9660; search</span>) : (
                                     <span className="hcFacetGroup">&#9658; search</span>
@@ -224,7 +224,7 @@ export default function Search(props: {search_string: string}) {
                                     <SearchFreeText  add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
+                            <div className="hcFacetSubDivision" onClick={() => {
                                 setCurrentPlaceFacet(!currentPlaceFacet);
                             }}>
                                 {currentPlaceFacet ? (<span className="hcFacetGroup">&#9660; current place</span>) : (
@@ -232,28 +232,28 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {currentPlaceFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <CurrentPlaceFacet add={sendCandidate}/>
+                                    <CurrentPlaceFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
+                            <div className="hcFacetSubDivision"
                                  onClick={() => setDatelabelFacet(!dateLabelFacet)}>
                                 {dateLabelFacet ? (<span className="hcFacetGroup">&#9660; date of origin</span>) : (
                                     <span className="hcFacetGroup">&#9658; date of origin</span>)}
                             </div>
                             {dateLabelFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <DatelabelFacet add={sendCandidate}/>
+                                    <DatelabelFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                     <DummySliderFacet/>
                                 </div>) : (<div/>)}
 
-                            <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
+                            <div className="hcFacetSubDivision"
                                  onClick={() => setGeoFacet(!geoFacet)}>
                                 {geoFacet ? (<span className="hcFacetGroup">&#9660; place of origin</span>) : (
                                     <span className="hcFacetGroup">&#9658; place of origin</span>)}
                             </div>
                             {geoFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <GeoNameFacet add={sendCandidate}/>
-                                    <AbsolutePlaceFacet add={sendCandidate}/>
+                                    <GeoNameFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                    <AbsolutePlaceFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -264,7 +264,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {regionFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <RegionFacet add={sendCandidate}/>
+                                    <RegionFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -275,7 +275,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {provenanceFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ProvenanceFacet parentCallback={sendCandidate}/>
+                                    <ProvenanceFacet parentCallback={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
@@ -285,7 +285,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {dimFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <PageDimensionsFacet add={sendCandidate}/>
+                                    <PageDimensionsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -296,7 +296,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {layoutFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <LayoutFacet add={sendCandidate}/>
+                                    <LayoutFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
@@ -307,7 +307,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {physicalStateFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <PhysicalStateFacet add={sendCandidate}/>
+                                    <PhysicalStateFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
 
@@ -320,7 +320,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {transmittedFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <TransmittedFacet add={sendCandidate}/>
+                                    <TransmittedFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle" onClick={() => {
                                 setBookFacet(!bookFacet)
@@ -341,7 +341,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {manuscriptFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ManuscriptTypeFacet  add={sendCandidate}/>
+                                    <ManuscriptTypeFacet  add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {
@@ -352,7 +352,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {authorFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <AuthorFacet parentCallback={sendCandidate}/>
+                                    <AuthorFacet parentCallback={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {
@@ -363,7 +363,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {scriptFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ScriptFacet add={sendCandidate}/>
+                                    <ScriptFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {
@@ -374,7 +374,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {filterFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <FiltersFacet add={sendCandidate}/>
+                                    <FiltersFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
                         </div>
 

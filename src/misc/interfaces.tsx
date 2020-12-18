@@ -125,6 +125,13 @@ export interface facetList {
     buckets: facetData[]
 }
 
+export interface filterNumbers {
+    annotations: number,
+    digitized: number,
+    excluded: number,
+    part: number
+}
+
 export interface IFacetCandidate {
     facet: string,
     field: string,
