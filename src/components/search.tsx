@@ -119,6 +119,13 @@ export default function Search(props: {search_string: string}) {
         setRefresh(!refresh);
     }
 
+    function openWindow(ref: string) {
+        let a= document.createElement('a');
+        a.target= '_blank';
+        a.href= ref;
+        a.click();
+    }
+
     const resetFacets: IResetFacets = () => {
         let searchBuffer: ISearchObject = searchData;
         searchBuffer.page = 1;
@@ -390,8 +397,8 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             <div className="hcMarginBottom2">
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets:
-                                    {searchData.searchvalues !== "none" && <span
-                                        className="hcFacetReset hcClickable">Download results</span>}
+                                    {searchData.searchvalues !== "none" && result.amount > 0 && <span
+                                        className="hcFacetReset hcClickable" onClick={() => {openWindow(SERVICE_SERVER + "download/" + Base64.toBase64(JSON.stringify(searchData)))}}>Download results</span>}
                                     <span
                                     className="hcFacetReset hcClickable" onClick={resetFacets}>Reset facets</span>
                                 </div>
