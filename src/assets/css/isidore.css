@@ -498,11 +498,6 @@ input, select, option, textarea {
 @media (min-width: 600px) {
   .hcBarDataset {
     flex-direction: row; }
-  span {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    padding-right: 1rem; }
   select {
     font-size: 14px !important;} }
 
@@ -1681,6 +1676,8 @@ border-left: 1px solid #ccc;
   font-size: smaller;
   margin-top: 10px;
 }
+
+.markercluster-map { height: 90vh; }
 
 
 
