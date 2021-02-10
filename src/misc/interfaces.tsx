@@ -5,6 +5,7 @@ export interface IResultManuscript {
     material_type: string,
     designed_as: string,
     absolute_places: IAbsolutePlace[],
+    library: IModernPlace[],
     scaled_dates: IScaledDate[],
     physical_state: string,
     certainty: string,
@@ -19,6 +20,12 @@ export interface IResultManuscript {
 
 export interface IAbsolutePlace {
     place_absolute: string,
+    latitude: number,
+    longitude: number
+}
+
+export interface IModernPlace {
+    place_name: string,
     latitude: number,
     longitude: number
 }

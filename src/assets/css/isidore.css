@@ -1658,7 +1658,7 @@ border-left: 1px solid #ccc;
 .leaflet-container {
   height: 300px !important;
   width: 860px !important;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   border: 1px solid #000000;
 }
 
@@ -1678,6 +1678,29 @@ border-left: 1px solid #ccc;
 }
 
 .markercluster-map { height: 90vh; }
+
+.mapSwitch{
+  display: block;
+  text-align: right;
+}
+
+.switchBtn, .activeSwitchBtn {
+  cursor: pointer;
+  color: rgb(73, 85, 114);;
+  font-weight: bold;
+  font-size: 0.9em;
+  display: inline-block;
+  width: 60px;
+  text-align: center;
+  margin: 0 20px 30px 0 !important;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+}
+
+.switchBtn {
+  background-color: #ccc;
+}
 
 
 
