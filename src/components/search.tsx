@@ -393,6 +393,7 @@ export default function Search(props: {search_string: string}) {
                                     <option value={20}>20 manuscripts per page</option>
                                     <option value={50}>50 manuscripts per page</option>
                                     <option value={100}>100 manuscripts per page</option>
+                                    <option value={500}>All manuscripts</option>
                                 </select></div>
                             </div>
                             <div className="hcMarginBottom2">
