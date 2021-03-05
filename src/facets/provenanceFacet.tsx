@@ -10,14 +10,14 @@ function ProvenanceFacet(props: { parentCallback: ISendCandidate, search: ISearc
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
         if (more) {
-            url = SERVICE_SERVER + "elastic/facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
         } else {
-            url = SERVICE_SERVER + "elastic/facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
         }
 
         const response = await fetch(url);
@@ -30,16 +30,16 @@ function ProvenanceFacet(props: { parentCallback: ISendCandidate, search: ISearc
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/initial_facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+                url = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
             } else {
-                url = SERVICE_SERVER + "elastic/facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/initial_facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long";
+                url = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long";
             } else {
-                url = SERVICE_SERVER + "elastic/facet/provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/provenances.provenance/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
             }
             setMore(true);
         }
@@ -72,7 +72,7 @@ function ProvenanceFacet(props: { parentCallback: ISendCandidate, search: ISearc
                         return (
                             <div className="hcFacetItem" onClick={() => props.parentCallback({
                                 facet: "Provenance",
-                                field: "provenance",
+                                field: "provenances.provenance",
                                 candidate: item.key
                             })}>
                                 <div className="checkBoxItem"> {item.key}

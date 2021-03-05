@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {IManuscript} from "../misc/interfaces";
-import {SERVICE_SERVER} from "../misc/config";
+import {SERVICE_SERVER, HOME} from "../misc/config";
 
 
-function ManuscriptDetails(props: {manuscript: IManuscript}) {
+function ManuscriptDetails(props: { manuscript: IManuscript }) {
     const layout_items = props.manuscript.layout;
     const content = props.manuscript.content;
     const img: string = SERVICE_SERVER + "img/detail/" + props.manuscript.image;
@@ -18,15 +18,18 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
         folText = "fol.";
     }
 
+    let source_of_date = "";
+    if (props.manuscript.source_dating !== "") {
+        source_of_date = "(" + props.manuscript.source_dating + ")";
+    }
 
 
     function openWindow(ref: string) {
-        let a= document.createElement('a');
-        a.target= '_blank';
-        a.href= ref;
+        let a = document.createElement('a');
+        a.target = '_blank';
+        a.href = ref;
         a.click();
     }
-
 
 
     return (
@@ -37,6 +40,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         {props.manuscript.shelfmark}
                         <div className="hcSteinova">{props.manuscript.steinova}</div>
                     </div>
+                    <div className="urlLine">{HOME}#detail/{props.manuscript.id}</div>
                 </div>
             </div>
             <div className="hcManuscriptTable">
@@ -47,7 +51,9 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
                     <div className="hcManuscriptValueOtherIDs">
                         {props.manuscript.anspach !== "" ? (<div>Anspach {props.manuscript.anspach}</div>) : (<div/>)}
-                        {props.manuscript.bischoff !== "" ? (<div>BK {props.manuscript.bischoff}</div>) : (<div/>)}
+                        {props.manuscript.bischoff !== "" ? (<div>Bischoff {props.manuscript.bischoff}</div>) : (
+                            <div/>)}
+                        {props.manuscript.cla !== "" ? (<div>CLA {props.manuscript.cla}</div>) : (<div/>)}
                     </div>
                 </div>
             </div>
@@ -57,7 +63,7 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                         Date of origin
                     </div>
                     <div className="hcManuscriptValue">
-                        {props.manuscript.bischoff_cla_date} (BK)
+                        {props.manuscript.bischoff_cla_date} {source_of_date}
                     </div>
                 </div>
                 <div className="hcManuscriptRow">
@@ -78,7 +84,8 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
 
                 </div>
                 <div className="hcManuscriptImg"><img className="thumb" src={img}/>
-                    {props.manuscript.page_number !== "" && <div className="hcPageNumber">Page number {props.manuscript.page_number}</div>}
+                    {props.manuscript.page_number !== "" &&
+                    <div className="hcPageNumber">Folio {props.manuscript.page_number}</div>}
                 </div>
             </div>
             <div className="hcManuscriptTable">
@@ -108,8 +115,23 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                 </div>
             </div>
             <div className="hcManuscriptTable">
-                <div className="hcManuscriptMaterialType">
-                    <strong>{props.manuscript.material_type}</strong>
+                <div className="hcManuscriptRow">
+                    <div className="hcManuscriptLabel">
+                        Transmission format
+                    </div>
+                    <div className="hcManuscriptValue">
+                        {props.manuscript.designed_as}
+                    </div>
+                </div>
+                <div className="hcManuscriptRow">
+                    <div className="hcManuscriptLabel">
+                        Physical condition
+                    </div>
+                    <div className="hcManuscriptValue">
+                        {props.manuscript.physical_state_scaled}
+                        {props.manuscript.physical_state !== "" ? (<div>{props.manuscript.physical_state}</div>) : (
+                            <div/>)}
+                    </div>
                 </div>
             </div>
             <div className="hcManuscriptTable">
@@ -117,12 +139,21 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     <div className="hcManuscriptLabel">
                         Content
                     </div>
-                    <div className="hcManuscriptValue">
-                        {content.map(item => {
-                            return <div className="line"><i>Etym. </i> {item.details} <i>({item.locations})</i></div>
-                        })}
-                    </div>
+
+                    {content.map(item => {
+                        return <div className="hcManuscriptRow">
+                            <div className="hcManuscriptValue underlineListItem">
+                                <div>{item.material_type === "full" ? (
+                                    <strong>canonical Etymologiae</strong>) : (
+                                    <strong>{item.material_type}</strong>)}, <strong>books: {item.books_included}</strong>
+                                </div>
+                                <div className="line"><i>Etym. </i> {item.details}&nbsp;&nbsp;&nbsp; <i>({item.locations})</i>
+                                </div>
+                            </div>
+                        </div>
+                    })}
                 </div>
+
             </div>
             <div className="hcManuscriptTable">
                 <div className="hcManuscriptRow">
@@ -165,15 +196,19 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     </div>
                     <div className="hcManuscriptValue">
                         {related_manuscripts.map((item, index) => {
-                            return (<div><div className="cursLine">{item.reason}</div>
-                            {item.intern.map((item_in, index) => {
-                                const url = "/#detail/" + item_in.id;
-                                return (<div key={index} className="linkLine" onClick={() => {window.scroll(0,0); window.location.href = url;}}>{item_in.shelfmark}</div>)
-                            })}
-                                {item.extern.map((index_ex, index) => {
-                                    return (<div key={index} className="line">{index_ex.item}</div> )
-                                })}
-                            </div>)
+                                return (<div>
+                                    <div className="cursLine">{item.reason}</div>
+                                    {item.intern.map((item_in, index) => {
+                                        const url = "/#detail/" + item_in.id;
+                                        return (<div key={index} className="linkLine" onClick={() => {
+                                            window.scroll(0, 0);
+                                            window.location.href = url;
+                                        }}>{item_in.shelfmark}</div>)
+                                    })}
+                                    {item.extern.map((index_ex, index) => {
+                                        return (<div key={index} className="line">{index_ex.item}</div>)
+                                    })}
+                                </div>)
                             }
                         )}
                     </div>
@@ -229,13 +264,16 @@ function ManuscriptDetails(props: {manuscript: IManuscript}) {
                     <div className="hcManuscriptValue">
                         {digitized.map(line => {
                             return <div className="linkLine" onClick={() => {
-                               openWindow(line.item);
+                                openWindow(line.item);
                             }}>{line.item}</div>
                         })}
                     </div>
                 </div>
             </div>
-            <div className="linkLine" onClick={() => {window.history.back()}}>Back to results</div>
+            <div className="linkLine" onClick={() => {
+                window.history.back()
+            }}>Back to results
+            </div>
         </div>
     )
 }

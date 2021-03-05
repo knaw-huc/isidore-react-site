@@ -9,7 +9,6 @@ import {SERVICE_SERVER} from "../misc/config";
 function Manuscript(props: {manuscriptID: string}) {
     const [loading, setLoading] = useState(true);
     const [result, setResult] = useState<IManuscript>({} as IManuscript);
-    console.log(props.manuscriptID);
 
     async function fetchData() {
         const url = SERVICE_SERVER + "detail/" + props.manuscriptID;

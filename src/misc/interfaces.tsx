@@ -73,11 +73,17 @@ export interface ISearchObject {
 }
 
 export interface IManuscript {
+    id: string,
     shelfmark: string,
     steinova: string,
     bischoff: string,
     anspach: string,
     bischoff_cla_date: string,
+    cla: string,
+    source_dating: string,
+    designed_as: string,
+    physical_state_scaled: string,
+    physical_state: string;
     place_absolute: string,
     material_type: string,
     uncertainty: string,
@@ -119,6 +125,8 @@ export interface IRelations {
 }
 
 export interface IManuscriptContent {
+    material_type: string,
+    books_included: string,
     details: string,
     locations: string
 }

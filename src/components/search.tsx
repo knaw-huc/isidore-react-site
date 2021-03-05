@@ -399,7 +399,7 @@ export default function Search(props: {search_string: string}) {
                             <div className="hcMarginBottom2">
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets:
                                     {searchData.searchvalues !== "none" && result.amount > 0 && <span
-                                        className="hcFacetReset hcClickable" onClick={() => {openWindow(SERVICE_SERVER + "download/" + Base64.toBase64(JSON.stringify(searchData)))}}>Download results</span>}
+                                        className="hcFacetReset hcClickable" onClick={() => {openWindow(SERVICE_SERVER + "download/" + Base64.toBase64(JSON.stringify(searchData)))}}>&nbsp;- Download results&nbsp;</span>}
                                     <span
                                     className="hcFacetReset hcClickable" onClick={resetFacets}>Reset facets</span>
                                 </div>

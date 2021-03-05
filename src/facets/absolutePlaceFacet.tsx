@@ -75,7 +75,7 @@ function AbsolutePlaceFacet(props: { add: ISendCandidate, search: ISearchObject,
                                 candidate: item.key
                             })}>
                                 <div className="checkBoxItem"> {item.key}
-                                    <div className="facetAmount">({item.doc_count})</div>
+                                    <div className="facetAmount"> ({item.doc_count})</div>
                                 </div>
                             </div>
                         )

@@ -8,7 +8,7 @@ function TransmittedFacet(props: {add: ISendCandidate, search: ISearchObject, re
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/material_type/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/material_types.material_type/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
@@ -32,7 +32,7 @@ function TransmittedFacet(props: {add: ISendCandidate, search: ISearchObject, re
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Etymology transmitted as", field: "material_type", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Etymology transmitted as", field: "material_types.material_type", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

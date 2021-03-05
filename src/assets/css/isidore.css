@@ -1262,6 +1262,11 @@ a {
   width: 100%;
 }
 
+.underlineListItem {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
 .hcManuscriptImg{
   height: 250px !important;
   position: absolute;
@@ -1700,6 +1705,21 @@ border-left: 1px solid #ccc;
 
 .switchBtn {
   background-color: #ccc;
+}
+
+.hcBrandLogo{
+  cursor: pointer;
+}
+
+.urlLine{
+  font-size: 12px;
+  color: #999;
+  font-weight: bold;
+}
+
+.hcManuscriptMaterialType{
+  color: rgb(73, 85, 114);;
+  text-decoration: underline;
 }
 
 
