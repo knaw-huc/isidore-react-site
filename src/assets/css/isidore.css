@@ -1606,6 +1606,15 @@ border-left: 1px solid #ccc;
   cursor: pointer;
 }
 
+.backLine{
+  color: rgb(73, 85, 144);
+  font-weight: bold;
+  font-size: 10px;
+  cursor: pointer;
+  text-align: right;
+  display: block;
+}
+
 .cursLine {
   font-style: italic;
 }
@@ -1715,6 +1724,10 @@ border-left: 1px solid #ccc;
   font-size: 12px;
   color: #999;
   font-weight: bold;
+}
+
+.moveUp{
+  margin: -30px;
 }
 
 .hcManuscriptMaterialType{

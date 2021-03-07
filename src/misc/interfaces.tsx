@@ -97,10 +97,12 @@ export interface IManuscript {
     larger_unit: string[],
     related_manuscripts: IRelatedManuscripts[],
     annotations: string,
+    diagrams: string,
     innovations: string,
     additional_observations: string,
     bibliography: IStringList[],
     digitized_at: IStringList[],
+    url_other: string,
     image: string;
     page_number: string;
 }
@@ -127,6 +129,10 @@ export interface IRelations {
 export interface IManuscriptContent {
     material_type: string,
     books_included: string,
+    details: IManuscriptContentPair[]
+}
+
+export interface IManuscriptContentPair {
     details: string,
     locations: string
 }

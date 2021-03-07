@@ -23,6 +23,11 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
         source_of_date = "(" + props.manuscript.source_dating + ")";
     }
 
+    let pgType = "Page";
+    if (props.manuscript.page_number.indexOf('r') !== -1 || props.manuscript.page_number.indexOf('v') !== -1) {
+        pgType = "Folio";
+    }
+
 
     function openWindow(ref: string) {
         let a = document.createElement('a');
@@ -34,6 +39,10 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
 
     return (
         <div className="hcManuscriptBasicInfo">
+            <div className="backLine" onClick={() => {
+                window.history.back()
+            }}>Back to results
+            </div>
             <div className="hcManuscriptTable">
                 <div className="hcManuscriptRow">
                     <div className="hcManuscriptLabelHeader">
@@ -85,7 +94,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                 </div>
                 <div className="hcManuscriptImg"><img className="thumb" src={img}/>
                     {props.manuscript.page_number !== "" &&
-                    <div className="hcPageNumber">Folio {props.manuscript.page_number}</div>}
+                    <div className="hcPageNumber">{pgType} {props.manuscript.page_number}</div>}
                 </div>
             </div>
             <div className="hcManuscriptTable">
@@ -147,8 +156,10 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     <strong>canonical Etymologiae</strong>) : (
                                     <strong>{item.material_type}</strong>)}, <strong>books: {item.books_included}</strong>
                                 </div>
-                                <div className="line"><i>Etym. </i> {item.details}&nbsp;&nbsp;&nbsp; <i>({item.locations})</i>
-                                </div>
+                                {item.details.map(values => {
+                                    return <div className="line"><i>Etym. </i> {values.details}&nbsp;&nbsp;&nbsp;
+                                        <i>({values.locations})</i></div>
+                                })}
                             </div>
                         </div>
                     })}
@@ -217,19 +228,25 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
             <div className="hcManuscriptTable">
                 <div className="hcManuscriptRow">
                     <div className="hcManuscriptLabel">
-                        Annotations
+                        Innovative features
                     </div>
-                    <div className="hcManuscriptValue">
+                </div>
+                <div className="hcManuscriptRow">
+                    <div className="hcManuscriptValue underlineListItem">
+                        <div><strong>Annotations</strong></div>
                         {props.manuscript.annotations}
                     </div>
                 </div>
-            </div>
-            <div className="hcManuscriptTable">
                 <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Innovations
+                    <div className="hcManuscriptValue underlineListItem">
+                        <div><strong>Diagrams</strong></div>
+                        {props.manuscript.diagrams}
                     </div>
-                    <div className="hcManuscriptValue">
+                </div>
+
+                <div className="hcManuscriptRow">
+                    <div className="hcManuscriptValue underlineListItem">
+                        <div><strong>Innovations</strong></div>
                         {props.manuscript.innovations}
                     </div>
                 </div>
@@ -270,7 +287,24 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                     </div>
                 </div>
             </div>
-            <div className="linkLine" onClick={() => {
+            <div className="hcManuscriptTable">
+                <div className="hcManuscriptRow">
+                    <div className="hcManuscriptLabel">
+                        Additional information online
+                    </div>
+                    <div className="hcManuscriptValue">
+                        {props.manuscript.url_other === "-" ?
+                            (
+                                <div>{props.manuscript.url_other}</div>
+                            ) : (
+                                <div className="linkLine" onClick={() => {
+                                    openWindow(props.manuscript.url_other);
+                                }}>{props.manuscript.url_other}</div>
+                            )}
+                    </div>
+                </div>
+            </div>
+            <div className="backLine" onClick={() => {
                 window.history.back()
             }}>Back to results
             </div>
