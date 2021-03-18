@@ -25,13 +25,19 @@ function DatelabelFacet(props: { add: ISendCandidate, search: ISearchObject, ref
 
     return (
         <div className="hcFacet">
+            { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+            src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+            alt=""/></span>}
+            {help &&
+        <div className="hcFacetHelp" onClick={() => setHelp(false)}>
+            <p><strong>Date of origin</strong></p>
+            <p>Choose a century from a list or adjust a segment of time on a slider.</p>
+        </div>}
             <div className="hcFacetTitle">
                 Date scaled
+
             </div>
-            {help &&
-            <div className="hcFacetHelp">
-                <strong>Scaled date facet</strong><br/>
-            </div>}
+
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {

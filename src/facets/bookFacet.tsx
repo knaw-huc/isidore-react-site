@@ -1,12 +1,21 @@
 import React from "react";
 import BookFacetItem from "../elements/bookFacetItem";
 import {ISendCandidate} from "../misc/interfaces";
+import {useState} from "react";
 
-function bookFacet(props: {add: ISendCandidate}) {
+function BookFacet(props: {add: ISendCandidate}) {
+    const [help, setHelp] = useState(false);
 
     return (
         <div className="hcFacet">
             <div className="hcFacetItems">
+                { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                    alt=""/></span>}
+                {help ? (<div className="hcFacetHelp"  onClick={() => setHelp(false)}>
+                    <p><strong>Books </strong></p>
+                    <p>This facet allows the users to select manuscripts based on whether they currently contain material from a specific section of the <i>Etymologiae</i>. Users can select complete books by clicking on OK, but also individual book chapters and chapter ranges by adjusting the slider. A separate exclude full tab included in this facet allows one to remove all manuscripts designed as encyclopaedic copies of the <i>Etymologiae</i> (i.e., query only over manuscripts transmitting the text of the <i>Etymologiae</i> selectively).</p>
+                </div>) : (<div/>)}
                 <BookFacetItem add={props.add} book = {1}  bookLatin = "I" chapters= {44} />
                 <BookFacetItem add={props.add} book = {2}  bookLatin = "II" chapters= {31} />
                 <BookFacetItem add={props.add} book = {3}  bookLatin = "III" chapters= {71} />
@@ -36,4 +45,4 @@ function bookFacet(props: {add: ISendCandidate}) {
 
 }
 
-export default bookFacet;
+export default BookFacet;

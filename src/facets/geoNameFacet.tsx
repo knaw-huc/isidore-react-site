@@ -25,14 +25,17 @@ function GeoNameFacet(props: { add: ISendCandidate, search: ISearchObject, refre
 
     return (
         <div className="hcFacet">
+            { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                alt=""/></span>}
+            {help &&
+            <div className="hcFacetHelp" onClick={() => setHelp(false)}>
+                <p><strong>Place of origin</strong></p>
+                <p>Modern places of origin correspond to current states. Specific places correspond to the various medieval locations (e.g. Reims), areas (e.g. Bodensee area), or wider regions (e.g. northern France) identified in manuscript catalogues.</p>
+            </div>}
             <div className="hcFacetTitle">
                 Modern place
             </div>
-            {help &&
-            <div className="hcFacetHelp">
-                <strong>Free text facet</strong><br/>
-                Type text and complete with ENTER.
-            </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {

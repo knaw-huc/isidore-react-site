@@ -24,10 +24,13 @@ function ManuscriptTypeFacet(props: {add: ISendCandidate, search: ISearchObject,
 
     return (
         <div className="hcFacet">
+            { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                alt=""/></span>}
             {help &&
-            <div className="hcFacetHelp">
-                <strong>Script</strong><br/>
-                Select one or more states.
+            <div className="hcFacetHelp" onClick={() => setHelp(false)}>
+                <p><strong>Manuscript type</strong></p>
+                <p>Refers to the character of manuscripts transmitting the <i>Etymologiae</i>. Manuscripts transmitting only the <i>Etymologiae</i> are designated as <strong>Big Isidores</strong>. Other manuscripts are assigned to a category based on a notable thematic profile. Not all texts found in these manuscripts must fit this profile, but the majority does. Manuscripts that do not fit into any of the profiles are classified as <strong>miscellanies</strong>. In case the thematic design of a manuscript cannot be established due to its fragmentary preservation, it is labelled as <strong>unknown</strong>.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

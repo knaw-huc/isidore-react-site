@@ -24,10 +24,13 @@ function LayoutFacet(props: {add: ISendCandidate, search: ISearchObject, refresh
 
     return (
         <div className="hcFacet">
+            { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                alt=""/></span>}
             {help &&
-            <div className="hcFacetHelp">
-                <strong>Script</strong><br/>
-                Select one or more states.
+            <div className="hcFacetHelp"  onClick={() => setHelp(false)}>
+                <p><strong>Layout</strong></p>
+                <p>The layout of the text in the writing window.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

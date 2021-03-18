@@ -57,17 +57,14 @@ function CurrentPlaceFacet(props: { add: ISendCandidate, search: ISearchObject, 
 
     return (
         <div className="hcFacet">
-            <div className="hcFacetTitle">
-
-            </div>
-            <div>
-                {help ? (<div className="hcFacetHelp">
-                    <strong>The full name facet </strong><br/>
-                    The names of the shipmasters are ordered by their number of passages. Filtering this facet is based
-                    on <u>family name</u>.
+            { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                alt=""/></span>}
+                {help ? (<div className="hcFacetHelp"  onClick={() => setHelp(false)}>
+                    <p><strong>Current place</strong></p>
+                    <p>The city of the current preservation of a manuscript</p>
                 </div>) : (<div/>)}
 
-            </div>
             <div className="hcFacetFilter"><input type="text" name="" onChange={handleChange} id="shipMasterFilter"
                                                   placeholder="Type to filter"/></div>
             {!loading ? (<div className="hcFacetItems">

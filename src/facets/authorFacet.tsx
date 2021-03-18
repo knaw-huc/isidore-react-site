@@ -57,14 +57,13 @@ function AuthorFacet(props: { parentCallback: ISendCandidate, search: ISearchObj
 
     return (
         <div className="hcFacet">
-            <div className="hcFacetTitle">
-
-            </div>
             <div>
-                {help ? (<div className="hcFacetHelp">
-                    <strong>The full name facet </strong><br/>
-                    The names of the shipmasters are ordered by their number of passages. Filtering this facet is based
-                    on <u>family name</u>.
+                { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                    alt=""/></span>}
+                {help ? (<div className="hcFacetHelp" onClick={() => setHelp(false)}>
+                    <p><strong>Author/text/types</strong></p>
+                    <p>This facet allows you to search for the works of known authors, anonymous texts, and short compositions on specific subjects that appear in the same manuscript as the <i>Etymologiae</i> (BUT it does not include systematically the texts interpolated into the <i>Etymologiae</i> – for these a separate facet may be established in the future).</p>
                 </div>) : (<div/>)}
 
             </div>
@@ -79,7 +78,7 @@ function AuthorFacet(props: { parentCallback: ISendCandidate, search: ISearchObj
                                 candidate: item.key
                             })}>
                                 <div className="checkBoxItem"> {item.key}
-                                    <div className="facetAmount">({item.doc_count})</div>
+                                    <div className="facetAmount"> ({item.doc_count})</div>
                                 </div>
                             </div>
                         )
