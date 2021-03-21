@@ -11,6 +11,12 @@ function SearchFreetext(props: { add: ISendCandidate }) {
         setTextField(e.currentTarget.value);
     }
 
+    function handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>): void {
+        if (e.key === 'Enter') {
+            setTextFacet();
+        }
+    }
+
     function setTextFacet() {
         if (textField !== "") {
             props.add({facet: "Free text", field: "FREE_TEXT", candidate: textField});
@@ -33,7 +39,7 @@ function SearchFreetext(props: { add: ISendCandidate }) {
             </div>
             <div className="hcFacetItems">
                 <input className="hcFacetSearch" defaultValue={textField} placeholder="Type text to search"
-                       onChange={handleChange}/>
+                       onChange={handleChange}  onKeyUp={handleKeyPress}/>
             </div>
             <button className="ftSearchBtn" onClick={setTextFacet}>Search</button>
         </div>
