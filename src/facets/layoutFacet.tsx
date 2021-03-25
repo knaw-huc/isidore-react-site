@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList, ISearchObject, ISendCandidate} from "../misc/interfaces";
+import {facetList, ISearchObject, ISendCandidate, ISortFacetValue} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
@@ -10,12 +10,27 @@ function LayoutFacet(props: {add: ISendCandidate, search: ISearchObject, refresh
     const [loading, setLoading] = useState(true);
     let url: string = SERVICE_SERVER + "elastic/initial_facet/layout/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
+    const facetValues: ISortFacetValue[] = [
+        {facetValue: "one column", amount: 0},
+        {facetValue: "two columns", amount: 0},
+        {facetValue: "three columns", amount: 0},
+        {facetValue: "four columns", amount: 0},
+        {facetValue: "unknown", amount: 0}
+    ];
 
     async function fetchData() {
         const response = await fetch(url);
         const json = await response.json();
         setData(json);
         setLoading(false);
+    }
+
+    if (!loading) {
+        data.buckets.map((item) => {
+            let waarde = (element: ISortFacetValue) => element.facetValue === item.key;
+            let i: number = facetValues.findIndex(waarde);
+            facetValues[i].amount = item.doc_count;
+        })
     }
 
     useEffect(() => {
@@ -34,8 +49,10 @@ function LayoutFacet(props: {add: ISendCandidate, search: ISearchObject, refresh
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>
-                    {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Layout", field: "layout", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                    {facetValues.map((item, index) => {
+                        if (item.amount > 0) {
+                            return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Layout", field: "layout", candidate: item.facetValue})}><div className="checkBoxLabel"> {item.facetValue} <div className="facetAmount">({item.amount})</div></div></div>);
+                        }
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

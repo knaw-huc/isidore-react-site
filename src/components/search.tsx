@@ -20,14 +20,26 @@ import ProvenanceFacet from "../facets/provenanceFacet";
 import AuthorFacet from "../facets/authorFacet";
 import CurrentPlaceFacet from "../facets/currentPlaceFacet";
 import RegionFacet from "../facets/regionFacet";
-import {IResultManuscriptList, ISearchObject, ISendCandidate, IFacetCandidate, ISearchValues, IRemoveFacet, IResetFacets} from "../misc/interfaces";
+import {
+    IResultManuscriptList,
+    ISearchObject,
+    ISendCandidate,
+    IFacetCandidate,
+    ISearchValues,
+    IRemoveFacet,
+    IResetFacets
+} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 import IsiMap from "../elements/map";
 import DummySliderFacet from "../facets/dummySliderfacet";
+import AnnotationsFacet from "../facets/annotationsFacet";
+import DigitizedFacet from "../facets/digitizedFacet";
+import LargerCollectionFacet from "../facets/largerCollectionFacet";
+import ExcludeFullFacet from "../facets/excludeFullFacet";
 
 
-export default function Search(props: {search_string: string}) {
+export default function Search(props: { search_string: string }) {
     let searchBuffer: ISearchObject = {
         facetstate: {
             search: true,
@@ -44,7 +56,11 @@ export default function Search(props: {search_string: string}) {
             provenance: false,
             authors: false,
             currentplace: false,
-            region: false
+            region: false,
+            annotations: false,
+            digitized: false,
+            larger: false,
+            exclude: false
         },
         searchvalues: "none",
         page: 1,
@@ -77,9 +93,12 @@ export default function Search(props: {search_string: string}) {
     const [authorFacet, setAuthorFacet] = useState(searchBuffer.facetstate.authors);
     const [currentPlaceFacet, setCurrentPlaceFacet] = useState(searchBuffer.facetstate.currentplace);
     const [regionFacet, setRegionFacet] = useState(searchBuffer.facetstate.region);
+    const [annotationFacet, setAnnotationFacet] = useState(searchBuffer.facetstate.annotations);
+    const [digitizedFacet, setDigitizedfacet] = useState(searchBuffer.facetstate.digitized);
+    const [largerFacet, setLargerfacet] = useState(searchBuffer.facetstate.larger);
+    const [excludeFacet, setExcludeFacet] = useState(searchBuffer.facetstate.exclude);
     const [refresh, setRefresh] = useState(false);
     const [searchData, setSearchData] = useState<ISearchObject>(searchBuffer);
-
 
 
     const cross: string = "[x]";
@@ -120,9 +139,9 @@ export default function Search(props: {search_string: string}) {
     }
 
     function openWindow(ref: string) {
-        let a= document.createElement('a');
-        a.target= '_blank';
-        a.href= ref;
+        let a = document.createElement('a');
+        a.target = '_blank';
+        a.href = ref;
         a.click();
     }
 
@@ -134,7 +153,6 @@ export default function Search(props: {search_string: string}) {
         window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
         setRefresh(!refresh);
     }
-
 
 
     const sendCandidate: ISendCandidate = (candidate: IFacetCandidate) => {
@@ -228,7 +246,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {searchFT ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <SearchFreeText  add={sendCandidate}/>
+                                    <SearchFreeText add={sendCandidate}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {
@@ -282,7 +300,8 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {provenanceFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ProvenanceFacet parentCallback={sendCandidate} search={searchData} refresh={refresh}/>
+                                    <ProvenanceFacet parentCallback={sendCandidate} search={searchData}
+                                                     refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" id="shipmasterFacetsTitle"
@@ -348,7 +367,7 @@ export default function Search(props: {search_string: string}) {
                             </div>
                             {manuscriptFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <ManuscriptTypeFacet  add={sendCandidate} search={searchData} refresh={refresh}/>
+                                    <ManuscriptTypeFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {
@@ -374,20 +393,55 @@ export default function Search(props: {search_string: string}) {
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {
-                                setFilterFacet(!filterFacet)
+                                setAnnotationFacet(!annotationFacet)
                             }}>
-                                {filterFacet ? (<span className="hcFacetGroup">&#9660; other filters</span>) : (
-                                    <span className="hcFacetGroup">&#9658; other filters</span>)}
+                                {annotationFacet ? (<span className="hcFacetGroup">&#9660; annotations</span>) : (
+                                    <span className="hcFacetGroup">&#9658; annotations</span>)}
                             </div>
-                            {filterFacet ? (
+                            {annotationFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                    <FiltersFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                    <AnnotationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                </div>) : (<div/>)}
+
+                            <div className="hcFacetSubDivision" onClick={() => {
+                                setDigitizedfacet(!digitizedFacet)
+                            }}>
+                                {digitizedFacet ? (<span className="hcFacetGroup">&#9660; digitized</span>) : (
+                                    <span className="hcFacetGroup">&#9658; digitized</span>)}
+                            </div>
+                            {digitizedFacet ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <DigitizedFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                </div>) : (<div/>)}
+
+                            <div className="hcFacetSubDivision" onClick={() => {
+                                setLargerfacet(!largerFacet);
+                            }}>
+                                {largerFacet ? (
+                                    <span className="hcFacetGroup">&#9660; part larger collection</span>) : (
+                                    <span className="hcFacetGroup">&#9658; part larger collection</span>)}
+                            </div>
+                            {largerFacet ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <LargerCollectionFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                </div>) : (<div/>)}
+
+                            <div className="hcFacetSubDivision" onClick={() => {
+                                setExcludeFacet(!excludeFacet)
+                            }}>
+                                {excludeFacet ? (<span className="hcFacetGroup">&#9660; exclude full</span>) : (
+                                    <span className="hcFacetGroup">&#9658; exclude full</span>)}
+                            </div>
+                            {excludeFacet ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <ExcludeFullFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
                         </div>
 
                         <div className="hcLayoutResults">
                             <div className="hcResultsHeader hcMarginBottom1">
-                                <div className="hcNumberFound">Manuscripts found: {result.amount} - Page {searchData.page} of {result.pages}</div>
+                                <div className="hcNumberFound">Manuscripts found: {result.amount} -
+                                    Page {searchData.page} of {result.pages}</div>
                                 <div><select value={searchData.page_length} className="hcAmountOfPages"
                                              onChange={(e) => setPageLength(e.target.value)}>
                                     <option value={20}>20 manuscripts per page</option>
@@ -399,9 +453,11 @@ export default function Search(props: {search_string: string}) {
                             <div className="hcMarginBottom2">
                                 <div className="hcSmallTxt hcTxtColorGreyMid">Selected facets:
                                     {searchData.searchvalues !== "none" && result.amount > 0 && <span
-                                        className="hcFacetReset hcClickable" onClick={() => {openWindow(SERVICE_SERVER + "download/" + Base64.toBase64(JSON.stringify(searchData)))}}>&nbsp;- Download results&nbsp;</span>}
+                                        className="hcFacetReset hcClickable" onClick={() => {
+                                        openWindow(SERVICE_SERVER + "download/" + Base64.toBase64(JSON.stringify(searchData)))
+                                    }}>&nbsp;- Download results&nbsp;</span>}
                                     <span
-                                    className="hcFacetReset hcClickable" onClick={resetFacets}>Reset facets</span>
+                                        className="hcFacetReset hcClickable" onClick={resetFacets}>Reset facets</span>
                                 </div>
                                 {searchData.searchvalues === "none" ? (
                                     <span className="hcSelectedFacet"><span
@@ -425,8 +481,12 @@ export default function Search(props: {search_string: string}) {
                                     <IsiMap result={result}/>
                                     <ManuscriptList result={result}/>
                                     <div className="hcPagination">
-                                        {searchData.page > 1 ? (<div className="hcClickable" onClick={() => {prevPage()}}>&#8592; Previous</div>) : (<div/>)}
-                                        {searchData.page < result.pages ? (<div className="hcClickable" onClick={() => {nextPage()}}>Next &#8594;</div>) : (<div/>)}
+                                        {searchData.page > 1 ? (<div className="hcClickable" onClick={() => {
+                                            prevPage()
+                                        }}>&#8592; Previous</div>) : (<div/>)}
+                                        {searchData.page < result.pages ? (<div className="hcClickable" onClick={() => {
+                                            nextPage()
+                                        }}>Next &#8594;</div>) : (<div/>)}
                                     </div>
                                 </div>
                             )}

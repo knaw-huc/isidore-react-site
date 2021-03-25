@@ -1,6 +1,6 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import {facetList, ISearchObject, ISendCandidate} from "../misc/interfaces";
+import {facetList, ISearchObject, ISendCandidate, ISortFacetValue} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
@@ -9,12 +9,32 @@ function PageDimensionsFacet(props: {add: ISendCandidate, search: ISearchObject,
     const [loading, setLoading] = useState(true);
     let url: string = SERVICE_SERVER + "elastic/initial_facet/page_dimensions/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
+    const facetValues: ISortFacetValue[] = [
+        {facetValue: "< 300 mm", amount: 0},
+        {facetValue: "300-350 mm", amount: 0},
+        {facetValue: "351-400 mm", amount: 0},
+        {facetValue: "401-450 mm", amount: 0},
+        {facetValue: "451-500 mm", amount: 0},
+        {facetValue: "501-550 mm", amount: 0},
+        {facetValue: "551-600 mm", amount: 0},
+        {facetValue: "601-650 mm", amount: 0},
+        {facetValue: "> 651 mm", amount: 0},
+        {facetValue: "Unknown", amount: 0}
+    ];
 
     async function fetchData() {
         const response = await fetch(url);
         const json = await response.json();
         setData(json);
         setLoading(false);
+    }
+
+    if (!loading) {
+        data.buckets.map((item) => {
+            let waarde = (element: ISortFacetValue) => element.facetValue === item.key;
+            let i: number = facetValues.findIndex(waarde);
+            facetValues[i].amount = item.doc_count;
+        })
     }
 
     useEffect(() => {
@@ -35,8 +55,18 @@ function PageDimensionsFacet(props: {add: ISendCandidate, search: ISearchObject,
             </div> }
             <div className="hcFacetItems">
                 {!loading ? (<div>
-                    {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({facet: "Page dimensions", field: "page_dimensions", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount"> ({item.doc_count})</div></div></div>);
+                    {facetValues.map((item, index) => {
+                        if (item.amount > 0) {
+                            return (<div key={index} className="hcFacetItem" onClick={() => props.add({
+                                facet: "Page dimensions",
+                                field: "page_dimensions",
+                                candidate: item.facetValue
+                            })}>
+                                <div className="checkBoxLabel"> {item.facetValue}
+                                    <div className="facetAmount"> ({item.amount})</div>
+                                </div>
+                            </div>);
+                        }
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

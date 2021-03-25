@@ -55,7 +55,11 @@ export interface IFacetState {
     provenance: boolean,
     authors: boolean,
     currentplace: boolean,
-    region: boolean
+    region: boolean,
+    annotations: boolean,
+    digitized: boolean,
+    larger: boolean,
+    exclude: boolean
 }
 
 export interface ISearchValues {
@@ -175,4 +179,9 @@ export interface IRemoveFacet {
 
 export interface IResetFacets {
     (): void
+}
+
+export interface ISortFacetValue {
+    facetValue: string,
+    amount: number
 }

@@ -44,7 +44,7 @@ function PhysicalStateFacet(props: { add: ISendCandidate, search: ISearchObject,
                             candidate: item.key
                         })}>
                             <div className="checkBoxLabel"> {item.key}
-                                <div className="facetAmount">({item.doc_count})</div>
+                                <div className="facetAmount"> ({item.doc_count})</div>
                             </div>
                         </div>);
                     })}

@@ -26,7 +26,7 @@ function IsiMap(props: { result: IResultManuscriptList }) {
                 {isModernPlace ? (
                     <MarkerClusterGroup>
                         {props.result.manuscripts.map((item: IResultManuscript) => {
-                            if (item.library[0].latitude !== 0 && !isNaN(item.library[0].latitude)) {
+                            if (item.library[0].latitude != 0 && !isNaN(item.library[0].latitude)) {
                                 let position: LatLngTuple = [item.library[0].latitude, item.library[0].longitude];
                                 return (<Marker position={position}>
                                     <Popup><span>{item.library[0].place_name}<br/></span><span className="hcClickable"
@@ -42,7 +42,7 @@ function IsiMap(props: { result: IResultManuscriptList }) {
                 ) : (
                     <MarkerClusterGroup>
                         {props.result.manuscripts.map((item: IResultManuscript) => {
-                            if (item.absolute_places[0].latitude !== 0 && !isNaN(item.absolute_places[0].latitude)) {
+                            if (item.absolute_places[0].latitude != 0 && !isNaN(item.absolute_places[0].latitude)) {
                                 let position: LatLngTuple = [item.absolute_places[0].latitude, item.absolute_places[0].longitude];
                                 return (<Marker position={position}>
                                     <Popup><span>{item.absolute_places[0].place_absolute}<br/></span><span
