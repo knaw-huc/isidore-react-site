@@ -35,7 +35,7 @@ function TransmittedFacet(props: { add: ISendCandidate, search: ISearchObject, r
                     Zaragoza (full). Many contain only excerpts from the entire work (single excerpt, multiple excerpts,
                     excerpt sequence), a specific abridgement of or selection from the <i>Etymologiae</i> (epitome, book
                     sequence), or a notable derivate of the encyclopaedia transmitted as novel textual compilations or
-                    self-standing text (excerpt collection, book, book section, book). The label not full applies to
+                    self-standing text (excerpt collection, book, book section, book). The label 'not full' applies to
                     fragments that cannot represent a remnant of an encyclopaedic copy of the <i>Etymologiae</i> but
                     whose transmission format cannot be established more precisely.</p>
             </div>}
@@ -48,7 +48,7 @@ function TransmittedFacet(props: { add: ISendCandidate, search: ISearchObject, r
                             candidate: item.key
                         })}>
                             <div className="checkBoxLabel"> {item.key}
-                                <div className="facetAmount">({item.doc_count})</div>
+                                <div className="facetAmount"> ({item.doc_count})</div>
                             </div>
                         </div>);
                     })}
