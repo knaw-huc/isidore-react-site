@@ -37,6 +37,8 @@ import AnnotationsFacet from "../facets/annotationsFacet";
 import DigitizedFacet from "../facets/digitizedFacet";
 import LargerCollectionFacet from "../facets/largerCollectionFacet";
 import ExcludeFullFacet from "../facets/excludeFullFacet";
+import InnovationsFacet from "../facets/innovationFacet";
+import DiagramsFacet from "../facets/diagramsFacet";
 
 
 export default function Search(props: { search_string: string }) {
@@ -57,6 +59,8 @@ export default function Search(props: { search_string: string }) {
             authors: false,
             currentplace: false,
             region: false,
+            innovations: false,
+            diagrams: false,
             annotations: false,
             digitized: false,
             larger: false,
@@ -83,7 +87,8 @@ export default function Search(props: { search_string: string }) {
     const [dateLabelFacet, setDatelabelFacet] = useState(searchBuffer.facetstate.dateLabel);
     const [bookFacet, setBookFacet] = useState(searchBuffer.facetstate.book);
     const [dimFacet, setDimFacet] = useState(searchBuffer.facetstate.dimensions);
-    const [filterFacet, setFilterFacet] = useState(searchBuffer.facetstate.filters);
+    const [innovationsFacet, setInnovationsFacet] = useState(searchBuffer.facetstate.innovations);
+    const [diagramsFacet, setDiagramsFacet] = useState(searchBuffer.facetstate.diagrams);
     const [physicalStateFacet, setPhysicalStatefacet] = useState(searchBuffer.facetstate.physicalState);
     const [scriptFacet, setScriptFacet] = useState(searchBuffer.facetstate.script);
     const [manuscriptFacet, setManuscriptFacet] = useState(searchBuffer.facetstate.manuscript);
@@ -390,6 +395,28 @@ export default function Search(props: { search_string: string }) {
                             {scriptFacet ? (
                                 <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                     <ScriptFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                </div>) : (<div/>)}
+
+                            <div className="hcFacetSubDivision" onClick={() => {
+                                setInnovationsFacet(!innovationsFacet);
+                            }}>
+                                {innovationsFacet ? (<span className="hcFacetGroup">&#9660; innovations</span>) : (
+                                    <span className="hcFacetGroup">&#9658; innovations</span>)}
+                            </div>
+                            {innovationsFacet ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <InnovationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                </div>) : (<div/>)}
+
+                            <div className="hcFacetSubDivision" onClick={() => {
+                                setDiagramsFacet(!diagramsFacet)
+                            }}>
+                                {diagramsFacet ? (<span className="hcFacetGroup">&#9660; diagrams</span>) : (
+                                    <span className="hcFacetGroup">&#9658; diagrams</span>)}
+                            </div>
+                            {diagramsFacet ? (
+                                <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                    <DiagramsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 </div>) : (<div/>)}
 
                             <div className="hcFacetSubDivision" onClick={() => {

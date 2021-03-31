@@ -88,7 +88,9 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                         Provenance
                     </div>
                     <div className="hcManuscriptValue">
-                        {props.manuscript.provenance}
+                        {props.manuscript.provenances.map((line) => {
+                            return (<div>{line.provenance}</div>)
+                        })}
                     </div>
 
                 </div>
@@ -217,7 +219,10 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         }}>{item_in.shelfmark}</div>)
                                     })}
                                     {item.extern.map((index_ex, index) => {
-                                        return (<div key={index} className="line">{index_ex.item}</div>)
+                                        if (index_ex !== "0") {
+                                            return (<div key={index} className="line">{index_ex}</div>)
+                                        }
+
                                     })}
                                 </div>)
                             }

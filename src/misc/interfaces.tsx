@@ -56,6 +56,8 @@ export interface IFacetState {
     authors: boolean,
     currentplace: boolean,
     region: boolean,
+    diagrams: boolean,
+    innovations: boolean,
     annotations: boolean,
     digitized: boolean,
     larger: boolean,
@@ -91,7 +93,7 @@ export interface IManuscript {
     place_absolute: string,
     material_type: string,
     uncertainty: string,
-    provenance: string,
+    provenances: IProvenance[],
     no_of_folia: string,
     layout: string[],
     script: string,
@@ -111,10 +113,14 @@ export interface IManuscript {
     page_number: string;
 }
 
+export interface IProvenance {
+    provenance: string;
+}
+
 export interface IRelatedManuscripts {
     reason: string,
     intern: IInsideRelations[],
-    extern: IRelations[]
+    extern: string[]
 }
 
 export interface IInsideRelations {
