@@ -6,6 +6,7 @@ import {StateMachineComponent} from "./renderMachine";
 import * as serviceWorker from './serviceWorker';
 import {interpret} from "xstate";
 import './assets/css/isidore.css';
+import './assets/css/isidore_new.css';
 import {IsiMachine} from "./machine/model";
 
 

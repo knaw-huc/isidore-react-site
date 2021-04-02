@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="41.40926021895689" width="41.29503790701983">
+  <defs>
+    <path id="path-0" opacity="1" fill-rule="evenodd" d="M31.704630109478558,4.704630109478444 L31.704630109478558,36.704630109478444 "/>
+    <path id="path-1" opacity="1" fill-rule="evenodd" d="M9.647518953509923,10.647518953509802 L9.647518953509916,0.7617412654470854 "/>
+    <path id="path-2" opacity="1" fill-rule="evenodd" d="M31.647518953509923,20.647518953509802 L31.647518953509916,10.761741265447085 "/>
+    <path id="path-3" opacity="1" fill-rule="evenodd" d="M20.647518953509923,30.647518953509802 L20.647518953509916,20.761741265447085 "/>
+    <path id="path-4" opacity="1" fill-rule="evenodd" d="M8.704630109478558,4.704630109478444 L8.704630109478558,36.704630109478444 "/>
+    <path id="path-5" opacity="1" fill-rule="evenodd" d="M20.704630109478558,4.704630109478444 L20.704630109478558,36.704630109478444 "/>
+  </defs>
+  <g opacity="1">
+    <g opacity="1">
+      <use xlink:href="#path-0" fill-opacity="0" stroke="rgb(68,68,68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+    <g transform="translate(9.64751895350992, 5.704630109478444) rotate(90.00003218077504) translate(-9.64751895350992, -5.704630109478444)" opacity="1">
+      <use xlink:href="#path-1" fill-opacity="0" stroke="rgb(68,68,68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+    <g transform="translate(31.64751895350992, 15.704630109478444) rotate(90.00003218077504) translate(-31.64751895350992, -15.704630109478444)" opacity="1">
+      <use xlink:href="#path-2" fill-opacity="0" stroke="rgb(68,68,68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+    <g transform="translate(20.64751895350992, 25.704630109478444) rotate(90.00003218077504) translate(-20.64751895350992, -25.704630109478444)" opacity="1">
+      <use xlink:href="#path-3" fill-opacity="0" stroke="rgb(68,68,68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-4" fill-opacity="0" stroke="rgb(68,68,68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+    <g opacity="1">
+      <use xlink:href="#path-5" fill-opacity="0" stroke="rgb(68,68,68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter"/>
+    </g>
+  </g>
+</svg>

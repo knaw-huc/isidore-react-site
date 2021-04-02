@@ -37,9 +37,7 @@ background-color: #fff;
 color: #3e3e3e;
 }
 
-a {
-color: rgb(73, 85, 144) !important;
-}
+
 
 .colorBgGrey {
 background-color: #f6f6f6;
@@ -1821,7 +1819,7 @@ margin: 20px auto;
 .hcFacetGroup {
 cursor: pointer;
 font-size: 0.95rem;
-color: rgb(73, 85, 114);
+color: #000;
 }
 
 /*.hcRightMargin select {
@@ -2073,8 +2071,8 @@ display: block;
 }
 
 .leaflet-container {
-height: 300px !important;
-width: 860px !important;
+height: 600px !important;
+width: 760px !important;
 margin-bottom: 0;
 border: 1px solid #000000;
 }

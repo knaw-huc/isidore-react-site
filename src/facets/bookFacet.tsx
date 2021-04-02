@@ -39,6 +39,9 @@ function BookFacet(props: {add: ISendCandidate}) {
                 <div className="hcClickable" onClick={() => props.add({facet: "Books", field: "books_latin", candidate: "Unknown"})}>
                     <div className="checkBoxItem"> <strong>Unknown</strong></div>
                 </div>
+                <div className="hcClickable" onClick={() => props.add({facet: "Books: exclude full", field: "excluded", candidate: "yes"})}>
+                    <div className="checkBoxItem"> <strong>Exclude full</strong></div>
+                </div>
             </div>
         </div>
     );

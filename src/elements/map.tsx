@@ -49,7 +49,7 @@ function IsiMap(props: { result: IResultManuscriptList }) {
                                         className="hcClickable" onClick={() => {
                                         window.location.href = "#detail/" + item.id;
                                     }}>
-                            Go to manuscript
+                            {item.shelfmark}
                       </span></Popup>
                                 </Marker>)
                             }
