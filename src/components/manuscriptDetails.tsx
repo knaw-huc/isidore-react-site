@@ -38,266 +38,215 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
 
 
     return (
-        <div className="hcManuscriptBasicInfo">
-            <div className="backLine" onClick={() => {
-                window.history.back()
-            }}>Back to results
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabelHeader">
-                        {props.manuscript.shelfmark}
-                        <div className="hcSteinova">{props.manuscript.steinova}</div>
-                    </div>
-                    <div className="urlLine">{HOME}#detail/{props.manuscript.id}</div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptValueSmall">
-                        Created by Evina Steinová on 7 September 2020<br/>
-                        Last modified by Evina Steinová on 7 September 2020
-                    </div>
-                    <div className="hcManuscriptValueOtherIDs">
-                        {props.manuscript.anspach !== "" ? (<div>Anspach {props.manuscript.anspach}</div>) : (<div/>)}
-                        {props.manuscript.bischoff !== "" ? (<div>Bischoff {props.manuscript.bischoff}</div>) : (
-                            <div/>)}
-                        {props.manuscript.cla !== "" ? (<div>CLA {props.manuscript.cla}</div>) : (<div/>)}
-                    </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Date of origin
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.bischoff_cla_date} {source_of_date}
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Place of origin
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.place_absolute}
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Provenance
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.provenances.map((line) => {
-                            return (<div>{line.provenance}</div>)
-                        })}
+        <div>
+            <div className="hcContentContainer hcMarginBottom1 hcMarginTop3">
+
+                <div className="hcIKheaderSplit hcAlignLeftRight">
+                    <div className="hcBasicSideMargin ">
+                        <h1>{props.manuscript.shelfmark}</h1>
+                        <span
+                            className="hcSmallTxt hcClrTxt_Grey">{HOME}#detail/{props.manuscript.id}</span>
+                        <span className="hcSmallTxt hcMarginTop1"><div className="hcClickable" onClick={() => {
+                            window.history.back()
+                        }}>Back to results</div></span>
                     </div>
 
-                </div>
-                <div className="hcManuscriptImg"><img className="thumb" src={img}/>
-                    {props.manuscript.page_number !== "" &&
-                    <div className="hcPageNumber">{pgType} {props.manuscript.page_number}</div>}
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Folia
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.no_of_folia} {folText}
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Layout
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {layout_items}
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Script
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.script}
-                    </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Transmission format
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.designed_as}
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Physical condition
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.physical_state_scaled}
-                        {props.manuscript.physical_state !== "" ? (<div>{props.manuscript.physical_state}</div>) : (
-                            <div/>)}
-                    </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Content
-                    </div>
-
-                    {content.map(item => {
-                        return <div className="hcManuscriptRow">
-                            <div className="hcManuscriptValue underlineListItem">
-                                <div>{item.material_type === "full" ? (
-                                    <strong>canonical Etymologiae</strong>) : (
-                                    <strong>{item.material_type}</strong>)}, <strong>books: {item.books_included}</strong>
-                                </div>
-                                {item.details.map(values => {
-                                    return <div className="line"><i>Etym. </i> {values.details}&nbsp;&nbsp;&nbsp;
-                                        <i>({values.locations})</i></div>
-                                })}
+                    <div className="hcBasicSideMargin hcAlignVertical">
+                        <span className=" hcAlignRight">Innovating knowledge ID <strong
+                            className="hcIKidBlock">{props.manuscript.id}</strong></span>
+                        {props.manuscript.anspach !== "" && (<span className="hcSmallTxt  hcAlignRight">Anspach
+                            <strong className="hcIKidBlock">{props.manuscript.anspach}</strong></span>)}
+                        {props.manuscript.bischoff !== "" && (<span className="hcSmallTxt hcAlignRight">Bischoff <strong
+                            className="hcIKidBlock">{props.manuscript.bischoff}</strong></span>)}
+                        <div className="hcIKstate hcMarginTop1">
+                            <div className="hcIKstateLabelBlock hcSmallTxt ">{props.manuscript.designed_as}</div>
+                            <div className="hcIKstateIconBlock">
+                                <img
+                                    src="https://d33wubrfki0l68.cloudfront.net/e925351caa47fe2ecc7752548256297ea30014ac/cdb32/images/custom/innknow/icon-non.png"
+                                    alt=""/>
                             </div>
+
                         </div>
-                    })}
+                    </div>
                 </div>
 
             </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Type
+            <div className="hcContentContainer hcMarginBottom5">
+
+                <hr className="hcMarginBottom2"/>
+
+                <div className="hc2columns">
+                    <div className="hcBasicSideMargin">
+
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Date of origin</div>
+                            {props.manuscript.bischoff_cla_date} {source_of_date}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Place of origin</div>
+                            {props.manuscript.place_absolute}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Provenance</div>
+                            {props.manuscript.provenances.map((line) => {
+                                return (<div>{line.provenance}</div>)
+                            })}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Folia</div>
+                            {props.manuscript.no_of_folia} {folText}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Layout</div>
+                            {layout_items}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Physical condition</div>
+                            {props.manuscript.physical_state_scaled}
+                            {props.manuscript.physical_state !== "" ? (<div>{props.manuscript.physical_state}</div>) : (
+                                <div/>)}
+                        </div>
+
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Script</div>
+                            {props.manuscript.script}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Type</div>
+                            {props.manuscript.type}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Transmission format</div>
+                            {props.manuscript.designed_as}
+                        </div>
+
                     </div>
-                    <div className="hcManuscriptValue">
-                        {props.manuscript.type}
+                    <div className="hcIKkImageBlock">
+                        <img
+                            src={img}
+                            alt=""/>
+                        {props.manuscript.page_number !== "" &&
+                        <div className="hcPageNumber">{pgType} {props.manuscript.page_number}</div>}
                     </div>
                 </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Additional content
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {additional_content.map(line => {
-                            return <div className="line">{line}</div>
+
+
+                <hr className="hcMarginTop2"/>
+
+                <div className="hc2columns hcMarginTop2">
+
+
+                    <div className="hcBasicSideMargin">
+                        <h2>Content</h2>
+                        {content.map(item => {
+                            return <div className="hcManuscriptRow">
+                                <div className="hcManuscriptValue underlineListItem">
+                                    <div>{item.material_type === "full" ? (
+                                        <strong>canonical Etymologiae</strong>) : (
+                                        <strong>{item.material_type}</strong>)}, <strong>books: {item.books_included}</strong>
+                                    </div>
+                                    {item.details.map(values => {
+                                        return <div className="line"><i>Etym. </i> {values.details}&nbsp;&nbsp;&nbsp;
+                                            <i>({values.locations})</i></div>
+                                    })}
+                                </div>
+                            </div>
                         })}
                     </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Larger unit
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {larger_unit.map(line => {
-                            return <div className="line">{line}</div>
-                        })}
-                    </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Related manuscripts
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {related_manuscripts.map((item, index) => {
-                                return (<div>
-                                    <div className="cursLine">{item.reason}</div>
-                                    {item.intern.map((item_in, index) => {
-                                        const url = "/#detail/" + item_in.id;
-                                        return (<div key={index} className="linkLine" onClick={() => {
-                                            window.scroll(0, 0);
-                                            window.location.href = url;
-                                        }}>{item_in.shelfmark}</div>)
-                                    })}
-                                    {item.extern.map((index_ex, index) => {
-                                        if (index_ex !== "0") {
-                                            return (<div key={index} className="line">{index_ex}</div>)
-                                        }
 
-                                    })}
-                                </div>)
-                            }
-                        )}
-                    </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Innovative features
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptValue underlineListItem">
-                        <div><strong>Annotations</strong></div>
-                        {props.manuscript.annotations}
-                    </div>
-                </div>
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptValue underlineListItem">
-                        <div><strong>Diagrams</strong></div>
-                        {props.manuscript.diagrams}
+
+                    <div className="hcBasicSideMargin">
+                        <h2>Additional content</h2>
+                        <div className="hcMarginBottom1">
+
+                            <ul>
+                                {additional_content.map(line => {
+                                    return <li>{line}</li>
+                                })}
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptValue underlineListItem">
-                        <div><strong>Innovations</strong></div>
-                        {props.manuscript.innovations}
+
+                <hr className="hcMarginTop2"/>
+
+                <div className="hc2columns hcMarginTop2">
+                    <div className="hcBasicSideMargin">
+                        <h2>Innovative features</h2>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Annotations</div>
+                            {props.manuscript.annotations}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Diagrams</div>
+                            {props.manuscript.diagrams}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Innovations</div>
+                            {props.manuscript.innovations}
+                        </div>
+                    </div>
+
+                    <div className="hcBasicSideMargin hcMarginTop3">
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Larger unit</div>
+                            {larger_unit.map(line => {
+                                return <div className="line">{line}</div>
+                            })}
+                        </div>
+                        <div className="hcMarginBottom1">
+                            <div className="hcDataLabel">Related manuscripts</div>
+                            {related_manuscripts.map((item, index) => {
+                                    return (<div>
+                                        <em>{item.reason}</em>
+                                        {item.intern.map((item_in, index) => {
+                                            const url = "/#detail/" + item_in.id;
+                                            return (<div key={index} className="linkLine" onClick={() => {
+                                                window.scroll(0, 0);
+                                                window.location.href = url;
+                                            }}>{item_in.shelfmark}</div>)
+                                        })}
+                                        {item.extern.map((index_ex, index) => {
+                                            if (index_ex !== "0") {
+                                                return (<div key={index} className="line">{index_ex}</div>)
+                                            }
+
+                                        })}
+                                    </div>)
+                                }
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Additional observations
-                    </div>
-                    <div className="hcManuscriptValue">
+
+                <hr className="hcMarginTop2"/>
+                <div className="hcMarginTop2 hcBasicSideMargin">
+                    <h2>Additional information</h2>
+                    <div className="hcMarginBottom1">
+                        <div className="hcDataLabel">Additional observations</div>
                         {props.manuscript.additional_observations}
                     </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Bibliography
+                    <div className="hcMarginBottom1">
+                        <div className="hcDataLabel">Bibliography</div>
+                        <ul>
+                            {bibliography.map(line => {
+                                return <li>{line}</li>
+                            })}
+                        </ul>
                     </div>
-                    <div className="hcManuscriptValue">
-                        {bibliography.map(line => {
-                            return <div className="line">{line}</div>
+                    <div className="hcMarginBottom1">
+                        <div className="hcDataLabel">Digitized at</div>
+                        {props.manuscript.digitized_at.map((item) => {
+                            return (
+                                <div className="linkLine" onClick={() => {
+                                    openWindow(item.item);
+                                }}>{item.item}</div>
+                            )
                         })}
                     </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Digitized at
-                    </div>
-                    <div className="hcManuscriptValue">
-                        {digitized.map(line => {
-                            return <div className="linkLine" onClick={() => {
-                                openWindow(line.item);
-                            }}>{line.item}</div>
-                        })}
-                    </div>
-                </div>
-            </div>
-            <div className="hcManuscriptTable">
-                <div className="hcManuscriptRow">
-                    <div className="hcManuscriptLabel">
-                        Additional information online
-                    </div>
-                    <div className="hcManuscriptValue">
+                    <div className="hcMarginBottom1">
+                        <div className="hcDataLabel">Additional information online</div>
                         {props.manuscript.url_other === "-" ?
                             (
                                 <div>{props.manuscript.url_other}</div>
@@ -308,10 +257,19 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             )}
                     </div>
                 </div>
-            </div>
-            <div className="backLine" onClick={() => {
-                window.history.back()
-            }}>Back to results
+                <hr className="hcMarginTop2"/>
+                <div className="hc2columns hcMarginTop2">
+                    <div className="hcBasicSideMargin hcSmallTxt">
+                        <div className="hcClickable" onClick={() => {
+                            window.history.back()
+                        }}>Back to results
+                        </div>
+                    </div>
+                    <div className="hcBasicSideMargin hcSmallTxt">
+                        Created by Evina Steinová on 7 September 2020<br/>
+                        Last modified by Evina Steinová on 7 September 2020
+                    </div>
+                </div>
             </div>
         </div>
     )

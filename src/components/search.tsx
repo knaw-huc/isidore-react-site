@@ -458,7 +458,7 @@ export default function Search(props: { search_string: string }) {
                     <div className="hcLayoutResults">
                         <div className="hcMarginBottom2">
                             <div className="hcIKselectedFacet">
-                                <div className=""><em>Selected facets:</em></div>
+                                <div><em>Selected facets:</em></div>
                                 <div className="hcIKselectedFacetBuffer">
                                     {searchData.searchvalues === "none" ? (<div></div>) : (<div>
                                         {facets.map((item: ISearchValues) => {
@@ -506,30 +506,14 @@ export default function Search(props: { search_string: string }) {
                                     </button>
                                 </div>
                             </div>
-                            <div className="hcMarginBottom2">
-                                {searchData.searchvalues === "none" ? (
-                                    <span className="hcSelectedFacet"><span
-                                        className="hcSelectedFacetType">None</span></span>
-                                ) : (
-                                    facets.map((item: ISearchValues) => {
-                                        return (
-                                            <span className="hcSelectedFacet"><span
-                                                className="hcSelectedFacetType">{item.name}: </span>
-                                                {item.values.map(function (facValue, i) {
-                                                    return (<div className="hcFacetValues" key={i}
-                                                                 onClick={() => removeFacet(item.name, facValue)}>{facValue} {cross} </div>)
-                                                })}
-                                        </span>
-                                        )
-                                    })
-                                )}
-                            </div>
 
 
                             {loading ? (<div>Loading...</div>) : (
                                 <div>
                                     {isList ? (
-                                        <ManuscriptList result={result}/>
+                                        <ul className="hcList2 hcList2NoIcon hcMarginBottom2">
+                                            <ManuscriptList result={result}/>
+                                        </ul>
                                     ) : (
                                         <IsiMap result={result}/>
                                     )}

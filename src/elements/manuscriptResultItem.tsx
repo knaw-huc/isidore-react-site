@@ -113,9 +113,21 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
 
     function formatDimension(height: string, width: string) {
         if (height == null || height === "" || width == null || width === "") {
-            return "";
+            return "-";
         } else {
             return height + " x " + width + " mm";
+        }
+    }
+
+    function showContent(content: string): string {
+        if (content.trim() === "") {
+            return "-";
+        } else {
+            if (content.length > 100) {
+                return content.slice(0, 100) + "...";
+            } else {
+                return content;
+            }
         }
     }
 
@@ -124,23 +136,66 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
 
 
     return (
-        <div className="resItem">
-            <div className="resultCell">
-                <div className="thumb"><img src={thumb} alt="Test"/></div>
-                <div className="resultData">
-                    <div className="resultShelfmark" onClick={() => {
-                        //console.log(window.pageYOffset);
-                        window.location.href = "#detail/" + props.item.id; }}>
-                        {props.item.shelfmark}
+            <li className="hcMarginBottom2 clickableResultItem" onClick={() => {
+                window.location.href = "#detail/" + props.item.id; }}>
+                <div className="hcIKresultCard hcIKBgLight">
+                    <div className="hcAlignLeftRight hcMarginBottom1">
+                        <strong className="">Albi, Bibliothèque municipale, MS 38</strong>
+                        <div>
+                            <div className="hcIKstate">
+                                <div className="hcIKstateLabelBlock hcSmallTxt">non-canonical Etymologiae</div>
+                                <div className="hcIKstateIconBlock">
+                                    <img
+                                        src="https://d33wubrfki0l68.cloudfront.net/e925351caa47fe2ecc7752548256297ea30014ac/cdb32/images/custom/innknow/icon-non.png"
+                                        alt=""/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className="resultDateLocation">{props.item.scaled_dates[0].date}, {props.item.absolute_places[0].place_absolute}{certainty}</div>
-                    <div className="resultDateLocation">{formatFolia(props.item.no_of_folia)} {formatDimension(props.item.page_height_min,props.item.page_width_min)}</div>
-                    <div className="resultDescription">{props.item.material_type},  includes <i>Etym.</i> {props.item.books_latin}</div>
-                    <div className="resultDateLocation">{props.item.additional_content_scaled}</div>
+                    <div className="hcIKresultCardInfo">
+                        <div className="hcIKkImageBlockResult">
+                            <img
+                                src={thumb}
+                                alt={props.item.shelfmark}/>
+                        </div>
+                        <div className="hcAlignVertical">
+                            <div className="hc2columns">
+                                <div className="hcBasicSideMargin">
+                                    <div className="hcMarginBottom05">
+                                        <div className="hcDataLabel">Date of origin</div>
+                                        {props.item.scaled_dates[0].date}
+                                    </div>
+                                    <div className="hcMarginBottom05">
+                                        <div className="hcDataLabel">Place of origin</div>
+                                        {props.item.absolute_places[0].place_absolute} {certainty}
+                                    </div>
+                                    <div className="hcMarginBottom05">
+                                        <div className="hcDataLabel">Folia</div>
+                                        {props.item.no_of_folia}
+                                    </div>
+                                    <div className="hcMarginBottom05">
+                                        <div className="hcDataLabel">Page dimensions</div>
+                                        {formatDimension(props.item.page_height_min, props.item.page_width_min)}
+                                    </div>
+                                </div>
+                                <div className="hcBasicSideMargin">
+                                    <div className="hcMarginBottom05">
+                                        <div className="hcDataLabel">Material type</div>
+                                        {props.item.material_type}
+                                    </div>
+                                    <div className="hcMarginBottom1">
+                                        <div className="hcDataLabel">Content</div>
+                                        <span className="hcSmallTxt">
+                                            {showContent(props.item.additional_content_scaled)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className={style}>{props.item.designed_as}</div>
-                <div className={secondStyle}>{formatPhysicalState(props.item.physical_state)}</div>
-            </div>
-        </div>
+            </li>
+
     )
 }
