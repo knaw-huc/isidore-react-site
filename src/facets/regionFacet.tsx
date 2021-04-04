@@ -30,7 +30,7 @@ function RegionFacet(props: {add: ISendCandidate, search: ISearchObject, refresh
                 alt=""/></span>}
             {help &&
             <div className="hcFacetHelp">
-                <strong>Script</strong><br/>
+                <strong>Region of origin</strong><br/>
                 Select one or more states.
             </div>}
             <div className="hcFacetItems">

@@ -1,12 +1,43 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import slider from "../assets/img/slider.png";
+import Slider, {SliderTooltip} from "rc-slider";
+import {ISendCandidate} from "../misc/interfaces";
 
 
+function DummySliderFacet(props: { add: ISendCandidate }) {
+    const [values, setValues] = useState([600, 1100]);
 
-function DummySliderFacet() {
-    const [help, setHelp] = useState(false);
 
+    const {createSliderWithTooltip} = Slider;
+    const Range = createSliderWithTooltip(Slider.Range);
+    const {Handle} = Slider;
+
+    const handle = (props: any) => {
+        const {value, dragging, index, ...restProps} = props;
+        return (
+            <SliderTooltip
+                prefixCls="rc-slider-tooltip"
+                overlay={`${value}`}
+                visible={dragging}
+                placement="top"
+                key={index}
+            >
+                <Handle value={value} {...restProps} />
+            </SliderTooltip>
+        );
+    };
+
+    const handleChange = (values: any) => {
+        setValues(values);
+    }
+
+    function setDateFacet() {
+        props.add({
+            facet: "Date numerical",
+            field: "DATE_NUMERICAL",
+            candidate: values[0].toString() + "-" + values[1].toString()
+        });
+    }
 
 
     return (
@@ -14,15 +45,16 @@ function DummySliderFacet() {
             <div className="hcFacetTitle">
                 Date numerical
             </div>
-            { help &&
-            <div className="hcFacetHelp">
-                <strong>Free text facet</strong><br/>
-                Type text and complete with ENTER.
-            </div> }
-            <div className="hcFacetItems">
-                <img className="sliderImg" src={slider}/>
+            <div>
+                <div className="hcFacetItems">
+                    <div>
+                        <div className="sliderBox">
+                            <Range min={600} max={1100} step={50} defaultValue={values} onAfterChange={handleChange}/>
+                        </div>
+                    </div>
+                </div>
             </div>
-            (This facet isn't active yet.)
+            <button className="ftSearchBtn" onClick={setDateFacet}>Select</button>
             {/*<div className="hcClickable" >
                 { true ? (<div>More...</div>) : (<div>Less...</div>)}
             </div>*/}

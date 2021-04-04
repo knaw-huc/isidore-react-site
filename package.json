@@ -15,6 +15,7 @@
     "@types/react-numeric-input": "^2.2.3",
     "js-base64": "^3.6.0",
     "leaflet.markercluster": "^1.4.1",
+    "rc-slider": "^9.7.2",
     "react-leaflet-markercluster": "^3.0.0-rc1",
     "react-numeric-input": "^2.2.3",
     "react-scripts": "^4.0.0",

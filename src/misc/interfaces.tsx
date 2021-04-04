@@ -59,6 +59,7 @@ export interface IFacetState {
     diagrams: boolean,
     innovations: boolean,
     annotations: boolean,
+    relations: boolean,
     digitized: boolean,
     larger: boolean,
     exclude: boolean

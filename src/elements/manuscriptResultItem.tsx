@@ -1,6 +1,10 @@
 import React from "react";
 import {IResultManuscript} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
+import canonical from "../assets/img/icon-canonical.png";
+import non_canonical from "../assets/img/icon-non-canonical.png";
+import unknown from "../assets/img/icon-unknown.png";
+import excerpts from "../assets/img/icon-excerps.png";
 
 export default function ManuscriptResultItem(props: { item: IResultManuscript }) {
     const width: number = 75;
@@ -16,22 +20,16 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
         switch (design)
         {
             case "non-canonical Etymologiae":
-                returnValue = "hcNonCanDesign";
-                break;
+                return non_canonical;
             case "excerpts":
-                returnValue = "hcExcDesign";
-                break;
+                return excerpts;
             case "canonical Etymologiae":
-                returnValue = "hcCanDesign";
-                break;
+                return canonical
             case "unknown":
-                returnValue = "hcUnknownDesign";
-                break;
+                return unknown;
             default:
-                returnValue = "hcUnknownDesign";
-                break;
+                return unknown;
         }
-        return returnValue;
     }
 
     function setSecondStyle(design: string): string
@@ -131,8 +129,8 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
         }
     }
 
-    const style: string = setStyle(props.item.designed_as);
-    const secondStyle: string = setSecondStyle(props.item.physical_state);
+    //const style: string = "hcIKstateIconBlock " + setStyle(props.item.designed_as);
+    const secondStyle: string = "hcIKstateIconBlock " + setSecondStyle(props.item.physical_state);
 
 
     return (
@@ -143,11 +141,16 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                         <strong className="">Albi, Bibliothèque municipale, MS 38</strong>
                         <div>
                             <div className="hcIKstate">
-                                <div className="hcIKstateLabelBlock hcSmallTxt">non-canonical Etymologiae</div>
-                                <div className="hcIKstateIconBlock">
-                                    <img
-                                        src="https://d33wubrfki0l68.cloudfront.net/e925351caa47fe2ecc7752548256297ea30014ac/cdb32/images/custom/innknow/icon-non.png"
+                                <div className="hcIKstateLabelBlock hcSmallTxt">{props.item.designed_as}</div>
+                                <div className='hcIconStyle'>
+                                    <img className='hcIconStyle'
+                                        src={setStyle(props.item.designed_as)}
                                         alt=""/>
+                                </div>
+                            </div>
+                            <div className="hcIKstate">
+                                <div className="hcIKstateLabelBlock hcSmallTxt">{props.item.physical_state}</div>
+                                <div className={secondStyle}>
                                 </div>
                             </div>
                         </div>

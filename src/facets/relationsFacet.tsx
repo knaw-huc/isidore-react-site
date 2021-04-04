@@ -4,11 +4,11 @@ import {facetList, ISearchObject, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
-function DiagramsFacet(props: {add: ISendCandidate, search: ISearchObject, refresh: boolean}) {
+function RelationsFacet(props: {add: ISendCandidate, search: ISearchObject, refresh: boolean}) {
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/has_diagrams/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/has_relations/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
@@ -29,13 +29,13 @@ function DiagramsFacet(props: {add: ISendCandidate, search: ISearchObject, refre
                 alt=""/></span>}
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
-                <p><strong>Diagrams</strong></p>
-                <p>Does the manuscript contain diagrams?</p>
+                <p><strong>Annotations</strong></p>
+                <p>Does the manuscript contain annotations?</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Diagrams", field: "has_diagrams", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                        return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Relations", field: "has_relations", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>
@@ -45,4 +45,4 @@ function DiagramsFacet(props: {add: ISendCandidate, search: ISearchObject, refre
     );
 }
 
-export default DiagramsFacet;
+export default RelationsFacet;

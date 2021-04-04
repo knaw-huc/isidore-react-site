@@ -34,6 +34,7 @@ import {Base64} from "js-base64";
 import IsiMap from "../elements/map";
 import DummySliderFacet from "../facets/dummySliderfacet";
 import AnnotationsFacet from "../facets/annotationsFacet";
+import RelationsFacet from "../facets/relationsFacet";
 import DigitizedFacet from "../facets/digitizedFacet";
 import LargerCollectionFacet from "../facets/largerCollectionFacet";
 import ExcludeFullFacet from "../facets/excludeFullFacet";
@@ -59,6 +60,7 @@ export default function Search(props: { search_string: string }) {
             authors: false,
             currentplace: false,
             region: false,
+            relations: false,
             innovations: false,
             diagrams: false,
             annotations: false,
@@ -68,7 +70,7 @@ export default function Search(props: { search_string: string }) {
         },
         searchvalues: "none",
         page: 1,
-        page_length: 20,
+        page_length: 500,
         sortorder: ""
     };
 
@@ -102,6 +104,7 @@ export default function Search(props: { search_string: string }) {
     const [digitizedFacet, setDigitizedfacet] = useState(searchBuffer.facetstate.digitized);
     const [largerFacet, setLargerfacet] = useState(searchBuffer.facetstate.larger);
     const [excludeFacet, setExcludeFacet] = useState(searchBuffer.facetstate.exclude);
+    const [relationsFacet, setRelationsFacet] = useState(searchBuffer.facetstate.relations);
     const [refresh, setRefresh] = useState(false);
     const [searchData, setSearchData] = useState<ISearchObject>(searchBuffer);
     const [isList, setIsList] = useState(true);
@@ -155,8 +158,29 @@ export default function Search(props: { search_string: string }) {
         let searchBuffer: ISearchObject = searchData;
         searchBuffer.page = 1;
         searchBuffer.searchvalues = "none";
+        setSearchFT(true);
+        setGeoFacet(false);
+        setDatelabelFacet(false);
+        setBookFacet(false);
+        setDimFacet(false);
+        setPhysicalStatefacet(false);
+        setScriptFacet(false);
+        setManuscriptFacet(false);
+        setLayoutFacet(false);
+        setTransmittedFacet(false);
+        setProvenanceFacet(false);
+        setAuthorFacet(false);
+        setCurrentPlaceFacet(false);
+        setRegionFacet(false);
+        setRelationsFacet(false);
+        setInnovationsFacet(false);
+        setDiagramsFacet(false);
+        setAnnotationFacet(false);
+        setDigitizedfacet(false);
+        setLargerfacet(false);
+        setExcludeFacet(false);
         setSearchData(searchBuffer);
-        window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
+        window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
         setRefresh(!refresh);
     }
 
@@ -272,7 +296,7 @@ export default function Search(props: { search_string: string }) {
                         {dateLabelFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                 <DatelabelFacet add={sendCandidate} search={searchData} refresh={refresh}/>
-                                <DummySliderFacet/>
+                                <DummySliderFacet  add={sendCandidate} />
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision"
@@ -420,6 +444,17 @@ export default function Search(props: { search_string: string }) {
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {
+                            setRelationsFacet(!relationsFacet)
+                        }}>
+                            {relationsFacet ? (<span className="hcFacetGroup">&#9660; relations</span>) : (
+                                <span className="hcFacetGroup">&#9658; relations</span>)}
+                        </div>
+                        {relationsFacet ? (
+                            <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                <RelationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                            </div>) : (<div/>)}
+
+                        <div className="hcFacetSubDivision" onClick={() => {
                             setAnnotationFacet(!annotationFacet)
                         }}>
                             {annotationFacet ? (<span className="hcFacetGroup">&#9660; annotations</span>) : (
@@ -486,9 +521,16 @@ export default function Search(props: { search_string: string }) {
                                 </div>
                             </div>
                             <div className="hcResultsHeader hcMarginBottom2">
-                                <div>Manuscripts found: <strong>{result.amount}</strong></div>
-
+                                <div className="manFoundHeader">Manuscripts found: <strong>{result.amount}</strong></div>
                                 <div className="hcAlignHorizontal">
+                                    <div className="manuscriptSelector">
+                                    <select value={searchData.page_length}
+                                            onChange={(e) => setPageLength(e.target.value)}>
+                                        <option value={50}>50 per page</option>
+                                        <option value={100}>100 per page</option>
+                                        <option value={500}>All manuscripts</option>
+                                    </select>
+                                    </div>
                                     {isList ? (
                                         <button onClick={() => {
                                             setIsList(false)
@@ -530,15 +572,6 @@ export default function Search(props: { search_string: string }) {
                                                         nextPage()
                                                     }}>Next &#8594;</div>) : (<div/>)}
                                             </div>
-                                        </div>
-                                        <div>
-                                            <select value={searchData.page_length}
-                                                    onChange={(e) => setPageLength(e.target.value)}>
-                                                <option value={20}>20 manuscripts per page</option>
-                                                <option value={50}>50 manuscripts per page</option>
-                                                <option value={100}>100 manuscripts per page</option>
-                                                <option value={500}>All manuscripts</option>
-                                            </select>
                                         </div>
                                     </div>
 

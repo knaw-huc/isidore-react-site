@@ -443,7 +443,13 @@ height: auto !important; }
 
 .hcResultsHeader {
 display: flex;
-justify-content: space-between; }
+justify-content: space-between;
+}
+
+.manFoundHeader{
+vertical-align: center;
+padding:0;
+}
 
 .hcMessageBar {
 display: flex;
@@ -562,7 +568,7 @@ height: 20px;
 display: block; }
 
 input, select, option, textarea {
-width: 100%;
+width: 70%;
 padding: .5rem;
 border: 1px solid #e1ebf3;
 border-radius: 4px;
@@ -1308,17 +1314,9 @@ border: 1px solid #ebebeb; }
 font-style: italic;
 color: rgba(0, 0, 0, 0.4); }
 
-.hcIconHelp img {
-width: 1.3rem;
-height: auto;
-cursor: pointer; }
 
-.hcFacetHelp {
-display: none;
-position: absolute;
-background-color: #25a39a;
-padding: .5rem;
-width: 250px; }
+
+
 
 .hcPagination {
 display: flex;
@@ -1700,4 +1698,14 @@ font-weight: bold;
 
 .clickableResultItem {
 cursor: pointer;
+}
+
+.manuscriptSelector {
+width: 200px;
+}
+
+.sliderBox {
+display: block;
+width: 160px !important;
+margin: 10px 0;
 }
