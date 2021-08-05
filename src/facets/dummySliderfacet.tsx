@@ -45,11 +45,12 @@ function DummySliderFacet(props: { add: ISendCandidate }) {
             <div className="hcFacetTitle">
                 Date numerical
             </div>
+            <div className="rangeLabelFrom">From:</div> {values[0]} <div className="rangeLabelTo">to:</div>{values[1]}
             <div>
                 <div className="hcFacetItems">
                     <div>
                         <div className="sliderBox">
-                            <Range min={600} max={1100} step={50} defaultValue={values} onAfterChange={handleChange}/>
+                            <Range min={600} max={1100} step={5} defaultValue={values} onAfterChange={handleChange}/>
                         </div>
                     </div>
                 </div>

@@ -163,10 +163,7 @@ stroke-width: 3px;
 width: 1rem;
 }
 
-.hcBasicSideMargin {
-/*padding-left: 2rem;*/
-padding-right: 2rem;
-}
+
 
 .hcBasicPading {
 padding: 1rem;
@@ -449,13 +446,9 @@ fill: #476018;
 stroke: #476018;
 }
 
-.hc2columns, .hc3columns, .hc4columns, .hc5columns, .hc6columns {
-display: flex;
-flex-direction: column;
-}
 
 .hc2columns, .hc3columns, .hc4columns, .hc5columns, .hc6columns > * {
-flex-basis: 100%;
+flex-basis: 50%;
 }
 
 @media (min-width: 800px) {
@@ -2077,6 +2070,12 @@ margin-top: 10px;
 height: 90vh;
 }
 
+.marker-cluster span {
+text-align: center !important;
+padding-left: 6px !important;
+margin: 0 !important;
+}
+
 .mapSwitch {
 display: block;
 text-align: right;
@@ -2124,9 +2123,26 @@ position: absolute;
   right: 30px;
 }
 
+.hcIconHelpDetail{
+height: 20px !important;
+width:  20px !important;
+
+}
+
+.detailHelp{
+display: inline-block;
+cursor: pointer;
+}
+
 .hcIconStyle{
 height: 20px;
 width: auto;
+}
+
+.iiif{
+width: 40px;
+height: 40px;
+cursor: pointer;
 }
 
 
