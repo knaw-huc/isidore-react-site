@@ -29,7 +29,7 @@ import {
     IRemoveFacet,
     IResetFacets
 } from "../misc/interfaces";
-import {SERVICE_SERVER} from "../misc/config";
+import {PROJECT_SITE, SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 import IsiMap from "../elements/map";
 import DummySliderFacet from "../facets/dummySliderfacet";
@@ -71,7 +71,8 @@ export default function Search(props: { search_string: string }) {
         searchvalues: "none",
         page: 1,
         page_length: 500,
-        sortorder: ""
+        sortorder: "",
+        is_list: true
     };
 
     if (props.search_string !== "none") {
@@ -107,7 +108,8 @@ export default function Search(props: { search_string: string }) {
     const [relationsFacet, setRelationsFacet] = useState(searchBuffer.facetstate.relations);
     const [refresh, setRefresh] = useState(false);
     const [searchData, setSearchData] = useState<ISearchObject>(searchBuffer);
-    const [isList, setIsList] = useState(true);
+    const [isList, setIsList] = useState(searchBuffer.is_list);
+    const [downloadActive, setDownloadActive] = useState(false);
 
 
     const cross: string = "[x]";
@@ -296,7 +298,7 @@ export default function Search(props: { search_string: string }) {
                         {dateLabelFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                 <DatelabelFacet add={sendCandidate} search={searchData} refresh={refresh}/>
-                                <DummySliderFacet  add={sendCandidate} />
+                                <DummySliderFacet add={sendCandidate}/>
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision"
@@ -487,6 +489,12 @@ export default function Search(props: { search_string: string }) {
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                 <LargerCollectionFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                             </div>) : (<div/>)}
+
+                        <div className="fbMessage">
+                            We will be glad to receive <div className="hcClickable" onClick={() => {
+                            window.location.href = PROJECT_SITE + "?page_id=278";
+                        }}>feedback</div> on the database from you.
+                        </div>
                     </div>
 
 
@@ -521,33 +529,56 @@ export default function Search(props: { search_string: string }) {
                                 </div>
                             </div>
                             <div className="hcResultsHeader hcMarginBottom2">
-                                <div className="manFoundHeader">Manuscripts found: <strong>{result.amount}</strong></div>
+                                <div className="manFoundHeader">Manuscripts found: <strong>{result.amount}</strong>
+                                </div>
                                 <div className="hcAlignHorizontal">
-                                    <div className="manuscriptSelector">
-                                    <select value={searchData.page_length}
-                                            onChange={(e) => setPageLength(e.target.value)}>
-                                        <option value={50}>50 per page</option>
-                                        <option value={100}>100 per page</option>
-                                        <option value={500}>All manuscripts</option>
-                                    </select>
-                                    </div>
+                                    {isList && (<div className="manuscriptSelector">
+                                        <select value={searchData.page_length}
+                                                onChange={(e) => setPageLength(e.target.value)}>
+                                            <option value={50}>50 per page</option>
+                                            <option value={100}>100 per page</option>
+                                            <option value={500}>All manuscripts</option>
+                                        </select>
+                                    </div>)}
                                     {isList ? (
                                         <button onClick={() => {
-                                            setIsList(false)
+                                            searchBuffer.is_list = false;
+                                            searchBuffer.page_length = 500;
+                                            window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
+                                            setIsList(false);
+                                            setRefresh(!refresh);
                                         }}>Results on map</button>
                                     ) : (
                                         <button onClick={() => {
-                                            setIsList(true)
+                                            searchBuffer.is_list = true;
+                                            searchBuffer.page_length = searchData.page_length;
+                                            window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
+                                            setIsList(true);
+                                            setRefresh(!refresh);
                                         }}>Results in list</button>
                                     )}
-
                                     <button onClick={resetFacets}>Reset facets</button>
                                     <button onClick={() => {
-                                        openWindow(SERVICE_SERVER + "download/" + Base64.toBase64(JSON.stringify(searchData)))
+                                        setDownloadActive(true);
                                     }}>Download results
                                     </button>
                                 </div>
                             </div>
+                            {downloadActive && (<div className="downloadFormats"><strong>Choose format: </strong>
+                                <div className="downloadFormat" onClick={() => {
+                                    setDownloadActive(false);
+                                    openWindow(SERVICE_SERVER + "download/csv/" + Base64.toBase64(JSON.stringify(searchData)))
+                                }}>CSV
+                                </div> | <div className="downloadFormat" onClick={() => {
+                                    setDownloadActive(false);
+                                    openWindow(SERVICE_SERVER + "download/excel/" + Base64.toBase64(JSON.stringify(searchData)))
+                                }}>Excel
+                                </div> | <div className="downloadFormat" onClick={() => {
+                                    setDownloadActive(false);
+                                    openWindow(SERVICE_SERVER + "download/xml/" + Base64.toBase64(JSON.stringify(searchData)))
+                                }}>XML
+                                </div>
+                            </div>)}
 
 
                             {loading ? (<div>Loading...</div>) : (

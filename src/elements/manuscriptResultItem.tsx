@@ -138,7 +138,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                 window.location.href = "#detail/" + props.item.id; }}>
                 <div className="hcIKresultCard hcIKBgLight">
                     <div className="hcAlignLeftRight hcMarginBottom1">
-                        <strong className="">Albi, Bibliothèque municipale, MS 38</strong>
+                        <strong className="">{props.item.shelfmark}</strong>
                         <div>
                             <div className="hcIKstate">
                                 <div className="hcIKstateLabelBlock hcSmallTxt">{props.item.designed_as}</div>

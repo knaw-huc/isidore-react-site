@@ -76,7 +76,8 @@ export interface ISearchObject {
     searchvalues: ISearchValues[] | string,
     page: number,
     page_length: number,
-    sortorder: string;
+    sortorder: string,
+    is_list: boolean;
 }
 
 export interface IManuscript {

@@ -189,6 +189,7 @@ stroke-width: 3px; }
 width: 1rem; }
 
 .hcBasicSideMargin {
+min-width: 335px;
 padding-left: 2rem;
 padding-right: 2rem; }
 
@@ -284,6 +285,10 @@ justify-content: flex-start; }
 .hcAlignRight {
 display: flex;
 justify-content: flex-end; }
+
+.tikkieKleiner {
+font-size: 15px !important;
+}
 
 .hcAlignVertical.alignRight {
 display: flex;
@@ -1644,6 +1649,7 @@ padding: .2rem .2rem .2rem .2rem;
 display: flex;
 align-items: center;
 justify-content: center; }
+
 .hcIKstateIconBlock img {
 height: 20px;
 width: auto; }
@@ -1708,4 +1714,51 @@ width: 200px;
 display: block;
 width: 160px !important;
 margin: 10px 0;
+}
+
+.fbMessage{
+display: inline-block;
+background-color: #eedddd;
+margin: 20px 0;
+font-size: small;
+width: 180px;
+line-height: normal;
+border: 1px solid #999;
+padding: 8px;
+}
+
+.rangeLabelFrom, .rangeLabelTo {
+font-weight: bold;
+color: #5d5d5d;
+display: inline;
+padding-right: 2px;
+}
+
+.rangeLabelTo {
+padding-left: 4px;
+}
+
+.hcBookSelector {
+margin-bottom: 12px;
+}
+
+.bookLine{
+width: 80%;
+margin-left: -12px;
+margin-top: 16px;
+}
+
+.downloadFormat{
+display: inline;
+cursor: pointer;
+color: #0a3d73;
+font-weight: bold;
+}
+
+.downloadFormats{
+font-size: smaller;
+display: block;
+margin-bottom: 30px;
+margin-top: -20px;
+text-align: right;
 }

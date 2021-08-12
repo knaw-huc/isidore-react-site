@@ -29,8 +29,8 @@ function InnovationsFacet(props: {add: ISendCandidate, search: ISearchObject, re
                 alt=""/></span>}
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
-                <p><strong>Annotations</strong></p>
-                <p>Does the manuscript contain annotations?</p>
+                <p><strong>Innovations</strong></p>
+                <p>Does the manuscript contain innovations?</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>
