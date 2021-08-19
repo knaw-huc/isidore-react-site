@@ -83,6 +83,8 @@ export interface ISearchObject {
 export interface IManuscript {
     id: string,
     shelfmark: string,
+    former_shelfmarks: string,
+    siglum: string,
     steinova: string,
     bischoff: string,
     anspach: string,
@@ -104,8 +106,10 @@ export interface IManuscript {
     additional_content: string[],
     larger_unit: string[],
     related_manuscripts: IRelatedManuscripts[],
-    annotations: string,
-    diagrams: string,
+    interpolations: IInterpolation[],
+    easter_tables: IEaster_table[],
+    annotations: IAnnotation[],
+    diagrams: IDiagram[],
     innovations: string,
     additional_observations: string,
     bibliography: IStringList[],
@@ -113,11 +117,41 @@ export interface IManuscript {
     url_other: string,
     image: string,
     page_number: string,
-    iiif: string
+    iiif: string,
+    created_by: string,
+    created_on: string,
+    contributions_from: string,
+    completeness_of_the_record: string,
+    last_updated_on: string
 }
 
 export interface IProvenance {
     provenance: string;
+}
+
+export interface IInterpolation {
+    interpolation: string,
+    folia: string,
+    description: string
+}
+
+export interface IDiagram {
+    diagram_type: string,
+    folia: string,
+    description: string
+}
+
+export interface IEaster_table {
+    easter_table_type: string,
+    folia: string,
+    remarks: string
+}
+
+export interface IAnnotation {
+    number_of_annotations: string,
+    books: string,
+    language: string,
+    remarks: string
 }
 
 export interface IRelatedManuscripts {
