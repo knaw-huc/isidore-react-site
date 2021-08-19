@@ -484,10 +484,10 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 }}>Back to results
                                 </div>
                             </div>
-                            <div className="hcBasicSideMargin hcSmallTxt">
+                            {/*<div className="hcBasicSideMargin hcSmallTxt">
                                 Created by Evina Steinová on 7 September 2020<br/>
                                 Last modified by Evina Steinová on 7 September 2020
-                            </div>
+                            </div>*/}
                         </div>
                     </div>
                 </div>
