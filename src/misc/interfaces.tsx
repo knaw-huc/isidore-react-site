@@ -15,7 +15,7 @@ export interface IResultManuscript {
     image: string;
     additional_content_scaled: string,
     books_latin: string,
-    id: string
+    id: string,
 }
 
 export interface IAbsolutePlace {
@@ -111,8 +111,9 @@ export interface IManuscript {
     bibliography: IStringList[],
     digitized_at: IStringList[],
     url_other: string,
-    image: string;
-    page_number: string;
+    image: string,
+    page_number: string,
+    iiif: string
 }
 
 export interface IProvenance {
