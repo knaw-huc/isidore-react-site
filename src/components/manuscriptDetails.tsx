@@ -413,7 +413,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     {related_manuscripts.map((item, index) => {
                                             return (<div>
                                                 <em>{item.reason}</em>
-                                                <ul>
+                                                <ul className="relationList">
                                                     {item.intern.map((item_in, index) => {
                                                         const url = "/#detail/" + item_in.id;
                                                         return (<li>
@@ -424,11 +424,9 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                                         </li>)
                                                     })}
                                                     {item.extern.map((index_ex, index) => {
-                                                        if (index_ex !== "0" && index_ex.trim() !== "") {
                                                             return (<li>
-                                                                <div key={index} className="line">{index_ex}</div>
+                                                                <div key={index} className="line">{index_ex.name}</div>
                                                             </li>)
-                                                        }
 
                                                     })}
                                                 </ul>

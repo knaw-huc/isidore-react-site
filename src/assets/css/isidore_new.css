@@ -1763,6 +1763,7 @@ margin-top: -20px;
 text-align: right;
 }
 
-.innovationListItem {
+.innovationListItem, .relationList {
 margin-bottom: 10px;
 }
+

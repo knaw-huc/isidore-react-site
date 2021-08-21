@@ -157,12 +157,16 @@ export interface IAnnotation {
 export interface IRelatedManuscripts {
     reason: string,
     intern: IInsideRelations[],
-    extern: string[]
+    extern: IOutsideRelations[]
 }
 
 export interface IInsideRelations {
     id: string,
     shelfmark: string
+}
+
+export interface IOutsideRelations {
+    name: string
 }
 
 export interface IStringList {
