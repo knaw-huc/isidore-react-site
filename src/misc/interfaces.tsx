@@ -113,7 +113,7 @@ export interface IManuscript {
     innovations: string,
     additional_observations: string,
     bibliography: IStringList[],
-    digitized_at: IStringList[],
+    digitized_at: IDigitized[],
     url_other: string,
     image: string,
     page_number: string,
@@ -123,6 +123,11 @@ export interface IManuscript {
     contributions_from: string,
     completeness_of_the_record: string,
     last_updated_on: string
+}
+
+export interface IDigitized {
+    other_links: string,
+    label: string
 }
 
 export interface IProvenance {

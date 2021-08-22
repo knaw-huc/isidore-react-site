@@ -456,9 +456,12 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 <div className="hcDataLabel">Digitized at</div>
                                 {props.manuscript.digitized_at.map((item) => {
                                     return (
+                                        <div>
                                         <div className="linkLine" onClick={() => {
-                                            openWindow(item.item);
-                                        }}>{item.item}</div>
+                                            openWindow(item.other_links);
+                                        }}>{item.other_links}</div>
+                                            ({item.label})
+                                        </div>
                                     )
                                 })}
                             </div>
