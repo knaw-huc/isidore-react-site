@@ -1767,3 +1767,8 @@ text-align: right;
 margin-bottom: 10px;
 }
 
+.other_url_label {
+display: inline-block;
+margin-left: 8px;
+}
+

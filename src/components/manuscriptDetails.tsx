@@ -460,21 +460,25 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         <div className="linkLine" onClick={() => {
                                             openWindow(item.other_links);
                                         }}>{item.other_links}</div>
-                                            ({item.label})
+                                            {item.label !== null && (<div>{item.label}</div>)}
                                         </div>
                                     )
                                 })}
                             </div>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Additional information online</div>
-                                {props.manuscript.url_other === "-" ?
-                                    (
-                                        <div>{props.manuscript.url_other}</div>
-                                    ) : (
+                                {props.manuscript.url_other.map((item) => {
+                                    return (
+                                        <div>
                                         <div className="linkLine" onClick={() => {
-                                            openWindow(props.manuscript.url_other);
-                                        }}>{props.manuscript.url_other}</div>
-                                    )}
+                                            openWindow(item.url);
+                                        }}>{item.url}</div>
+                                             <div className="other_url_label">{item.label}</div>
+                                        </div>
+                                    )
+                                })}
+
+
                             </div>
                         </div>
                         <hr className="hcMarginTop2"/>

@@ -114,7 +114,7 @@ export interface IManuscript {
     additional_observations: string,
     bibliography: IStringList[],
     digitized_at: IDigitized[],
-    url_other: string,
+    url_other: IOther[],
     image: string,
     page_number: string,
     iiif: string,
@@ -123,6 +123,11 @@ export interface IManuscript {
     contributions_from: string,
     completeness_of_the_record: string,
     last_updated_on: string
+}
+
+export interface IOther {
+    url: string,
+    label: string
 }
 
 export interface IDigitized {

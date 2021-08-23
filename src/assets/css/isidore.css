@@ -1979,7 +1979,10 @@ margin-right: 8px;
 color: #0087d4;
 text-decoration: none;
 cursor: pointer;
+display: inline-block;
 }
+
+
 
 .backLine {
 color: rgb(73, 85, 144);
