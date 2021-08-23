@@ -104,7 +104,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
 
                             <div className="hcBasicSideMargin hcAlignVertical">
                         <span className="hcAlignRight tikkieKleiner">Innovating knowledge ID <strong
-                            className="hcIKidBlock">{props.manuscript.id}</strong></span>
+                            className="hcIKidBlock">{props.manuscript.steinova}</strong></span>
                                 {props.manuscript.anspach !== "" && (<span className="hcSmallTxt  hcAlignRight">Anspach
                             <strong className="hcIKidBlock">{props.manuscript.anspach}</strong></span>)}
                                 {props.manuscript.bischoff !== "" && (
@@ -473,7 +473,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         <div className="linkLine" onClick={() => {
                                             openWindow(item.url);
                                         }}>{item.url}</div>
-                                             <div className="other_url_label">{item.label}</div>
+                                             {item.label}
                                         </div>
                                     )
                                 })}
