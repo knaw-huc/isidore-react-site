@@ -9,6 +9,7 @@ import AbsolutePlaceFacet from "../facets/absolutePlaceFacet";
 import DatelabelFacet from "../facets/dateLabelFacet";
 import DatePeriodFacet from "../facets/dataPeriodFacet";
 import FiltersFacet from "../facets/filtersFacet";
+import FragmentFacet from "../facets/fragmentFacet";
 import BookFacet from "../facets/bookFacet";
 import PageDimensionsFacet from "../facets/pageDimensions";
 import PhysicalStateFacet from "../facets/physicalStateFacet";
@@ -16,9 +17,11 @@ import ScriptFacet from "../facets/scriptFacet";
 import ManuscriptTypeFacet from "../facets/manuscriptType";
 import LayoutFacet from "../facets/layoutFacet";
 import TransmittedFacet from "../facets/transmittedFacet";
+import EasterTableFacet from "../facets/easterTableFacet";
 import ProvenanceFacet from "../facets/provenanceFacet";
 import AuthorFacet from "../facets/authorFacet";
 import CurrentPlaceFacet from "../facets/currentPlaceFacet";
+import InterpolationsFacet from "../facets/interpolationFacet";
 import RegionFacet from "../facets/regionFacet";
 import {
     IResultManuscriptList,
@@ -66,7 +69,10 @@ export default function Search(props: { search_string: string }) {
             annotations: false,
             digitized: false,
             larger: false,
-            exclude: false
+            exclude: false,
+            fragment: false,
+            interpolations: false,
+            easter_tables: false
         },
         searchvalues: "none",
         page: 1,
@@ -105,7 +111,10 @@ export default function Search(props: { search_string: string }) {
     const [digitizedFacet, setDigitizedfacet] = useState(searchBuffer.facetstate.digitized);
     const [largerFacet, setLargerfacet] = useState(searchBuffer.facetstate.larger);
     const [excludeFacet, setExcludeFacet] = useState(searchBuffer.facetstate.exclude);
+    const [fragmentFacet, setFragmentFacet] = useState(searchBuffer.facetstate.fragment);
+    const [interpolationsFacet, setInterpolationsFacet] = useState(searchBuffer.facetstate.interpolations);
     const [relationsFacet, setRelationsFacet] = useState(searchBuffer.facetstate.relations);
+    const [easterTableFacet, setEasterTableFacet] = useState(searchBuffer.facetstate.relations);
     const [refresh, setRefresh] = useState(false);
     const [searchData, setSearchData] = useState<ISearchObject>(searchBuffer);
     const [isList, setIsList] = useState(searchBuffer.is_list);
@@ -181,6 +190,9 @@ export default function Search(props: { search_string: string }) {
         setDigitizedfacet(false);
         setLargerfacet(false);
         setExcludeFacet(false);
+        setFragmentFacet(false);
+        setInterpolationsFacet(false);
+        setEasterTableFacet(false);
         setSearchData(searchBuffer);
         window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
         setRefresh(!refresh);
@@ -423,6 +435,20 @@ export default function Search(props: { search_string: string }) {
                                 <ScriptFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                             </div>) : (<div/>)}
 
+
+                        <div className="hcFacetSubDivision" onClick={() => {
+                            setFragmentFacet(!fragmentFacet);
+                        }}>
+                            {fragmentFacet ? (<span className="hcFacetGroup">&#9660; is fragment</span>) : (
+                                <span className="hcFacetGroup">&#9658; is fragment</span>)}
+                        </div>
+                        {fragmentFacet ? (
+                            <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                <FragmentFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                            </div>) : (<div/>)}
+
+
+
                         <div className="hcFacetSubDivision" onClick={() => {
                             setInnovationsFacet(!innovationsFacet);
                         }}>
@@ -435,6 +461,17 @@ export default function Search(props: { search_string: string }) {
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {
+                            setInterpolationsFacet(!interpolationsFacet);
+                        }}>
+                            {interpolationsFacet ? (<span className="hcFacetGroup">&#9660; interpolations</span>) : (
+                                <span className="hcFacetGroup">&#9658; interpolations</span>)}
+                        </div>
+                        {interpolationsFacet ? (
+                            <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                <InterpolationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                            </div>) : (<div/>)}
+
+                        <div className="hcFacetSubDivision" onClick={() => {
                             setDiagramsFacet(!diagramsFacet)
                         }}>
                             {diagramsFacet ? (<span className="hcFacetGroup">&#9660; diagrams</span>) : (
@@ -443,6 +480,17 @@ export default function Search(props: { search_string: string }) {
                         {diagramsFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                 <DiagramsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                            </div>) : (<div/>)}
+
+                        <div className="hcFacetSubDivision" onClick={() => {
+                            setEasterTableFacet(!easterTableFacet)
+                        }}>
+                            {easterTableFacet ? (<span className="hcFacetGroup">&#9660; easter tables</span>) : (
+                                <span className="hcFacetGroup">&#9658; easter tables</span>)}
+                        </div>
+                        {easterTableFacet ? (
+                            <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                <EasterTableFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {

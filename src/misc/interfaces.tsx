@@ -62,7 +62,10 @@ export interface IFacetState {
     relations: boolean,
     digitized: boolean,
     larger: boolean,
-    exclude: boolean
+    exclude: boolean,
+    fragment: boolean,
+    interpolations: boolean,
+    easter_tables: boolean
 }
 
 export interface ISearchValues {

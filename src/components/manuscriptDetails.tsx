@@ -6,6 +6,7 @@ import non_canonical from "../assets/img/icon-non-canonical.png";
 import unknown from "../assets/img/icon-unknown.png";
 import excerpts from "../assets/img/icon-excerps.png";
 import iiifImg from "../assets/img/iiif.png";
+import Mirador from 'mirador';
 
 
 
@@ -390,7 +391,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         larger collection, this collection is named or briefly described here.
                                     </div>)}
                                     {larger_unit.map(line => {
-                                        return <div className="line">{line}</div>
+                                        return <div className="line" dangerouslySetInnerHTML={{__html: line}}/>
                                     })}
                                 </div>
                                 <div className="hcMarginBottom1">
@@ -497,10 +498,29 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                     </div>
                 </div>
             ) : (
-                <div>
-                    <div onClick={() => {setShowViewer(false)}}>Close</div>
 
-                </div>
+                    <Mirador
+                        config={{
+                            id: 'mirador',
+                            window: {
+                                allowFullscreen: false,
+                                sideBarPanel: 'info',
+                                hideWindowTitle: true,
+                                sideBarOpen: true,
+                                highlightAllAnnotations: true,
+                                forceDrawAnnotations: true,
+                            },
+                            windows: [
+                                {
+                                    loadedManifest: props.manuscript.iiif
+                                },
+                            ],
+                            workspaceControlPanel: {
+                                enabled: false,
+                            },
+                        }}
+                        plugins={[]}
+                    />
             )}
         </div>
     )
