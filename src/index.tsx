@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Search from "./components/search";
 import Manuscript from "./components/manuscript";
+import Viewer from "./components/viewer";
 import {StateMachineComponent} from "./renderMachine";
 import * as serviceWorker from './serviceWorker';
 import {interpret} from "xstate";
@@ -30,8 +31,15 @@ function gotoUrl() {
                 interpreter.send("search", {search_string: id});
             }
         } else {
-            const id = "none";
-            interpreter.send("search", {search_string: id});
+            if (window.location.hash.substr(1).indexOf("viewer") === 0) {
+                const id = window.location.hash.substr(window.location.hash.indexOf("/") + 1);
+                console.log(id);
+                interpreter.send("viewer", {manuscript_id: id});
+            } else {
+                const id = "none";
+                interpreter.send("search", {search_string: id});
+            }
+
         }
     }
 }
@@ -39,13 +47,12 @@ function gotoUrl() {
 window.onhashchange = gotoUrl;
 
 
-
-
 ReactDOM.render(
     <div>
         {StateMachineComponent(interpreter, {
             "detail": ({state}) => <Manuscript manuscriptID={(state.context || {}).manuscript_id}/>,
-            "search": ({state}) => <Search  search_string={(state.context || {}).search_string}/>,
+            "viewer": ({state}) => <Viewer manuscriptID={(state.context || {}).manuscript_id}/>,
+            "search": ({state}) => <Search search_string={(state.context || {}).search_string}/>,
             "fourOhFour": ({state}) => <div>404</div>,
             "": ({state}) => <div>The GUI for {state.value} is not yet defined</div>
         })}</div>

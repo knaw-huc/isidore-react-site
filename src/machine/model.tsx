@@ -8,6 +8,7 @@ export const IsiMachine = Machine<{
         fourOhFour: {},
         detail: {},
         search: {},
+        viewer: {}
     }
 }>(
     {
@@ -30,6 +31,12 @@ export const IsiMachine = Machine<{
                 }),
                 target: "search"
             },
+            viewer: {
+               actions: assign({
+                   manuscript_id: (context, event) => event.manuscript_id
+               }),
+                target: "viewer"
+            },
             "*": "fourOhFour"
         },
         states: {
@@ -37,14 +44,17 @@ export const IsiMachine = Machine<{
             detail: {
                 on: {
                     search: "search",
-                    detail: "detail"
+                    detail: "detail",
+                    viewer: "viewer"
                 }
             },
             search: {
                 on: {
-                    item: "detail"
+                    item: "detail",
+                    viewer: "viewer"
                 }
-            }
+            },
+            viewer: {}
         }
     }
 );
