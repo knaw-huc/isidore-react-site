@@ -6,7 +6,7 @@ import non_canonical from "../assets/img/icon-non-canonical.png";
 import unknown from "../assets/img/icon-unknown.png";
 import excerpts from "../assets/img/icon-excerps.png";
 import iiifImg from "../assets/img/iiif.png";
-import Mirador from 'mirador';
+import Mirador from "../components/Mirador";
 
 
 
@@ -37,6 +37,8 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
     if (props.manuscript.source_dating !== "") {
         source_of_date = "(" + props.manuscript.source_dating + ")";
     }
+
+    console.log(props.manuscript.iiif);
 
     let pgType = "Page";
     if (props.manuscript.page_number.indexOf('r') !== -1 || props.manuscript.page_number.indexOf('v') !== -1) {
@@ -236,7 +238,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     alt=""/>
                                 {props.manuscript.page_number !== "" &&
                                 <div className="hcPageNumber">{pgType} {props.manuscript.page_number}</div>}
-                                {props.manuscript.iiif !== "-" &&
+                                {props.manuscript.iiif !== "" &&
                                 <div className="iiif" onClick={() => {setShowViewer(true)}}><img
                                     src={iiifImg}
                                     alt=""/></div>}
@@ -513,7 +515,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 allowFullscreen: false,
                                 sideBarPanel: 'info',
                                 hideWindowTitle: true,
-                                sideBarOpen: true,
+                                sideBarOpen: false,
                                 highlightAllAnnotations: true,
                                 forceDrawAnnotations: true,
                             },
