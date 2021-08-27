@@ -370,7 +370,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 </div>
                                 <div className="hcMarginBottom1">
                                     <div className="hcDataLabel">Other innovations</div>
-                                    {props.manuscript.innovations}
+                                    <div dangerouslySetInnerHTML={{__html: props.manuscript.innovations}}/>
                                 </div>
                             </div>
 
@@ -426,7 +426,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                                     })}
                                                     {item.extern.map((index_ex, index) => {
                                                             return (<li>
-                                                                <div key={index} className="line">{index_ex.name}</div>
+                                                                <div key={index} className="line" dangerouslySetInnerHTML={{__html: index_ex.name}}/>
                                                             </li>)
 
                                                     })}
@@ -443,7 +443,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             <h2>Additional information</h2>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Additional observations</div>
-                                {props.manuscript.additional_observations}
+                                <div dangerouslySetInnerHTML={{__html: props.manuscript.additional_observations}}/>
                             </div>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Bibliography</div>
