@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {IManuscript} from "../misc/interfaces";
-import {SERVICE_SERVER, HOME} from "../misc/config";
+import {SERVICE_SERVER, HOME, EDITION} from "../misc/config";
 import canonical from "../assets/img/icon-canonical.png";
 import non_canonical from "../assets/img/icon-non-canonical.png";
 import unknown from "../assets/img/icon-unknown.png";
@@ -363,6 +363,13 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                             {item.number_of_annotations} {item.language} glosses to books {item.books}
                                             {item.remarks !== "" && (
                                                 <div>{item.remarks}</div>
+                                            )}
+                                            {item.url !== "" && (
+                                                (<div className="linkLine" onClick={() => {
+                                                    openWindow(EDITION + item.url);
+                                                }} >
+                                                    {EDITION + item.url}
+                                                </div>)
                                             )}
                                         </div>)
                                     })

@@ -164,7 +164,8 @@ export interface IAnnotation {
     number_of_annotations: string,
     books: string,
     language: string,
-    remarks: string
+    remarks: string,
+    url: string
 }
 
 export interface IRelatedManuscripts {
