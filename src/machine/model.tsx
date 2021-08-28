@@ -2,7 +2,8 @@ import {assign, Machine} from "xstate";
 
 export const IsiMachine = Machine<{
     search_string: string,
-    manuscript_id: string
+    manuscript_id: string,
+    m_id: string
 }, {
     states: {
         fourOhFour: {},
@@ -17,6 +18,7 @@ export const IsiMachine = Machine<{
         context: {
             search_string: "none",
             manuscript_id: "",
+            m_id: "rob"
         },
         on: {
             detail: {
@@ -33,7 +35,7 @@ export const IsiMachine = Machine<{
             },
             viewer: {
                actions: assign({
-                   manuscript_id: (context, event) => event.manuscript_id
+                   m_id: (context, event) => event.m_id
                }),
                 target: "viewer"
             },
@@ -41,6 +43,12 @@ export const IsiMachine = Machine<{
         },
         states: {
             fourOhFour: {},
+            viewer: {
+                on: {
+                    search: "search",
+                    detail: "detail"
+                }
+            },
             detail: {
                 on: {
                     search: "search",
@@ -53,8 +61,7 @@ export const IsiMachine = Machine<{
                     item: "detail",
                     viewer: "viewer"
                 }
-            },
-            viewer: {}
+            }
         }
     }
 );

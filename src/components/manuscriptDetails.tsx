@@ -6,7 +6,7 @@ import non_canonical from "../assets/img/icon-non-canonical.png";
 import unknown from "../assets/img/icon-unknown.png";
 import excerpts from "../assets/img/icon-excerps.png";
 import iiifImg from "../assets/img/iiif.png";
-import Mirador from "../components/Mirador";
+import {toBase64} from "js-base64";
 
 
 function ManuscriptDetails(props: { manuscript: IManuscript }) {
@@ -234,7 +234,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             <div className="hcPageNumber">{pgType} {props.manuscript.page_number}</div>}
                             {props.manuscript.iiif !== "" &&
                             <div className="iiif" onClick={() => {
-                                openWindow("#viewer/" + props.manuscript.id);
+                                openWindow("#viewer/" + toBase64(props.manuscript.iiif));
                             }}><img
                                 src={iiifImg}
                                 alt=""/></div>}

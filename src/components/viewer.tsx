@@ -1,12 +1,37 @@
 import React from "react";
 import Mirador from "./Mirador";
+import {fromBase64} from "js-base64";
 
-function Viewer(props: {manuscriptID: string}) {
+function Viewer(props: {id: string}) {
 
-    console.log('bonzo');
-    console.log(props.manuscriptID);
+    const id: string = window.location.hash.substr(window.location.hash.indexOf("/") + 1);
+    const manifest = fromBase64(id);
+
     return (
-     <div>Rob was hier: {props.manuscriptID}</div>
+     <div>
+         <Mirador
+             config={{
+                 id: 'mirador',
+                 window: {
+                     allowFullscreen: false,
+                     sideBarPanel: 'info',
+                     hideWindowTitle: true,
+                     sideBarOpen: true,
+                     highlightAllAnnotations: true,
+                     forceDrawAnnotations: true,
+                 },
+                 windows: [
+                     {
+                         loadedManifest: manifest,
+                     },
+                 ],
+                 workspaceControlPanel: {
+                     enabled: false,
+                 },
+             }}
+             plugins={[]}
+         />
+     </div>
     )
 }
 

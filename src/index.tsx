@@ -34,7 +34,7 @@ function gotoUrl() {
             if (window.location.hash.substr(1).indexOf("viewer") === 0) {
                 const id = window.location.hash.substr(window.location.hash.indexOf("/") + 1);
                 console.log(id);
-                interpreter.send("viewer", {manuscript_id: id});
+                interpreter.send("viewer", {m_id: id});
             } else {
                 const id = "none";
                 interpreter.send("search", {search_string: id});
@@ -51,7 +51,7 @@ ReactDOM.render(
     <div>
         {StateMachineComponent(interpreter, {
             "detail": ({state}) => <Manuscript manuscriptID={(state.context || {}).manuscript_id}/>,
-            "viewer": ({state}) => <Viewer manuscriptID={(state.context || {}).manuscript_id}/>,
+            "viewer": ({state}) => <Viewer id={(state.context || {}).m_id}/>,
             "search": ({state}) => <Search search_string={(state.context || {}).search_string}/>,
             "fourOhFour": ({state}) => <div>404</div>,
             "": ({state}) => <div>The GUI for {state.value} is not yet defined</div>
