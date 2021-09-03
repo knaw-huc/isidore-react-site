@@ -72,7 +72,8 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                 <div className="hcContentContainer hcMarginBottom1 hcMarginTop3">
                     <div className="hcIKheaderSplit hcAlignLeftRight">
                         <div className="hcBasicSideMargin ">
-                            <h1>{props.manuscript.shelfmark}</h1>
+                            {props.manuscript.shelfmark.length > 60 ? (<h3>{props.manuscript.shelfmark}</h3>) : (<h1>{props.manuscript.shelfmark}</h1>)}
+
                             <span
                                 className="hcSmallTxt hcClrTxt_Grey">{HOME}#detail/{props.manuscript.id}
                                 </span>
@@ -107,6 +108,10 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             {props.manuscript.bischoff !== "" && (
                                 <span className="hcSmallTxt hcAlignRight">Bischoff <strong
                                     className="hcIKidBlock">{props.manuscript.bischoff}</strong></span>)}
+                            {props.manuscript.cla !== "" && (
+                                <span className="hcSmallTxt hcAlignRight">CLA <strong
+                                    className="hcIKidBlock">{props.manuscript.cla}</strong></span>)}
+
                             {props.manuscript.siglum !== "" && (
                                 <span className="hcSmallTxt hcAlignRight">Siglum <strong
                                     className="hcIKidBlock">{props.manuscript.siglum}</strong></span>)}
@@ -140,6 +145,9 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             </div>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Provenance</div>
+                                {props.manuscript.provenances.length === 0 && (
+                                    <div>-</div>
+                                )}
                                 {props.manuscript.provenances.map((line) => {
                                     return (<div>{line.provenance}</div>)
                                 })}
@@ -154,6 +162,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             </div>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Physical condition</div>
+                                {props.manuscript.physical_state_scaled === "" && props.manuscript.physical_state === "" && (<div>-</div>)}
                                 {props.manuscript.physical_state_scaled}
                                 {props.manuscript.physical_state !== "" ? (
                                     <div>{props.manuscript.physical_state}</div>) : (
@@ -227,9 +236,14 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
 
                         </div>
                         <div className="hcIKkImageBlock">
-                            <img
-                                src={img}
-                                alt=""/>
+                            {props.manuscript.iiif !== "" ? (
+                                <img className="imgLink" onClick={() => {
+                                    openWindow("#viewer/" + toBase64(props.manuscript.iiif));
+                                }} src={img} alt=""/>
+                            ) : (
+                                <img src={img} alt=""/>
+                            )}
+
                             {props.manuscript.page_number !== "" &&
                             <div className="hcPageNumber">{pgType} {props.manuscript.page_number}</div>}
                             {props.manuscript.iiif !== "" &&
@@ -358,17 +372,20 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 )}
                                 {props.manuscript.annotations.map(item => {
                                     return (<div className="innovationListItem">
-                                        {item.number_of_annotations} {item.language} glosses to books {item.books}
-                                        {item.remarks !== "" && (
-                                            <div>{item.remarks}</div>
-                                        )}
-                                        {item.url !== "" && (
-                                            (<div className="linkLine" onClick={() => {
-                                                openWindow(EDITION + item.url);
-                                            }}>
-                                                {EDITION + item.url}
-                                            </div>)
-                                        )}
+                                        {item.url !== "" ? (
+                                            <div>
+                                                <div className="linkLine" onClick={() => {
+                                                    openWindow(EDITION + item.url);
+                                                }}>{item.number_of_annotations} {item.language} glosses to books {item.books}</div>
+                                                {item.remarks !== "" && (
+                                                    <div>{item.remarks}</div>)}
+                                            </div>
+                                        ) : (<div>
+                                            {item.number_of_annotations} {item.language} glosses to books {item.books}
+                                            {item.remarks !== "" && (
+                                                <div>{item.remarks}</div>
+                                            )}
+                                        </div>)}
                                     </div>)
                                 })
                                 }
@@ -395,6 +412,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     into a
                                     larger collection, this collection is named or briefly described here.
                                 </div>)}
+                                {larger_unit.length === 1 && larger_unit[0] === "" && (<div>-</div>)}
                                 {larger_unit.map(line => {
                                     return <div className="line" dangerouslySetInnerHTML={{__html: line}}/>
                                 })}
@@ -416,6 +434,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     are
                                     listed here. Manuscripts with a record view in the database are linked.
                                 </div>)}
+                                {related_manuscripts.length === 0 && (<div>-</div>)}
                                 {related_manuscripts.map((item, index) => {
                                         return (<div>
                                             <em>{item.reason}</em>
@@ -467,7 +486,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         <div className="linkLine" onClick={() => {
                                             openWindow(item.other_links);
                                         }}>{item.other_links}</div>
-                                        {item.label !== null && (<div>{item.label}</div>)}
+                                        {item.label !== null && item.label !== "()" && (<div  className="other_url_label">{item.label}</div>)}
                                     </div>
                                 )
                             })}
@@ -480,7 +499,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         <div className="linkLine" onClick={() => {
                                             openWindow(item.url);
                                         }}>{item.url}</div>
-                                        {item.label}
+                                        {item.label !== "()" && (<div className="other_url_label">{item.label}</div>)}
                                     </div>
                                 )
                             })}

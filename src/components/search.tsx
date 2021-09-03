@@ -1,14 +1,12 @@
 import React, {useEffect} from "react";
 import Header from "../page/header";
-import Footer from "../page/footer";
+// import Footer from "../page/footer";
 import ManuscriptList from "./manuscriptList";
 import {useState} from "react";
 import SearchFreeText from "../facets/searchFreeText";
 import GeoNameFacet from "../facets/geoNameFacet";
 import AbsolutePlaceFacet from "../facets/absolutePlaceFacet";
 import DatelabelFacet from "../facets/dateLabelFacet";
-import DatePeriodFacet from "../facets/dataPeriodFacet";
-import FiltersFacet from "../facets/filtersFacet";
 import FragmentFacet from "../facets/fragmentFacet";
 import BookFacet from "../facets/bookFacet";
 import PageDimensionsFacet from "../facets/pageDimensions";
@@ -17,7 +15,7 @@ import ScriptFacet from "../facets/scriptFacet";
 import ManuscriptTypeFacet from "../facets/manuscriptType";
 import LayoutFacet from "../facets/layoutFacet";
 import TransmittedFacet from "../facets/transmittedFacet";
-import EasterTableFacet from "../facets/easterTableFacet";
+// import EasterTableFacet from "../facets/easterTableFacet";
 import ProvenanceFacet from "../facets/provenanceFacet";
 import AuthorFacet from "../facets/authorFacet";
 import CurrentPlaceFacet from "../facets/currentPlaceFacet";
@@ -439,14 +437,15 @@ export default function Search(props: { search_string: string }) {
                         <div className="hcFacetSubDivision" onClick={() => {
                             setFragmentFacet(!fragmentFacet);
                         }}>
-                            {fragmentFacet ? (<span className="hcFacetGroup">&#9660; is fragment</span>) : (
-                                <span className="hcFacetGroup">&#9658; is fragment</span>)}
+                            {fragmentFacet ? (<span className="hcFacetGroup">&#9660; fragment</span>) : (
+                                <span className="hcFacetGroup">&#9658; fragment</span>)}
                         </div>
                         {fragmentFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                 <FragmentFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                             </div>) : (<div/>)}
 
+                        <div className="hcFacetSubDivision"><hr/></div>
 
 
                         <div className="hcFacetSubDivision" onClick={() => {
@@ -482,7 +481,7 @@ export default function Search(props: { search_string: string }) {
                                 <DiagramsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                             </div>) : (<div/>)}
 
-                        <div className="hcFacetSubDivision" onClick={() => {
+                        {/*<div className="hcFacetSubDivision" onClick={() => {
                             setEasterTableFacet(!easterTableFacet)
                         }}>
                             {easterTableFacet ? (<span className="hcFacetGroup">&#9660; easter tables</span>) : (
@@ -491,13 +490,13 @@ export default function Search(props: { search_string: string }) {
                         {easterTableFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
                                 <EasterTableFacet add={sendCandidate} search={searchData} refresh={refresh}/>
-                            </div>) : (<div/>)}
+                            </div>) : (<div/>)}*/}
 
                         <div className="hcFacetSubDivision" onClick={() => {
                             setRelationsFacet(!relationsFacet)
                         }}>
-                            {relationsFacet ? (<span className="hcFacetGroup">&#9660; relations</span>) : (
-                                <span className="hcFacetGroup">&#9658; relations</span>)}
+                            {relationsFacet ? (<span className="hcFacetGroup">&#9660; relations to other mss</span>) : (
+                                <span className="hcFacetGroup">&#9658; relations to other mss</span>)}
                         </div>
                         {relationsFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">

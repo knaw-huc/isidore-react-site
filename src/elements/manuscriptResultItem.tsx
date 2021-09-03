@@ -83,7 +83,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                 returnValue = "psUnknownDesign";
                 break;
             default:
-                returnValue = "psUnknownDesign";
+                returnValue = "noDesign";
                 break;
         }
         return returnValue;

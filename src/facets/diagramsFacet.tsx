@@ -18,6 +18,8 @@ function DiagramsFacet(props: {add: ISendCandidate, search: ISearchObject, refre
         setLoading(false);
     }
 
+
+
     useEffect(() => {
         fetchData();
     }, [props.refresh]);
@@ -35,12 +37,13 @@ function DiagramsFacet(props: {add: ISendCandidate, search: ISearchObject, refre
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Diagrams", field: "has_diagrams", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                            return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Has diagrams", field: "has_diagrams", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>
                 </div>
             </div>
+
         </div>
     );
 }

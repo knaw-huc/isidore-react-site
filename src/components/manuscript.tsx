@@ -28,7 +28,7 @@ function Manuscript(props: { manuscriptID: string }) {
             <Header/>
             <div>
                 {loading ? (
-                    <div>Loading...</div>
+                    <div></div>
                 ) : (
                     <ManuscriptDetails manuscript={result}/>
                 )}
