@@ -166,7 +166,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                                 <div className="hcBasicSideMargin">
                                     <div className="hcMarginBottom05">
                                         <div className="hcDataLabel">Date of origin</div>
-                                        {props.item.scaled_dates[0].date}
+                                        {props.item.scaled_dates[0].label}
                                     </div>
                                     <div className="hcMarginBottom05">
                                         <div className="hcDataLabel">Place of origin</div>
@@ -182,6 +182,10 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                                     </div>
                                 </div>
                                 <div className="hcBasicSideMargin">
+                                    <div className="hcMarginBottom05">
+                                        <div className="hcDataLabel">Books included</div>
+                                        {props.item.books_latin}
+                                    </div>
                                     <div className="hcMarginBottom05">
                                         <div className="hcDataLabel">Material type</div>
                                         {props.item.material_type}

@@ -31,7 +31,7 @@ export interface IModernPlace {
 }
 
 export interface IScaledDate {
-    date: string;
+    label: string;
 }
 
 export interface IResultManuscriptList {
