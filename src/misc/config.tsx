@@ -1,5 +1,5 @@
 // Development
-export const SERVICE_SERVER = "http://www.huc.localhost/isidore_service/";
+export const SERVICE_SERVER = "http://localhost/isidore_service/";
 export const HOME = "http://localhost:3000/";
 export const EDITION = "https://localhost/isidore_editie?ms="
 // Test server

@@ -16,6 +16,7 @@ import ManuscriptTypeFacet from "../facets/manuscriptType";
 import LayoutFacet from "../facets/layoutFacet";
 import TransmittedFacet from "../facets/transmittedFacet";
 // import EasterTableFacet from "../facets/easterTableFacet";
+import GeneralListFacet from "../facets/generalListFacet";
 import ProvenanceFacet from "../facets/provenanceFacet";
 import AuthorFacet from "../facets/authorFacet";
 import CurrentPlaceFacet from "../facets/currentPlaceFacet";
@@ -64,12 +65,15 @@ export default function Search(props: { search_string: string }) {
             relations: false,
             innovations: false,
             diagrams: false,
+            diagramsYes: false,
             annotations: false,
+            annotationsYes: false,
             digitized: false,
             larger: false,
             exclude: false,
             fragment: false,
             interpolations: false,
+            interpolationsYes: false,
             easter_tables: false
         },
         searchvalues: "none",
@@ -96,6 +100,7 @@ export default function Search(props: { search_string: string }) {
     const [dimFacet, setDimFacet] = useState(searchBuffer.facetstate.dimensions);
     const [innovationsFacet, setInnovationsFacet] = useState(searchBuffer.facetstate.innovations);
     const [diagramsFacet, setDiagramsFacet] = useState(searchBuffer.facetstate.diagrams);
+    const [diagramsYes, setDiagramsYes] = useState(searchBuffer.facetstate.diagrams);
     const [physicalStateFacet, setPhysicalStatefacet] = useState(searchBuffer.facetstate.physicalState);
     const [scriptFacet, setScriptFacet] = useState(searchBuffer.facetstate.script);
     const [manuscriptFacet, setManuscriptFacet] = useState(searchBuffer.facetstate.manuscript);
@@ -106,11 +111,13 @@ export default function Search(props: { search_string: string }) {
     const [currentPlaceFacet, setCurrentPlaceFacet] = useState(searchBuffer.facetstate.currentplace);
     const [regionFacet, setRegionFacet] = useState(searchBuffer.facetstate.region);
     const [annotationFacet, setAnnotationFacet] = useState(searchBuffer.facetstate.annotations);
+    const [annotationsYes, setAnnotationsYes] = useState(searchBuffer.facetstate.annotationsYes);
     const [digitizedFacet, setDigitizedfacet] = useState(searchBuffer.facetstate.digitized);
     const [largerFacet, setLargerfacet] = useState(searchBuffer.facetstate.larger);
     const [excludeFacet, setExcludeFacet] = useState(searchBuffer.facetstate.exclude);
     const [fragmentFacet, setFragmentFacet] = useState(searchBuffer.facetstate.fragment);
     const [interpolationsFacet, setInterpolationsFacet] = useState(searchBuffer.facetstate.interpolations);
+    const [interpolationsYes, setInterpolationsYes] = useState(searchBuffer.facetstate.interpolationsYes);
     const [relationsFacet, setRelationsFacet] = useState(searchBuffer.facetstate.relations);
     const [easterTableFacet, setEasterTableFacet] = useState(searchBuffer.facetstate.relations);
     const [refresh, setRefresh] = useState(false);
@@ -138,6 +145,33 @@ export default function Search(props: { search_string: string }) {
 
     const removeFacet: IRemoveFacet = (field: string, value: string) => {
         let searchBuffer: ISearchObject = searchData;
+        switch (field) {
+            case "Has interpolations":
+                setInterpolationsYes(false);
+                if (typeof searchBuffer.searchvalues === "object") {
+                    searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
+                        return el.field !== "interpolations.interpolation";
+                    });
+                }
+                break;
+            case "Has diagrams":
+                setDiagramsYes(false);
+                if (typeof searchBuffer.searchvalues === "object") {
+                    searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
+                        return el.field !== "diagrams.diagram_type";
+                    });
+                }
+                break;
+            case "Has annotations":
+                setAnnotationsYes(false);
+                if (typeof searchBuffer.searchvalues === "object") {
+                    searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
+                        return el.field !== "annotations.amount";
+                    });
+                }
+                break;
+
+        }
         if (typeof searchBuffer.searchvalues === "object") {
             searchBuffer.searchvalues.forEach((item: ISearchValues) => {
                 if (item.name === field) {
@@ -184,12 +218,15 @@ export default function Search(props: { search_string: string }) {
         setRelationsFacet(false);
         setInnovationsFacet(false);
         setDiagramsFacet(false);
+        setDiagramsYes(false);
         setAnnotationFacet(false);
+        setAnnotationsYes(false);
         setDigitizedfacet(false);
         setLargerfacet(false);
         setExcludeFacet(false);
         setFragmentFacet(false);
         setInterpolationsFacet(false);
+        setInterpolationsYes(false);
         setEasterTableFacet(false);
         setSearchData(searchBuffer);
         window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
@@ -199,13 +236,37 @@ export default function Search(props: { search_string: string }) {
 
     const sendCandidate: ISendCandidate = (candidate: IFacetCandidate) => {
         let searchBuffer: ISearchObject = searchData;
+        switch (candidate.field) {
+            case "has_interpolations":
+                if (candidate.candidate === 'yes') {
+                    setInterpolationsYes(true);
+                } else {
+                    setInterpolationsYes(false);
+                }
+                break;
+            case "has_diagrams":
+                if (candidate.candidate === 'yes') {
+                    setDiagramsYes(true);
+                } else {
+                    setDiagramsYes(false);
+                }
+                break;
+            case "has_annotations":
+                if (candidate.candidate === 'yes') {
+                    setAnnotationsYes(true);
+                } else {
+                    setAnnotationsYes(false);
+                }
+                break;
+
+        }
         if (searchData.searchvalues === "none") {
             searchBuffer.searchvalues = [{
                 name: candidate.facet,
                 field: candidate.field,
                 values: [candidate.candidate]
             } as ISearchValues];
-            setSearchData(searchData);
+            setSearchData(searchBuffer);
             window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
             setRefresh(!refresh);
         } else {
@@ -228,7 +289,7 @@ export default function Search(props: { search_string: string }) {
                 }
             }
             searchBuffer.page = 1;
-            setSearchData(searchData);
+            setSearchData(searchBuffer);
             window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchData));
             setRefresh(!refresh);
             window.scroll(0, 0);
@@ -467,7 +528,11 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {interpolationsFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                <InterpolationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                {interpolationsYes ? (
+                                    <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="interpolations.interpolation" label="Interpolations"/>
+                                ) : (
+                                    <InterpolationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                )}
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {
@@ -478,7 +543,11 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {diagramsFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                <DiagramsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                {diagramsYes ? (
+                                    <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="diagrams.diagram_type" label="Diagrams"/>
+                                ) : (
+                                    <DiagramsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                )}
                             </div>) : (<div/>)}
 
                         {/*<div className="hcFacetSubDivision" onClick={() => {
@@ -511,7 +580,11 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {annotationFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                <AnnotationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                {annotationsYes ? (
+                                    <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="annotations.amount" label="Annotations"/>
+                                ) : (
+                                    <AnnotationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                )}
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {

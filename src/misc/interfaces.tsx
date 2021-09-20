@@ -57,14 +57,17 @@ export interface IFacetState {
     currentplace: boolean,
     region: boolean,
     diagrams: boolean,
+    diagramsYes: boolean,
     innovations: boolean,
     annotations: boolean,
+    annotationsYes: boolean,
     relations: boolean,
     digitized: boolean,
     larger: boolean,
     exclude: boolean,
     fragment: boolean,
     interpolations: boolean,
+    interpolationsYes: boolean,
     easter_tables: boolean
 }
 
