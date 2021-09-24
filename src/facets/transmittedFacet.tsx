@@ -8,7 +8,7 @@ function TransmittedFacet(props: { add: ISendCandidate, search: ISearchObject, r
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/material_types.material_type/" + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/?f=material_types.material_type&q=" + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {

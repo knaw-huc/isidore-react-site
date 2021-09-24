@@ -6,7 +6,7 @@ import {Base64} from "js-base64";
 function GeneralListFacet(props: {add: ISendCandidate, search: ISearchObject, refresh: boolean, field: string, label: string}) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + 'elastic/nested_facet/' + props.field + '/'  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + 'elastic/nested_facet/?f=' + props.field + '&q='  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
 
     async function fetchData() {
         const response = await fetch(url);

@@ -8,7 +8,7 @@ function ManuscriptTypeFacet(props: {add: ISendCandidate, search: ISearchObject,
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/content_type/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=content_type&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {

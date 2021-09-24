@@ -8,7 +8,7 @@ function AnnotationsFacet(props: {add: ISendCandidate, search: ISearchObject, re
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/has_annotations/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=has_annotations&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {

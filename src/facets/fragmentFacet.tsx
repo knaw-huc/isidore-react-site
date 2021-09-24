@@ -8,7 +8,7 @@ function FragmentFacet(props: {add: ISendCandidate, search: ISearchObject, refre
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/is_fragment/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=is_fragment&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {

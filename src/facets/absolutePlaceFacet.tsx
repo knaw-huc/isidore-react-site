@@ -9,14 +9,14 @@ function AbsolutePlaceFacet(props: { add: ISendCandidate, search: ISearchObject,
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/?f=absolute_places.place_absolute&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
         if (more) {
-            url = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/?f=absolute_places.place_absolute&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short&s=" + filter;
         } else {
-            url = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/?f=absolute_places.place_absolute&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=long&s=" + filter;
         }
 
         const response = await fetch(url);
@@ -29,16 +29,16 @@ function AbsolutePlaceFacet(props: { add: ISendCandidate, search: ISearchObject,
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+                url = SERVICE_SERVER + "elastic/nested_facet/?f=absolute_places.place_absolute&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short";
             } else {
-                url = SERVICE_SERVER + "elastic/nested_facet/absolute_places.place_absolute/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/?f=absolute_places.place_absolute&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short&s=" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/initial_facet/absolute_places.place_absolute/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long";
+                url = SERVICE_SERVER + "elastic/initial_facet/?f=absolute_places.place_absolute&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=long";
             } else {
-                url = SERVICE_SERVER + "elastic/facet/absolute_places.place_absolute/long/"  + Base64.toBase64(JSON.stringify(props.search)) + "/" + filter;
+                url = SERVICE_SERVER + "elastic/facet/?f=absolute_places.place_absolute&l=long/&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&s=" + filter;
             }
             setMore(true);
         }

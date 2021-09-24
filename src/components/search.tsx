@@ -136,7 +136,7 @@ export default function Search(props: { search_string: string }) {
     const [result, setResult] = useState<IResultManuscriptList>({amount: 0, pages: 0, manuscripts: []});
 
     async function fetchData() {
-        const url = SERVICE_SERVER + "search/" + Base64.toBase64(JSON.stringify(searchData));
+        const url = SERVICE_SERVER + "search/?q=" + Base64.toBase64(JSON.stringify(searchData));
         const response = await fetch(url);
         const json: IResultManuscriptList = await response.json();
         setResult(json);
@@ -664,7 +664,7 @@ export default function Search(props: { search_string: string }) {
                                         <button onClick={() => {
                                             searchBuffer.is_list = false;
                                             searchBuffer.page_length = 500;
-                                            window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
+                                            window.location.href = "#search/?q=" + Base64.toBase64(JSON.stringify(searchBuffer));
                                             setIsList(false);
                                             setRefresh(!refresh);
                                         }}>Results on map</button>
@@ -672,7 +672,7 @@ export default function Search(props: { search_string: string }) {
                                         <button onClick={() => {
                                             searchBuffer.is_list = true;
                                             searchBuffer.page_length = searchData.page_length;
-                                            window.location.href = "#search/" + Base64.toBase64(JSON.stringify(searchBuffer));
+                                            window.location.href = "#search/?q=" + Base64.toBase64(JSON.stringify(searchBuffer));
                                             setIsList(true);
                                             setRefresh(!refresh);
                                         }}>Results in list</button>
@@ -687,15 +687,15 @@ export default function Search(props: { search_string: string }) {
                             {downloadActive && (<div className="downloadFormats"><strong>Choose format: </strong>
                                 <div className="downloadFormat" onClick={() => {
                                     setDownloadActive(false);
-                                    openWindow(SERVICE_SERVER + "download/csv/" + Base64.toBase64(JSON.stringify(searchData)))
+                                    openWindow(SERVICE_SERVER + "download/csv/?q=" + Base64.toBase64(JSON.stringify(searchData)))
                                 }}>CSV
                                 </div> | <div className="downloadFormat" onClick={() => {
                                     setDownloadActive(false);
-                                    openWindow(SERVICE_SERVER + "download/excel/" + Base64.toBase64(JSON.stringify(searchData)))
+                                    openWindow(SERVICE_SERVER + "download/excel/?q=" + Base64.toBase64(JSON.stringify(searchData)))
                                 }}>Excel
                                 </div> | <div className="downloadFormat" onClick={() => {
                                     setDownloadActive(false);
-                                    openWindow(SERVICE_SERVER + "download/xml/" + Base64.toBase64(JSON.stringify(searchData)))
+                                    openWindow(SERVICE_SERVER + "download/xml/?q=" + Base64.toBase64(JSON.stringify(searchData)))
                                 }}>XML
                                 </div>
                             </div>)}

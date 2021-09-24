@@ -7,7 +7,7 @@ import {Base64} from "js-base64";
 function PageDimensionsFacet(props: {add: ISendCandidate, search: ISearchObject, refresh: boolean}) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/page_dimensions/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=page_dimensions&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
     const facetValues: ISortFacetValue[] = [
         {facetValue: "< 300 mm", amount: 0},

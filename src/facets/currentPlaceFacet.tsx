@@ -10,14 +10,14 @@ function CurrentPlaceFacet(props: { add: ISendCandidate, search: ISearchObject, 
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/?f=current_places.place&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
         if (more) {
-            url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/?f=current_places.place&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short&s=" + filter;
         } else {
-            url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/?f=current_places.place&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=long&s=" + filter;
         }
 
         const response = await fetch(url);
@@ -30,16 +30,16 @@ function CurrentPlaceFacet(props: { add: ISendCandidate, search: ISearchObject, 
     function changeListLength() {
         if (more) {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/nested_facet/current_places.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+                url = SERVICE_SERVER + "elastic/nested_facet/?f=current_places.place&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short";
             } else {
-                url = SERVICE_SERVER + "elastic/nested_facet/autcurrent_placeshors.place/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+                url = SERVICE_SERVER + "elastic/nested_facet/?f=autcurrent_placeshors.place&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short&f=" + filter;
             }
             setMore(false);
         } else {
             if (filter === "") {
-                url = SERVICE_SERVER + "elastic/initial_facet/current_places.place/long";
+                url = SERVICE_SERVER + "elastic/initial_facet/?f=current_places.place&l=long";
             } else {
-                url = SERVICE_SERVER + "elastic/facet/current_places.place/long/" + filter;
+                url = SERVICE_SERVER + "elastic/facet/?f=current_places.place&l=long&f=" + filter;
             }
             setMore(true);
         }

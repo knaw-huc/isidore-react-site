@@ -8,7 +8,7 @@ import {SERVICE_SERVER} from "../misc/config";
 function DatePeriodFacet(props: { add: ISendCandidate }) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/scaled_dates.numerical_date/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/?f=scaled_dates.numerical_date&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {

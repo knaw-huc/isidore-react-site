@@ -11,14 +11,14 @@ function AuthorFacet(props: { parentCallback: ISendCandidate, search: ISearchObj
     const [filter, setFilter] = useState("");
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/?f=authors.author&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
         if (more) {
-            url = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/short/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/?f=authors.author&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=short&s=" + filter;
         } else {
-            url = SERVICE_SERVER + "elastic/nested_facet/authors.author/"  + Base64.toBase64(JSON.stringify(props.search)) + "/long/" + filter;
+            url = SERVICE_SERVER + "elastic/nested_facet/?f=authors.author&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=long&s=" + filter;
         }
 
         const response = await fetch(url);

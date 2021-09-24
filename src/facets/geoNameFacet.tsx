@@ -8,7 +8,7 @@ import {Base64} from "js-base64";
 function GeoNameFacet(props: { add: ISendCandidate, search: ISearchObject, refresh: boolean }) {
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/nested_facet/absolute_places.country/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/nested_facet/?f=absolute_places.country&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {

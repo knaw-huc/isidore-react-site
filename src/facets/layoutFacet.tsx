@@ -8,7 +8,7 @@ function LayoutFacet(props: {add: ISendCandidate, search: ISearchObject, refresh
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/layout/"  + Base64.toBase64(JSON.stringify(props.search)) + "/normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=layout&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
     const facetValues: ISortFacetValue[] = [
         {facetValue: "one column", amount: 0},
