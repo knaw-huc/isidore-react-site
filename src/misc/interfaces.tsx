@@ -7,6 +7,7 @@ export interface IResultManuscript {
     absolute_places: IAbsolutePlace[],
     library: IModernPlace[],
     scaled_dates: IScaledDate[],
+    accepted_date: string,
     physical_state: string,
     certainty: string,
     no_of_folia: string,
@@ -103,7 +104,7 @@ export interface IManuscript {
     place_absolute: string,
     material_type: string,
     uncertainty: string,
-    provenances: IProvenance[],
+    provenances: string,
     no_of_folia: string,
     layout: string[],
     script: string,
@@ -111,6 +112,7 @@ export interface IManuscript {
     type: string,
     additional_content: string[],
     larger_unit: string[],
+    url_larger_unit: string,
     related_manuscripts: IRelatedManuscripts[],
     interpolations: IInterpolation[],
     easter_tables: IEaster_table[],
@@ -148,13 +150,15 @@ export interface IProvenance {
 export interface IInterpolation {
     interpolation: string,
     folia: string,
-    description: string
+    description: string,
+    url: string
 }
 
 export interface IDiagram {
     diagram_type: string,
     folia: string,
-    description: string
+    description: string,
+    url: string
 }
 
 export interface IEaster_table {

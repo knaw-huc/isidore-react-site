@@ -35,7 +35,6 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
         source_of_date = "(" + props.manuscript.source_dating + ")";
     }
 
-    console.log(props.manuscript.iiif);
 
     let pgType = "Page";
     if (props.manuscript.page_number.indexOf('r') !== -1 || props.manuscript.page_number.indexOf('v') !== -1) {
@@ -145,12 +144,12 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             </div>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Provenance</div>
-                                {props.manuscript.provenances.length === 0 && (
+                                {props.manuscript.provenances === "" || props.manuscript.provenances === null ? (
                                     <div>-</div>
+                                ) : (
+                                    <div>{props.manuscript.provenances}</div>
                                 )}
-                                {props.manuscript.provenances.map((line) => {
-                                    return (<div>{line.provenance}</div>)
-                                })}
+
                             </div>
                             <div className="hcMarginBottom1">
                                 <div className="hcDataLabel">Folia</div>
@@ -326,12 +325,21 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     <div>-</div>
                                 )}
                                 {props.manuscript.interpolations.map(item => {
-                                    return (<div className="innovationListItem">
-                                        {item.interpolation} ({item.folia})
-                                        {item.description !== "" && (
-                                            <div>{item.description}</div>
-                                        )}
-                                    </div>)
+                                    if (item.url === "") {
+                                        return (<div className="innovationListItem">
+                                            {item.interpolation} ({item.folia})
+                                            {item.description !== "" && (
+                                                <div>{item.description}</div>
+                                            )}
+                                        </div>)
+                                    } else {
+                                        return (<div className="innovationListItem linkLine" onClick={() => {openWindow(item.url)}}>
+                                            {item.interpolation} ({item.folia})
+                                            {item.description !== "" && (
+                                                <div>{item.description}</div>
+                                            )}
+                                        </div>)
+                                    }
                                 })
                                 }
                             </div>
@@ -341,12 +349,21 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                     <div>-</div>
                                 )}
                                 {props.manuscript.diagrams.map(item => {
+                                    if (item.url === "") {
                                     return (<div className="innovationListItem">
                                         {item.diagram_type} ({item.folia})
                                         {item.description !== "" && (
                                             <div>{item.description}</div>
                                         )}
-                                    </div>)
+                                    </div>) }
+                                    else {
+                                        return (<div className="innovationListItem linkLine" onClick={() => {openWindow(item.url)}}>
+                                            {item.diagram_type} ({item.folia})
+                                            {item.description !== "" && (
+                                                <div>{item.description}</div>
+                                            )}
+                                        </div>)
+                                    }
                                 })
                                 }
                             </div>
@@ -414,7 +431,11 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 </div>)}
                                 {larger_unit.length === 1 && larger_unit[0] === "" && (<div>-</div>)}
                                 {larger_unit.map(line => {
-                                    return <div className="line" dangerouslySetInnerHTML={{__html: line}}/>
+                                    if (props.manuscript.url_larger_unit === "") {
+                                        return <div className="line" dangerouslySetInnerHTML={{__html: line}}/>
+                                    } else {
+                                        return <div className="linkLine" dangerouslySetInnerHTML={{__html: line}} onClick={() => {openWindow(props.manuscript.url_larger_unit)}} />
+                                    }
                                 })}
                             </div>
                             <div className="hcMarginBottom1">

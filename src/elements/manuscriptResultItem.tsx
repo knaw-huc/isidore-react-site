@@ -166,7 +166,7 @@ export default function ManuscriptResultItem(props: { item: IResultManuscript })
                                 <div className="hcBasicSideMargin">
                                     <div className="hcMarginBottom05">
                                         <div className="hcDataLabel">Date of origin</div>
-                                        {props.item.scaled_dates[0].label}
+                                        {props.item.accepted_date}
                                     </div>
                                     <div className="hcMarginBottom05">
                                         <div className="hcDataLabel">Place of origin</div>
