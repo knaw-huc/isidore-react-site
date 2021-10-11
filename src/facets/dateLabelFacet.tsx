@@ -31,7 +31,7 @@ function DatelabelFacet(props: { add: ISendCandidate, search: ISearchObject, ref
             {help &&
         <div className="hcFacetHelp" onClick={() => setHelp(false)}>
             <p><strong>Date of origin</strong></p>
-            <p>Choose a century from a list or adjust a segment of time on a slider.</p>
+            <p>You can filter manuscripts by century using the list or make a more precise selection by adjusting the slider.</p>
         </div>}
             <div className="hcFacetTitle">
                 Date scaled

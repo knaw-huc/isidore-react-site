@@ -29,8 +29,8 @@ function FragmentFacet(props: {add: ISendCandidate, search: ISearchObject, refre
                 alt=""/></span>}
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
-                <p><strong>Innovations</strong></p>
-                <p>Does the manuscript contain innovations?</p>
+                <p><strong>Fragment</strong></p>
+                <p>Allows the users to select manuscripts based on whether these are/are not fragments.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

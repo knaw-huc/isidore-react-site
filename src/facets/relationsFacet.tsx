@@ -30,7 +30,7 @@ function RelationsFacet(props: {add: ISendCandidate, search: ISearchObject, refr
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
                 <p><strong>Relations</strong></p>
-                <p>Does the manuscript contain relations?</p>
+                <p>Allows the users to select manuscripts having a relationship with another manuscript in the database.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

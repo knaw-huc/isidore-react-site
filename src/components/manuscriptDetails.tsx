@@ -16,6 +16,12 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
     const [addHelp, setAddHelp] = useState(false);
     const [largeHelp, setLargeHelp] = useState(false);
     const [relHelp, setRelHelp] = useState(false);
+    const [physConHelp, setPhysConHelp] = useState(false);
+    const [interpolHelp, setInterpolHelp] = useState(false);
+    const [diagramHelp, setDiagramHelp] = useState(false);
+    const [easterHelp, setEasterHelp] = useState(false);
+    const [annotationHelp, setAnnotationHelp] = useState(false);
+    const [otherInnoHelp, setOtherInnoHelp] = useState(false);
     const layout_items = props.manuscript.layout;
     const content = props.manuscript.content;
     const img: string = SERVICE_SERVER + "img/detail/" + props.manuscript.image;
@@ -160,7 +166,17 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 {layout_items}
                             </div>
                             <div className="hcMarginBottom1">
-                                <div className="hcDataLabel">Physical condition</div>
+                                <div className="hcDataLabel">Physical condition <div className="detailHelp"
+                                                                                     onClick={() => setPhysConHelp(!physConHelp)}>
+                                    <img
+                                        className="hcIconHelpDetail"
+                                        src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                                        alt=""/></div></div>
+                                {physConHelp && (<div className="hcFacetHelp" onClick={() => {
+                                    setPhysConHelp(false)
+                                }}>
+                                    any available notes on the current physical condition of the manuscript.
+                                </div>)}
                                 {props.manuscript.physical_state_scaled === "" && props.manuscript.physical_state === "" && (<div>-</div>)}
                                 {props.manuscript.physical_state_scaled}
                                 {props.manuscript.physical_state !== "" ? (
@@ -320,7 +336,16 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                         <div className="hcBasicSideMargin">
                             <h2>Innovative features</h2>
                             <div className="hcMarginBottom1">
-                                <div className="hcDataLabel">Interpolations</div>
+                                <div className="hcDataLabel">Interpolations <div className="detailHelp"
+                                                                                 onClick={() => setInterpolHelp(!interpolHelp)}><img
+                                    className="hcIconHelpDetail"
+                                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                                    alt=""/></div></div>
+                                {interpolHelp && (<div className="hcFacetHelp" onClick={() => {
+                                    setInterpolHelp(false)
+                                }}>
+                                    Describes briefly texts interpolated into the <i>Etymologiae</i> with a link to a fuller description in the EtymoWiki
+                                </div>)}
                                 {props.manuscript.interpolations.length == 0 && (
                                     <div>-</div>
                                 )}
@@ -344,7 +369,16 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 }
                             </div>
                             <div className="hcMarginBottom1">
-                                <div className="hcDataLabel">Diagrams</div>
+                                <div className="hcDataLabel">Diagrams <div className="detailHelp"
+                                                                           onClick={() => setDiagramHelp(!diagramHelp)}><img
+                                    className="hcIconHelpDetail"
+                                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                                    alt=""/></div></div>
+                                {diagramHelp && (<div className="hcFacetHelp" onClick={() => {
+                                    setDiagramHelp(false)
+                                }}>
+                                    Describes any diagrams added to the text of the <i>Etymologiae</i> (i.e., those not original to the text) with a link to a fuller description in the EtymoWiki.
+                                </div>)}
                                 {props.manuscript.diagrams.length == 0 && (
                                     <div>-</div>
                                 )}
@@ -368,7 +402,16 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 }
                             </div>
                             <div className="hcMarginBottom1">
-                                <div className="hcDataLabel">Easter table</div>
+                                <div className="hcDataLabel">Easter table <div className="detailHelp"
+                                                                               onClick={() => setEasterHelp(!easterHelp)}><img
+                                    className="hcIconHelpDetail"
+                                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                                    alt=""/></div></div>
+                                {easterHelp && (<div className="hcFacetHelp" onClick={() => {
+                                    setEasterHelp(false)
+                                }}>
+                                    Describes briefly if and what kind of Easter table is present in <i>Etym. VI 17</i>.
+                                </div>)}
                                 {props.manuscript.easter_tables.length == 0 && (
                                     <div>-</div>
                                 )}
@@ -383,7 +426,16 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 }
                             </div>
                             <div className="hcMarginBottom1">
-                                <div className="hcDataLabel">Annotations</div>
+                                <div className="hcDataLabel">Annotations <div className="detailHelp"
+                                                                              onClick={() => setAnnotationHelp(!annotationHelp)}><img
+                                    className="hcIconHelpDetail"
+                                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                                    alt=""/></div></div>
+                                {annotationHelp && (<div className="hcFacetHelp" onClick={() => {
+                                    setAnnotationHelp(false)
+                                }}>
+                                    Describes briefly whether and what kind of annotations are present in the manuscript (with a link to the digital edition in case of glosses to book I).
+                                </div>)}
                                 {props.manuscript.annotations.length == 0 && (
                                     <div>-</div>
                                 )}
@@ -408,7 +460,16 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 }
                             </div>
                             <div className="hcMarginBottom1">
-                                <div className="hcDataLabel">Other innovations</div>
+                                <div className="hcDataLabel">Other innovations <div className="detailHelp"
+                                                                                    onClick={() => setOtherInnoHelp(!otherInnoHelp)}><img
+                                    className="hcIconHelpDetail"
+                                    src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                                    alt=""/></div></div>
+                                {otherInnoHelp && (<div className="hcFacetHelp" onClick={() => {
+                                    setOtherInnoHelp(false)
+                                }}>
+                                    Describes briefly any other innovative features present in the manuscript.
+                                </div>)}
                                 <div dangerouslySetInnerHTML={{__html: props.manuscript.innovations}}/>
                             </div>
                         </div>

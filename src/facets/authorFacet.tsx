@@ -63,7 +63,7 @@ function AuthorFacet(props: { parentCallback: ISendCandidate, search: ISearchObj
                     alt=""/></span>}
                 {help ? (<div className="hcFacetHelp" onClick={() => setHelp(false)}>
                     <p><strong>Author/text/types</strong></p>
-                    <p>This facet allows you to search for the works of known authors, anonymous texts, and short compositions on specific subjects that appear in the same manuscript as the <i>Etymologiae</i> (BUT it does not include systematically the texts interpolated into the <i>Etymologiae</i> – for these a separate facet may be established in the future).</p>
+                    <p>This facet allows you to search for the works of known authors, anonymous texts, and short compositions on specific subjects that appear in the same manuscript as the <i>Etymologiae</i>. This facet does not account for texts interpolated into the <i>Etymologiae</i>, which can be filtered using the Interpolations facet.</p>
                 </div>) : (<div/>)}
 
             </div>

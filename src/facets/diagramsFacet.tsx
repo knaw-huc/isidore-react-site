@@ -32,7 +32,7 @@ function DiagramsFacet(props: {add: ISendCandidate, search: ISearchObject, refre
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
                 <p><strong>Diagrams</strong></p>
-                <p>Does the manuscript contain diagrams?</p>
+                <p>Allows the users to select manuscripts based on whether they do/do not contain diagrams added to the <i>Etymologiae</i>.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

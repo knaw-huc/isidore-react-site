@@ -30,7 +30,7 @@ function DigitizedFacet(props: {add: ISendCandidate, search: ISearchObject, refr
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
                 <p><strong>Digitized</strong></p>
-                <p>Is the manuscript digitized?</p>
+                <p>Allows the users to select manuscripts based on whether they are/are not digitized.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

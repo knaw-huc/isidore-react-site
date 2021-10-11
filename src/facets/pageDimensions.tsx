@@ -50,7 +50,7 @@ function PageDimensionsFacet(props: {add: ISendCandidate, search: ISearchObject,
             { help &&
             <div className="hcFacetHelp"  onClick={() => setHelp(false)}>
                 <p><strong>Page dimensions</strong></p>
-                <p>The page dimensions of manuscripts in the database are represented by a single value, the <i>taille</i> (page height + page width).</p> <p>Manuscripts are then assigned to several size categories. For example, a manuscript with a page of 325 x 210 mm, that is with a taille of 535 mm, would appear in this overview in the category of 500-550 mm.</p>
+                <p>The page dimensions of manuscripts in the database are represented by a single value, the <i>taille</i> (page height + page width).</p> <p>Manuscripts are then assigned to several size categories. For example, a manuscript with a page of 325 x 210 mm, that is with a <i>taille</i> of 535 mm, would appear in this overview in the category of 500-550 mm.</p>
                 <p>In the case of manuscripts with pages of varying size, the values taken are minimum page height + minimum page width.</p>
             </div> }
             <div className="hcFacetItems">

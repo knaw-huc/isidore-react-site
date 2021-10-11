@@ -29,8 +29,7 @@ function DatePeriodFacet(props: { add: ISendCandidate }) {
             </div>
             { help &&
             <div className="hcFacetHelp">
-                <strong>Free text facet</strong><br/>
-                Type text and complete with ENTER.
+
             </div> }
             <div className="hcFacetItems">
                 {!loading ? (<div>

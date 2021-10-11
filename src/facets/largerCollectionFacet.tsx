@@ -30,7 +30,7 @@ function LargerCollectionFacet(props: {add: ISendCandidate, search: ISearchObjec
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
                 <p><strong>Part larger collection</strong></p>
-                <p>Is the manuscript part of a larger collection?</p>
+                <p>Allows the users to select manuscripts in which the material from the <i>Etymologiae</i> appears embedded into a more extensive collection.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

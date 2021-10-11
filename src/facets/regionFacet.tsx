@@ -31,7 +31,7 @@ function RegionFacet(props: {add: ISendCandidate, search: ISearchObject, refresh
             {help &&
             <div className="hcFacetHelp">
                 <strong>Region of origin</strong><br/>
-                Select one or more states.
+                Historical regions of origin of manuscripts.
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

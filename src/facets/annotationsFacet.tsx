@@ -30,7 +30,7 @@ function AnnotationsFacet(props: {add: ISendCandidate, search: ISearchObject, re
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
                 <p><strong>Annotations</strong></p>
-                <p>Does the manuscript contain annotations?</p>
+                <p>Allows the users to select manuscripts based on whether they do/do not contain annotations.</p>
             </div>}
             <div className="hcFacetItems">
                 {!loading ? (<div>

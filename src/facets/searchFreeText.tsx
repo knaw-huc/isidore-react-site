@@ -32,7 +32,7 @@ function SearchFreetext(props: { add: ISendCandidate }) {
             {help &&
             <div className="hcFacetHelp" onClick={() => setHelp(false)}>
                 <p><strong>Search</strong></p>
-                <p>A free text search of all of the data in the dataset</p>
+                <p>a free text search of all of the indexed data in the dataset</p>
             </div>}
             <div className="hcFacetTitle">
                 Free text search
