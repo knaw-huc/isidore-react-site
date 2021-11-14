@@ -33,7 +33,6 @@ function gotoUrl() {
         } else {
             if (window.location.hash.substr(1).indexOf("viewer") === 0) {
                 const id = window.location.hash.substr(window.location.hash.indexOf("/") + 1);
-                console.log(id);
                 interpreter.send("viewer", {m_id: id});
             } else {
                 const id = "none";
