@@ -8,6 +8,10 @@ function GeneralListFacet(props: {add: ISendCandidate, search: ISearchObject, re
     const [loading, setLoading] = useState(true);
     let url: string = SERVICE_SERVER + 'elastic/nested_facet/?f=' + props.field + '&q='  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
 
+    // Workaround
+    if (props.field === "part_name") {
+        url = SERVICE_SERVER + 'elastic/initial_facet/?f=' + props.field + '&q='  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
+    }
     async function fetchData() {
         const response = await fetch(url);
         const json = await response.json();

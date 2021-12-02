@@ -63,6 +63,7 @@ export default function Search(props: { search_string: string }) {
             currentplace: false,
             region: false,
             relations: false,
+            relationsYes: false,
             innovations: false,
             diagrams: false,
             diagramsYes: false,
@@ -70,6 +71,7 @@ export default function Search(props: { search_string: string }) {
             annotationsYes: false,
             digitized: false,
             larger: false,
+            largerYes: false,
             exclude: false,
             fragment: false,
             interpolations: false,
@@ -114,11 +116,13 @@ export default function Search(props: { search_string: string }) {
     const [annotationsYes, setAnnotationsYes] = useState(searchBuffer.facetstate.annotationsYes);
     const [digitizedFacet, setDigitizedfacet] = useState(searchBuffer.facetstate.digitized);
     const [largerFacet, setLargerfacet] = useState(searchBuffer.facetstate.larger);
+    const [largerYes, setLargerYes] = useState(searchBuffer.facetstate.largerYes);
     const [excludeFacet, setExcludeFacet] = useState(searchBuffer.facetstate.exclude);
     const [fragmentFacet, setFragmentFacet] = useState(searchBuffer.facetstate.fragment);
     const [interpolationsFacet, setInterpolationsFacet] = useState(searchBuffer.facetstate.interpolations);
     const [interpolationsYes, setInterpolationsYes] = useState(searchBuffer.facetstate.interpolationsYes);
     const [relationsFacet, setRelationsFacet] = useState(searchBuffer.facetstate.relations);
+    const [relationsYes, setRelationsYes] = useState(searchBuffer.facetstate.relationsYes);
     const [easterTableFacet, setEasterTableFacet] = useState(searchBuffer.facetstate.relations);
     const [refresh, setRefresh] = useState(false);
     const [searchData, setSearchData] = useState<ISearchObject>(searchBuffer);
@@ -166,11 +170,26 @@ export default function Search(props: { search_string: string }) {
                 setAnnotationsYes(false);
                 if (typeof searchBuffer.searchvalues === "object") {
                     searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
-                        return el.field !== "annotations.amount";
+                        return el.field !== "annotations.amount" && el.field !== "annotations.language";
                     });
                 }
                 break;
-
+            case "Has relations":
+                setRelationsYes(false);
+                if (typeof searchBuffer.searchvalues === "object") {
+                    searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
+                        return el.field !== "relations.reason";
+                    });
+                }
+                break;
+            case "Part larger collection":
+                setLargerYes(false);
+                if (typeof searchBuffer.searchvalues === "object") {
+                    searchBuffer.searchvalues = searchBuffer.searchvalues.filter(function (el) {
+                        return el.field !== "part_name";
+                    });
+                }
+                break;
         }
         if (typeof searchBuffer.searchvalues === "object") {
             searchBuffer.searchvalues.forEach((item: ISearchValues) => {
@@ -258,7 +277,20 @@ export default function Search(props: { search_string: string }) {
                     setAnnotationsYes(false);
                 }
                 break;
-
+            case "has_relations":
+                if (candidate.candidate === 'yes') {
+                    setRelationsYes(true);
+                } else {
+                    setRelationsYes(false);
+                }
+                break;
+            case "part":
+                if (candidate.candidate === 'yes') {
+                    setLargerYes(true);
+                } else {
+                    setLargerYes(false);
+                }
+                break;
         }
         if (searchData.searchvalues === "none") {
             searchBuffer.searchvalues = [{
@@ -550,16 +582,6 @@ export default function Search(props: { search_string: string }) {
                                 )}
                             </div>) : (<div/>)}
 
-                        {/*<div className="hcFacetSubDivision" onClick={() => {
-                            setEasterTableFacet(!easterTableFacet)
-                        }}>
-                            {easterTableFacet ? (<span className="hcFacetGroup">&#9660; easter tables</span>) : (
-                                <span className="hcFacetGroup">&#9658; easter tables</span>)}
-                        </div>
-                        {easterTableFacet ? (
-                            <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                <EasterTableFacet add={sendCandidate} search={searchData} refresh={refresh}/>
-                            </div>) : (<div/>)}*/}
 
                         <div className="hcFacetSubDivision" onClick={() => {
                             setRelationsFacet(!relationsFacet)
@@ -569,7 +591,11 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {relationsFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                <RelationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                {relationsYes ? (
+                                    <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="relations.reason" label="Reason"/>
+                                ) : (
+                                    <RelationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                )}
                             </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {
@@ -580,8 +606,12 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {annotationFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                {annotationsYes ? (
-                                    <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="annotations.amount" label="Annotations"/>
+                                {annotationsYes ? (<div>
+                                        <div className="facetSubHeader">Amount</div>
+                                        <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="annotations.amount" label="Annotations: amount"/>
+                                        <div className="facetSubHeader">Language</div>
+                                        <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="annotations.language" label="Annotations: language"/>
+                                    </div>
                                 ) : (
                                     <AnnotationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 )}
@@ -607,7 +637,11 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {largerFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                <LargerCollectionFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                {largerYes ? (
+                                    <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="part_name" label="Name larger part"/>
+                                ) : (
+                                    <LargerCollectionFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                                )}
                             </div>) : (<div/>)}
 
                         <div className="fbMessage">

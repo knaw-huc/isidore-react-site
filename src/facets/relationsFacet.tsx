@@ -35,7 +35,7 @@ function RelationsFacet(props: {add: ISendCandidate, search: ISearchObject, refr
             <div className="hcFacetItems">
                 {!loading ? (<div>
                     {data.buckets.map((item, index) => {
-                        return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Relations", field: "has_relations", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
+                        return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Has relations", field: "has_relations", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
                     })}
                 </div>) : (<div>Loading...</div>)}
                 <div>

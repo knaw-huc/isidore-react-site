@@ -4,11 +4,11 @@ import {facetList, ISearchObject, ISendCandidate} from "../misc/interfaces";
 import {SERVICE_SERVER} from "../misc/config";
 import {Base64} from "js-base64";
 
-function InterpolationsFacet(props: {add: ISendCandidate, search: ISearchObject, refresh: boolean}) {
+function InterpolationsFacet(props: { add: ISendCandidate, search: ISearchObject, refresh: boolean }) {
 
     const [data, setData] = useState<facetList>({"buckets": []});
     const [loading, setLoading] = useState(true);
-    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=has_interpolations&q="  + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
+    let url: string = SERVICE_SERVER + "elastic/initial_facet/?f=has_interpolations&q=" + Base64.toBase64(JSON.stringify(props.search)) + "&l=normal";
     const [help, setHelp] = useState(false);
 
     async function fetchData() {
@@ -24,25 +24,34 @@ function InterpolationsFacet(props: {add: ISendCandidate, search: ISearchObject,
 
     return (
         <div className="hcFacet">
-            { !help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
-        src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
-    alt=""/></span>}
-    {help &&
-    <div className="hcFacetHelp" onClick={() => setHelp(false)}>
-        <p><strong>Interpolations</strong></p>
-        <p>Allows the users to select manuscripts based on whether they do/do not contain texts interpolated into the <i>Etymologiae</i>.</p>
-        </div>}
-        <div className="hcFacetItems">
-        {!loading ? (<div>
-            {data.buckets.map((item, index) => {
-                    return (<div key={index} className="hcFacetItem"  onClick={() => props.add({facet: "Has interpolations", field: "has_interpolations", candidate: item.key})}><div className="checkBoxLabel"> {item.key} <div className="facetAmount">({item.doc_count})</div></div></div>);
-                })}
-        </div>) : (<div>Loading...</div>)}
-        <div>
+            {!help && <span className="hcIconHelp" onClick={() => setHelp(true)}><img
+                src="https://d33wubrfki0l68.cloudfront.net/85886ca3e2d8c36ba06d7773a094512272453181/545f8/images/icons/icon-huc-help.svg"
+                alt=""/></span>}
+            {help &&
+            <div className="hcFacetHelp" onClick={() => setHelp(false)}>
+                <p><strong>Interpolations</strong></p>
+                <p>Allows the users to select manuscripts based on whether they do/do not contain texts interpolated
+                    into the <i>Etymologiae</i>.</p>
+            </div>}
+            <div className="hcFacetItems">
+                {!loading ? (<div>
+                    {data.buckets.map((item, index) => {
+                        return (<div key={index} className="hcFacetItem" onClick={() => props.add({
+                            facet: "Has interpolations",
+                            field: "has_interpolations",
+                            candidate: item.key
+                        })}>
+                            <div className="checkBoxLabel"> {item.key}
+                                <div className="facetAmount">({item.doc_count})</div>
+                            </div>
+                        </div>);
+                    })}
+                </div>) : (<div>Loading...</div>)}
+                <div>
+                </div>
             </div>
         </div>
-        </div>
     );
-    }
+}
 
-    export default InterpolationsFacet;
+export default InterpolationsFacet;
