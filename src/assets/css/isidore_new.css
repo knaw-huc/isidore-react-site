@@ -1777,5 +1777,6 @@ display: inline-block;
 margin-left: 20px;
 font-weight: bold;
 font-size: smaller;
+width: 300px !important;
 }
 

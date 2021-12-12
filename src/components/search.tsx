@@ -606,12 +606,12 @@ export default function Search(props: { search_string: string }) {
                         </div>
                         {annotationFacet ? (
                             <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
-                                {annotationsYes ? (<div>
+                                {annotationsYes ? (<React.Fragment>
                                         <div className="facetSubHeader">Amount</div>
                                         <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="annotations.amount" label="Annotations: amount"/>
                                         <div className="facetSubHeader">Language</div>
                                         <GeneralListFacet  add={sendCandidate} search={searchData} refresh={refresh} field="annotations.language" label="Annotations: language"/>
-                                    </div>
+                                    </React.Fragment>
                                 ) : (
                                     <AnnotationsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 )}
