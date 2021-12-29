@@ -1765,6 +1765,7 @@ text-align: right;
 
 .innovationListItem, .relationList {
 margin-bottom: 10px;
+font-size: smaller;
 }
 
 .other_url_label {

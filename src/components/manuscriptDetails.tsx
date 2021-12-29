@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Fragment, useState} from "react";
 import {IManuscript} from "../misc/interfaces";
 import {SERVICE_SERVER, HOME, EDITION} from "../misc/config";
 import canonical from "../assets/img/icon-canonical.png";
@@ -470,7 +470,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 }}>
                                     Describes briefly any other innovative features present in the manuscript.
                                 </div>)}
-                                <div dangerouslySetInnerHTML={{__html: props.manuscript.innovations}}/>
+                                <div className="innovationListItem" dangerouslySetInnerHTML={{__html: props.manuscript.innovations}}/>
                             </div>
                         </div>
 
@@ -565,23 +565,26 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                             {props.manuscript.digitized_at.map((item) => {
                                 return (
                                     <div>
-                                        <div className="linkLine" onClick={() => {
+                                        { item.other_links !== "" ?
+                                        (<React.Fragment><div className="linkLine" onClick={() => {
                                             openWindow(item.other_links);
                                         }}>{item.other_links}</div>
                                         {item.label !== null && item.label !== "()" && (<div  className="other_url_label">{item.label}</div>)}
+                                            </React.Fragment>) : (<div>-</div>)}
                                     </div>
                                 )
                             })}
                         </div>
                         <div className="hcMarginBottom1">
                             <div className="hcDataLabel">Additional information online</div>
-                            {props.manuscript.url_other.map((item) => {
+                            {props.manuscript.url_other.map((item, index) => {
                                 return (
                                     <div>
                                         <div className="linkLine" onClick={() => {
                                             openWindow(item.url);
                                         }}>{item.url}</div>
-                                        {item.label !== "()" && (<div className="other_url_label">{item.label}</div>)}
+                                        {item.label !== "()" ? (<div className="other_url_label">{item.label}</div>)
+                                        : (<React.Fragment>-</React.Fragment>)}
                                     </div>
                                 )
                             })}
