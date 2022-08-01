@@ -358,8 +358,8 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                             )}
                                         </div>)
                                     } else {
-                                        return (<div className="innovationListItem linkLine" onClick={() => {openWindow(item.url)}}>
-                                            {item.interpolation} ({item.folia})
+                                        return (<div className="innovationListItem">
+                                            <div className="linkLine" onClick={() => {openWindow(item.url)}}> {item.interpolation}</div> ({item.folia})
                                             {item.description !== "" && (
                                                 <div>{item.description}</div>
                                             )}
@@ -391,8 +391,8 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         )}
                                     </div>) }
                                     else {
-                                        return (<div className="innovationListItem linkLine" onClick={() => {openWindow(item.url)}}>
-                                            {item.diagram_type} ({item.folia})
+                                        return (<div className="innovationListItem">
+                                            <div className="linkLine" onClick={() => {openWindow(item.url)}}>{item.diagram_type}</div> ({item.folia})
                                             {item.description !== "" && (
                                                 <div>{item.description}</div>
                                             )}
