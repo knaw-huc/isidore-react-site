@@ -1781,3 +1781,17 @@ font-size: smaller;
 width: 300px !important;
 }
 
+.additional_content_link {
+display: inline-block;
+color: #0087d4;
+cursor: pointer;
+margin-left: 6px;
+}
+
+.additional_content_link:before {
+content: "| ";
+color: #000000;
+}
+
+
+

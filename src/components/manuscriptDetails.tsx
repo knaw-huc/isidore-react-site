@@ -322,7 +322,11 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                 </div>)}
                                 <ul>
                                     {additional_content.map(line => {
-                                        return <li>{line}</li>
+                                        return <li>{line.additional_content_scaled}
+                                            {line.viaf_url !== "" && (<div className="additional_content_link" onClick={() => window.open(line.viaf_url)}>VIAF</div>)}
+                                            {line.biblissima_author_url !== "" && (<div className="additional_content_link" onClick={() => window.open(line.biblissima_author_url)}>Biblissima</div>)}
+                                            {line.wikidata_author_url !== "" && (<div className="additional_content_link" onClick={() => window.open(line.wikidata_author_url)}>Wikidata</div>)}
+                                        </li>
                                     })}
                                 </ul>
                             </div>
@@ -444,7 +448,7 @@ function ManuscriptDetails(props: { manuscript: IManuscript }) {
                                         {item.url !== "" ? (
                                             <div>
                                                 <div className="linkLine" onClick={() => {
-                                                    openWindow(EDITION + item.url);
+                                                    openWindow(item.url);
                                                 }}>{item.number_of_annotations} {item.language} glosses to books {item.books}</div>
                                                 {item.remarks !== "" && (
                                                     <div>{item.remarks}</div>)}

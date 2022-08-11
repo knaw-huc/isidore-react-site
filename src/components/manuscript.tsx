@@ -12,7 +12,6 @@ function Manuscript(props: { manuscriptID: string }) {
 
     async function fetchData() {
         const url = SERVICE_SERVER + "detail/" + props.manuscriptID;
-        console.log(url);
         const response = await fetch(url);
         const json: IManuscript = await response.json();
         setResult(json);

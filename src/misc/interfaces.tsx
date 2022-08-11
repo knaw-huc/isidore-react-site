@@ -112,7 +112,7 @@ export interface IManuscript {
     script: string,
     content: IManuscriptContent[],
     type: string,
-    additional_content: string[],
+    additional_content: IViaf[],
     larger_unit: string[],
     url_larger_unit: string,
     related_manuscripts: IRelatedManuscripts[],
@@ -138,6 +138,13 @@ export interface IManuscript {
 export interface IOther {
     url: string,
     label: string
+}
+
+export interface IViaf {
+    additional_content_scaled: string,
+    viaf_url: string,
+    biblissima_author_url: string,
+    wikidata_author_url: string
 }
 
 export interface IDigitized {

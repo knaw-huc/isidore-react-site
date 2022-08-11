@@ -42,6 +42,7 @@ import LargerCollectionFacet from "../facets/largerCollectionFacet";
 import ExcludeFullFacet from "../facets/excludeFullFacet";
 import InnovationsFacet from "../facets/innovationFacet";
 import DiagramsFacet from "../facets/diagramsFacet";
+import EasterTableFacet from "../facets/easterTableFacet";
 
 
 export default function Search(props: { search_string: string }) {
@@ -581,7 +582,16 @@ export default function Search(props: { search_string: string }) {
                                     <DiagramsFacet add={sendCandidate} search={searchData} refresh={refresh}/>
                                 )}
                             </div>) : (<div/>)}
-
+                        <div className="hcFacetSubDivision" onClick={() => {
+                            setEasterTableFacet(!easterTableFacet);
+                        }}>
+                            {easterTableFacet ? (<span className="hcFacetGroup">&#9660; easter tables</span>) : (
+                                <span className="hcFacetGroup">&#9658; easter tables</span>)}
+                        </div>
+                        {easterTableFacet ? (
+                            <div className="hcLayoutFacetsToggle" id="hcLayoutFacetsToggle">
+                                <EasterTableFacet add={sendCandidate} search={searchData} refresh={refresh}/>
+                            </div>) : (<div/>)}
 
                         <div className="hcFacetSubDivision" onClick={() => {
                             setRelationsFacet(!relationsFacet)
